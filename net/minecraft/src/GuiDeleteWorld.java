@@ -16,8 +16,11 @@ public class GuiDeleteWorld extends GuiSelectWorld {
 	// Closes the delete world gui - retrorandom
 	protected void actionPerformed(GuiButton button) {
 	    if (button.id == 6) {
-	        this.mc.displayGuiScreen(null); 
+	        this.mc.displayGuiScreen(null);
+	        return;
 	    }
+	    
+	    super.actionPerformed(button);
 	}
 	
 	public void selectWorld(int var1) {
