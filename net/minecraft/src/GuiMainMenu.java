@@ -21,9 +21,12 @@ public class GuiMainMenu extends GuiScreen {
 	private float updateCounter = 0.0F;
 	private String splashString = "missingno";
 	private int bgIndex = 0;
-	int ticksToChangeBackground;
+	int millisToChangeBackground;
 	
-	private float lastTime;
+	private long lastTime;
+	private int fadeState = 0;
+	private int fadeTimer = 0;
+	private long bgCol = 0xefefef;
 
 	public GuiMainMenu() {
 		try {
@@ -66,7 +69,7 @@ public class GuiMainMenu extends GuiScreen {
 	public void initGui() {
 		Random rand = new Random();
 		this.bgIndex = 1 + rand.nextInt(4);
-		this.ticksToChangeBackground = 600;
+		this.millisToChangeBackground = 5000;
 		
 		Calendar var1 = Calendar.getInstance();
 		var1.setTime(new Date());
@@ -91,7 +94,7 @@ public class GuiMainMenu extends GuiScreen {
 			((GuiButton)this.controlList.get(1)).enabled = false;
 		}
 
-		this.lastTime = (float)System.currentTimeMillis() / 1000f;
+		this.lastTime = System.currentTimeMillis();
 	}
 
 	protected void actionPerformed(GuiButton var1) {
@@ -118,7 +121,7 @@ public class GuiMainMenu extends GuiScreen {
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.mc.renderEngine.getTexture("/gui/title/" + this.bgIndex + ".png"));
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		var2.startDrawingQuads();
-		var2.setColorOpaque_I(0xefefef);
+		var2.setColorOpaque_I((int)this.bgCol);
 		var2.addVertexWithUV(0, this.height, 0, 0, 1);
 		var2.addVertexWithUV(this.width, this.height, 0, 1, 1);
 		var2.addVertexWithUV(this.width, 0, 0, 1, 0);
@@ -129,14 +132,40 @@ public class GuiMainMenu extends GuiScreen {
 //		var2.addVertexWithUV(0.0D, 0.0D, 0.0D, 0.0D, (double)(0 + var1));
 		var2.draw();
 		
-		if(this.ticksToChangeBackground > 0) {
-			this.ticksToChangeBackground--;
+		if(this.fadeState == 1) {
+//			this.bgCol -= (long)((float)0x010101 * (float)System.currentTimeMillis() / 1000F);
+			int change = System.currentTimeMillis() % 3 == 0 ? 1 : 0;
+			this.bgCol -= change | (change << 8) | (change << 16);
+			
+			if(this.bgCol <= 0) {
+				this.fadeState = 2;
+				this.bgIndex++;
+				if(this.bgIndex > 5) this.bgIndex -= 5;
+			}
+			
 			return;
 		}
 		
-		this.bgIndex++;
-		if(this.bgIndex > 5) this.bgIndex -= 5;
-		this.ticksToChangeBackground = 600;
+		if(this.fadeState == 2) {
+//			this.bgCol += (long)((float)0x010101 * (float)System.currentTimeMillis() / 1000F);
+			int change = System.currentTimeMillis() % 3 == 0 ? 1 : 0;
+			this.bgCol += change | (change << 8) | (change << 16);
+			if(this.bgCol >= 0xefefef) {
+				this.fadeState = 0;
+			}
+			
+			return;
+		}
+		
+		if(this.millisToChangeBackground > 0) {
+			this.millisToChangeBackground -= System.currentTimeMillis() - this.lastTime;
+			this.lastTime = System.currentTimeMillis();
+			return;
+		}
+		
+		this.fadeState = 1;
+		this.millisToChangeBackground = 5000;
+		System.currentTimeMillis();
 	}
 	
 	public void drawScreen(int var1, int var2, float var3) {
@@ -157,7 +186,7 @@ public class GuiMainMenu extends GuiScreen {
 		GL11.glScalef(var5, var5, var5);
 		this.drawCenteredString(this.fontRenderer, this.splashString, 0, -8, 16776960);
 		GL11.glPopMatrix();
-		String var6 = "Alpha Advanced Public Beta Build b1.3.2 by Tori";
+		String var6 = "Alpha Advanced Public Beta Build b1.3.3 by Tori";
 		this.drawString(this.fontRenderer, var6, this.width - this.fontRenderer.getStringWidth(var6) - 2, this.height - 10, 16777215);
 		long var7 = Runtime.getRuntime().maxMemory();
 		long var9 = Runtime.getRuntime().totalMemory();
