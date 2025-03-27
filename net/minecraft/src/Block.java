@@ -119,7 +119,7 @@ public class Block {
 	public static final Block brickSmooth = (new Block(97, 125, Material.rock)).setHardness(2.0F).setResistance(10.0F).setStepSound(soundStoneFootstep);
 	public static final Block stairCompactSmoothBrick = new BlockStairs(98, brickSmooth);
 	public static final Block blockCopper = (new Block(99, 7+3*16, Material.iron)).setHardness(5.0F).setResistance(10.0F).setStepSound(soundMetalFootstep);
-	public static final Block leafPile = (new BlockLeafPile(100, 14+7*16)).setHardness(0.1F).setStepSound(soundGrassFootstep);
+	public static final Block leafPile = (new BlockLeafPile(100, 14+8*16)).setHardness(0.1F).setStepSound(soundGrassFootstep);
 	public int blockIndexInTexture;
 	public final int blockID;
 	protected float hardness;
@@ -436,7 +436,7 @@ public class Block {
 
 	public boolean canPlaceBlockAt(World var1, int var2, int var3, int var4) {
 		int var5 = var1.getBlockId(var2, var3, var4);
-		return var5 == 0 || blocksList[var5].material.getIsLiquid();
+		return var5 == 0 || var5 == Block.leafPile.blockID || blocksList[var5].material.getIsLiquid();
 	}
 
 	public boolean blockActivated(World var1, int var2, int var3, int var4, EntityPlayer var5) {

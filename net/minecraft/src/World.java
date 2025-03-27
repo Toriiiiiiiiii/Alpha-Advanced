@@ -197,6 +197,8 @@ public class World implements IBlockAccess {
 				this.sizeOnDisk = var7.getLong("SizeOnDisk");
 				this.snowCovered = var7.getBoolean("SnowCovered");
 				this.isAutumn = var7.getBoolean("IsAutumn");
+				if(this.isAutumn) Block.grass.autumn = true;
+				
 				if(var7.hasKey("Player")) {
 					this.nbtCompoundPlayer = var7.getCompoundTag("Player");
 				}
