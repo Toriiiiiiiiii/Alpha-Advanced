@@ -23,6 +23,7 @@ public class World implements IBlockAccess {
 	public List loadedTileEntityList;
 	public long worldTime;
 	public boolean snowCovered;
+	public boolean isAutumn;
 	private long skyColor;
 	private long fogColor;
 	private long cloudColor;
@@ -195,6 +196,7 @@ public class World implements IBlockAccess {
 				this.worldTime = var7.getLong("Time");
 				this.sizeOnDisk = var7.getLong("SizeOnDisk");
 				this.snowCovered = var7.getBoolean("SnowCovered");
+				this.isAutumn = var7.getBoolean("IsAutumn");
 				if(var7.hasKey("Player")) {
 					this.nbtCompoundPlayer = var7.getCompoundTag("Player");
 				}
@@ -295,6 +297,7 @@ public class World implements IBlockAccess {
 		var1.setLong("Time", this.worldTime);
 		var1.setLong("SizeOnDisk", this.sizeOnDisk);
 		var1.setBoolean("SnowCovered", this.snowCovered);
+		var1.setBoolean("IsAutumn", this.isAutumn);
 		var1.setLong("LastPlayed", System.currentTimeMillis());
 		EntityPlayer var2 = null;
 		if(this.playerEntities.size() > 0) {

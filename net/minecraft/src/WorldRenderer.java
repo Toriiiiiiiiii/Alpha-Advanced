@@ -131,6 +131,15 @@ public class WorldRenderer {
 								}
 
 								Block var24 = Block.blocksList[var18];
+								if(var24.blockID == Block.leaves.blockID || var24.blockID == Block.leavesPlr.blockID) {
+									if(this.worldObj.isAutumn) {
+										if(var24.isOpaqueCube())
+											var24.blockIndexInTexture = 15 + 7*16;
+										else
+											var24.blockIndexInTexture = 14 + 7*16;
+									}
+								}
+								
 								int var20 = var24.getRenderBlockPass();
 								if(var20 != var11) {
 									var12 = true;

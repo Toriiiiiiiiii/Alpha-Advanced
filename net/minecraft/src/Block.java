@@ -119,6 +119,7 @@ public class Block {
 	public static final Block brickSmooth = (new Block(97, 125, Material.rock)).setHardness(2.0F).setResistance(10.0F).setStepSound(soundStoneFootstep);
 	public static final Block stairCompactSmoothBrick = new BlockStairs(98, brickSmooth);
 	public static final Block blockCopper = (new Block(99, 7+3*16, Material.iron)).setHardness(5.0F).setResistance(10.0F).setStepSound(soundMetalFootstep);
+	public static final Block leafPile = (new BlockLeafPile(100, 14+7*16)).setHardness(0.1F).setStepSound(soundGrassFootstep);
 	public int blockIndexInTexture;
 	public final int blockID;
 	protected float hardness;

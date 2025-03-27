@@ -17,7 +17,7 @@ public class BlockLeaves extends BlockLeavesBase {
 		this.setTickOnLoad(true);
 		this.playerPlaced = player;
 	}
-
+	
 	public void onNeighborBlockChange(World world, int x, int y, int z, int flag) {
 		this.decayCounter = 0;
 		this.updateCurrentLeaves(world, x, y, z);
@@ -109,7 +109,7 @@ public class BlockLeaves extends BlockLeavesBase {
 			return i5;
 		}
 	}
-
+	
 	public void updateTick(World world, int x, int y, int z, Random random) {
 		int i6 = world.getBlockMetadata(x, y, z);
 		if(i6 == 0) {
@@ -155,6 +155,7 @@ public class BlockLeaves extends BlockLeavesBase {
 
 	public void setGraphicsLevel(boolean var1) {
 		this.graphicsLevel = var1;
+		
 		this.blockIndexInTexture = this.leafTexIndex + (var1 ? 0 : 1);
 	}
 	

@@ -8,7 +8,7 @@ public class GuiNewWorld extends GuiScreen {
 	protected String screenTitle = "Create world";
 	private boolean selected = false;
 	
-	private boolean snowWorld = false;
+	private int worldType;
 	private int worldID;
 
 	public GuiNewWorld(GuiScreen var1, int id) {
@@ -47,15 +47,18 @@ public class GuiNewWorld extends GuiScreen {
 
 	protected void actionPerformed(GuiButton var1) {
 		if(var1.id == 0) {
-			this.snowWorld = !this.snowWorld;
-			if(this.snowWorld) 
-				var1.displayString = "World Type: Snow";
+			this.worldType++;
+			if(this.worldType > 2) this.worldType -= 2;
+			if(this.worldType == 1) 
+				var1.displayString = "World Type: Winter";
+			else if(this.worldType == 2)
+				var1.displayString = "World Type: Autumn";
 			else
 				var1.displayString = "World Type: Normal";
 		}
 		
 		if(var1.id == 1) {
-			this.selectWorld(this.snowWorld);
+			this.selectWorld(this.worldType == 1, this.worldType == 2);
 		}
 		
 		if(var1.id == 6) {
@@ -63,12 +66,12 @@ public class GuiNewWorld extends GuiScreen {
 		}
 	}
 
-	public void selectWorld(boolean snowy) {
+	public void selectWorld(boolean snowy, boolean autumn) {
 		this.mc.displayGuiScreen((GuiScreen)null);
 		if(!this.selected) {
 			this.selected = true;
 			this.mc.playerController = new PlayerControllerSP(this.mc);
-			this.mc.startWorld("World" + this.worldID, snowy);
+			this.mc.startWorld("World" + this.worldID, snowy, autumn);
 			this.mc.displayGuiScreen((GuiScreen)null);
 		}
 	}

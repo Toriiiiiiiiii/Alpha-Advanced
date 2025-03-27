@@ -69,6 +69,9 @@ public class WorldGenTrees extends WorldGenerator {
 						if(var10 == 0 || var10 == Block.leaves.blockID) {
 							var1.setBlock(var3, var4 + var16, var5, Block.wood.blockID);
 						}
+						if(var16 == 0) {
+							(new WorldGenLeafPiles(Block.leafPile.blockID)).generate(var1, var2, var3, var4, var5);
+						}
 						height = var16;
 					}
 					

@@ -986,12 +986,13 @@ public abstract class Minecraft implements Runnable {
 		return this.theWorld != null && this.theWorld.multiplayerWorld;
 	}
 
-	public void startWorld(String var1, boolean snowy) {
+	public void startWorld(String var1, boolean snowy, boolean autumn) {
 		this.changeWorld1((World)null);
 		System.gc();
 		World var2 = new World(new File(getMinecraftDir(), "saves"), var1);
 		if(var2.isNewWorld) {
 			var2.snowCovered = snowy;
+			var2.isAutumn = autumn;
 			this.changeWorld(var2, "Generating level");
 		} else {
 			this.changeWorld(var2, "Loading level");
