@@ -12,7 +12,14 @@ public class GuiDeleteWorld extends GuiSelectWorld {
 	public void initButtons() {
 		this.controlList.add(new GuiButton(6, this.width / 2 - 100, this.height / 6 + 168, "Cancel"));
 	}
-
+	
+	// Closes the delete world gui - retrorandom
+	protected void actionPerformed(GuiButton button) {
+	    if (button.id == 6) {
+	        this.mc.displayGuiScreen(null); 
+	    }
+	}
+	
 	public void selectWorld(int var1) {
 		String var2 = this.getSaveName(var1);
 		if(var2 != null) {
