@@ -69,7 +69,7 @@ public class GuiMainMenu extends GuiScreen {
 	public void initGui() {
 		Random rand = new Random();
 		this.bgIndex = 1 + rand.nextInt(4);
-		this.millisToChangeBackground = 5000;
+		this.millisToChangeBackground = 10000;
 		
 		Calendar var1 = Calendar.getInstance();
 		var1.setTime(new Date());
@@ -140,7 +140,7 @@ public class GuiMainMenu extends GuiScreen {
 			if(this.bgCol <= 0) {
 				this.fadeState = 2;
 				this.bgIndex++;
-				if(this.bgIndex > 6) this.bgIndex -= 6;
+				if(this.bgIndex > 7) this.bgIndex -= 7;
 			}
 			
 			return;
@@ -164,12 +164,24 @@ public class GuiMainMenu extends GuiScreen {
 		}
 		
 		this.fadeState = 1;
-		this.millisToChangeBackground = 5000;
+		this.millisToChangeBackground = 10000;
 		System.currentTimeMillis();
 	}
 	
 	public void drawScreen(int var1, int var2, float var3) {
 		this.drawBack(0);
+		
+		SoundManager sm = this.mc.sndManager;
+		
+		if(!sm.sndSystem.playing("BgMusic") && !sm.sndSystem.playing("streaming")) {
+			SoundPoolEntry entry = sm.soundPoolMusic.getRandomSound();
+			if(entry != null) {
+				sm.sndSystem.backgroundMusic("BgMusic", entry.soundUrl, entry.soundName, false);
+				sm.sndSystem.setVolume("BgMusic", sm.options.musicVolume);
+				sm.sndSystem.play("BgMusic");
+			}
+		}
+		
 		
 		Tessellator var4 = Tessellator.instance;
 		this.drawLogo(var3);

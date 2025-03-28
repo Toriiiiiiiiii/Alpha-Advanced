@@ -9,12 +9,12 @@ import paulscode.sound.codecs.CodecWav;
 import paulscode.sound.libraries.LibraryLWJGLOpenAL;
 
 public class SoundManager {
-	private static SoundSystem sndSystem;
+	public static SoundSystem sndSystem;
 	private SoundPool soundPoolSounds = new SoundPool();
 	private SoundPool soundPoolStreaming = new SoundPool();
-	private SoundPool soundPoolMusic = new SoundPool();
+	public SoundPool soundPoolMusic = new SoundPool();
 	private int playedSoundsCount = 0;
-	private GameSettings options;
+	public GameSettings options;
 	private static boolean loaded = false;
 	private Random rand = new Random();
 	private int ticksBeforeMusic = this.rand.nextInt(12000);
