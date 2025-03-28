@@ -692,7 +692,7 @@ public class RenderGlobal implements IWorldAccess {
 		float var5 = 4.0F;
 		double var6 = (this.mc.thePlayer.prevPosX + (this.mc.thePlayer.posX - this.mc.thePlayer.prevPosX) * (double)var1 + (double)(((float)this.cloudTickCounter + var1) * 0.03F)) / (double)var4;
 		double var8 = (this.mc.thePlayer.prevPosZ + (this.mc.thePlayer.posZ - this.mc.thePlayer.prevPosZ) * (double)var1) / (double)var4 + (double)0.33F;
-		float var10 = 108.0F - var2 + 0.33F;
+		float var10 = 130.0F - var2 + 0.33F;
 		int var11 = MathHelper.floor_double(var6 / 2048.0D);
 		int var12 = MathHelper.floor_double(var8 / 2048.0D);
 		var6 -= (double)(var11 * 2048);

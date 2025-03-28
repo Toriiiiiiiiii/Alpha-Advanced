@@ -173,12 +173,14 @@ public class GuiMainMenu extends GuiScreen {
 		
 		SoundManager sm = this.mc.sndManager;
 		
-		if(!sm.sndSystem.playing("BgMusic") && !sm.sndSystem.playing("streaming")) {
-			SoundPoolEntry entry = sm.soundPoolMusic.getRandomSound();
-			if(entry != null) {
-				sm.sndSystem.backgroundMusic("BgMusic", entry.soundUrl, entry.soundName, false);
-				sm.sndSystem.setVolume("BgMusic", sm.options.musicVolume);
-				sm.sndSystem.play("BgMusic");
+		if(sm != null) {
+			if(!sm.sndSystem.playing("BgMusic") && !sm.sndSystem.playing("streaming")) {
+				SoundPoolEntry entry = sm.soundPoolMusic.getRandomSound();
+				if(entry != null) {
+					sm.sndSystem.backgroundMusic("BgMusic", entry.soundUrl, entry.soundName, false);
+					sm.sndSystem.setVolume("BgMusic", sm.options.musicVolume);
+					sm.sndSystem.play("BgMusic");
+				}
 			}
 		}
 		
@@ -198,7 +200,7 @@ public class GuiMainMenu extends GuiScreen {
 		GL11.glScalef(var5, var5, var5);
 		this.drawCenteredString(this.fontRenderer, this.splashString, 0, -8, 16776960);
 		GL11.glPopMatrix();
-		String var6 = "Alpha Advanced Public Beta Build b1.4.0 by Tori";
+		String var6 = "Alpha Advanced Public Beta Build b1.4.1 by Tori";
 		this.drawString(this.fontRenderer, var6, this.width - this.fontRenderer.getStringWidth(var6) - 2, this.height - 10, 16777215);
 		long var7 = Runtime.getRuntime().maxMemory();
 		long var9 = Runtime.getRuntime().totalMemory();
