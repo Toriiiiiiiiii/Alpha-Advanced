@@ -19,7 +19,7 @@ public class MetadataChunkBlock {
 		this.maxZ = var7;
 	}
 
-	public void updateLight(World var1) {
+	public void updateLight(World var1, int depth) {
 		int var2 = this.maxX - this.minX;
 		int var3 = this.maxY - this.minY;
 		int var4 = this.maxZ - this.minZ;
@@ -96,19 +96,19 @@ public class MetadataChunkBlock {
 										var14 = 0;
 									}
 
-									var1.neighborLightPropagationChanged(this.skyBlock, var6 - 1, var8, var7, var14);
-									var1.neighborLightPropagationChanged(this.skyBlock, var6, var8 - 1, var7, var14);
-									var1.neighborLightPropagationChanged(this.skyBlock, var6, var8, var7 - 1, var14);
+									var1.neighborLightPropagationChanged(this.skyBlock, var6 - 1, var8, var7, var14, depth-1);
+									var1.neighborLightPropagationChanged(this.skyBlock, var6, var8 - 1, var7, var14, depth-1);
+									var1.neighborLightPropagationChanged(this.skyBlock, var6, var8, var7 - 1, var14, depth-1);
 									if(var6 + 1 >= this.maxX) {
-										var1.neighborLightPropagationChanged(this.skyBlock, var6 + 1, var8, var7, var14);
+										var1.neighborLightPropagationChanged(this.skyBlock, var6 + 1, var8, var7, var14, depth-1);
 									}
 
 									if(var8 + 1 >= this.maxY) {
-										var1.neighborLightPropagationChanged(this.skyBlock, var6, var8 + 1, var7, var14);
+										var1.neighborLightPropagationChanged(this.skyBlock, var6, var8 + 1, var7, var14, depth-1);
 									}
 
 									if(var7 + 1 >= this.maxZ) {
-										var1.neighborLightPropagationChanged(this.skyBlock, var6, var8, var7 + 1, var14);
+										var1.neighborLightPropagationChanged(this.skyBlock, var6, var8, var7 + 1, var14, depth-1);
 									}
 								}
 							}

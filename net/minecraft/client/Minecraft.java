@@ -453,7 +453,7 @@ public abstract class Minecraft implements Runnable {
 					this.sndManager.setListener(this.thePlayer, this.timer.renderPartialTicks);
 					GL11.glEnable(GL11.GL_TEXTURE_2D);
 					if(this.theWorld != null) {
-						while(this.theWorld.updatingLighting()) {
+						while(this.theWorld.updatingLighting(10)) {
 						}
 					}
 
@@ -1075,7 +1075,7 @@ public abstract class Minecraft implements Runnable {
 				this.loadingScreen.setLoadingProgress(var3++ * 100 / var4);
 				this.theWorld.getBlockId(var6 + var5, 64, var7 + var8);
 
-				while(this.theWorld.updatingLighting()) {
+				while(this.theWorld.updatingLighting(10)) {
 				}
 			}
 		}

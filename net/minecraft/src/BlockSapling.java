@@ -18,6 +18,7 @@ public class BlockSapling extends BlockFlower {
 			} else {
 				var1.setBlock(var2, var3, var4, 0);
 				Object var7 = new WorldGenTrees();
+				((WorldGenTrees)var7).autumn = var1.isAutumn;
 				if(var5.nextInt(10) == 0) {
 					var7 = new WorldGenBigTree();
 				}

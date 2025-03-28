@@ -386,6 +386,7 @@ public class ChunkProviderGenerate implements IChunkProvider {
 		}
 
 		Object var18 = new WorldGenTrees();
+		((WorldGenTrees)var18).autumn = this.worldObj.isAutumn;
 		if(this.rand.nextInt(10) == 0) {
 			var18 = new WorldGenBigTree();
 		}

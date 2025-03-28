@@ -125,9 +125,9 @@ public class Chunk {
 	private void checkSkylightNeighborUpdate(int var1, int var2, int var3) {
 		int var4 = this.worldObj.getHeightValue(var1, var2);
 		if(var4 > var3) {
-			this.worldObj.scheduleLightingUpdate(EnumSkyBlock.Sky, var1, var3, var2, var1, var4, var2);
+			this.worldObj.scheduleLightingUpdate(EnumSkyBlock.Sky, var1, var3, var2, var1, var4, var2, 10);
 		} else if(var4 < var3) {
-			this.worldObj.scheduleLightingUpdate(EnumSkyBlock.Sky, var1, var4, var2, var1, var3, var2);
+			this.worldObj.scheduleLightingUpdate(EnumSkyBlock.Sky, var1, var4, var2, var1, var3, var2, 10);
 		}
 
 		this.isModified = true;
@@ -172,7 +172,7 @@ public class Chunk {
 					this.skylightMap.set(var1, var9, var3, 15);
 				}
 			} else {
-				this.worldObj.scheduleLightingUpdate(EnumSkyBlock.Sky, var7, var4, var8, var7, var5, var8);
+				this.worldObj.scheduleLightingUpdate(EnumSkyBlock.Sky, var7, var4, var8, var7, var5, var8, 10);
 
 				for(var9 = var4; var9 < var5; ++var9) {
 					this.skylightMap.set(var1, var9, var3, 0);
@@ -200,7 +200,7 @@ public class Chunk {
 			}
 
 			if(var5 != var10) {
-				this.worldObj.scheduleLightingUpdate(EnumSkyBlock.Sky, var7 - 1, var5, var8 - 1, var7 + 1, var10, var8 + 1);
+				this.worldObj.scheduleLightingUpdate(EnumSkyBlock.Sky, var7 - 1, var5, var8 - 1, var7 + 1, var10, var8 + 1, 10);
 			}
 
 			this.isModified = true;
@@ -234,8 +234,8 @@ public class Chunk {
 				this.relightBlock(var1, var2, var3);
 			}
 
-			this.worldObj.scheduleLightingUpdate(EnumSkyBlock.Sky, var9, var2, var10, var9, var2, var10);
-			this.worldObj.scheduleLightingUpdate(EnumSkyBlock.Block, var9, var2, var10, var9, var2, var10);
+			this.worldObj.scheduleLightingUpdate(EnumSkyBlock.Sky, var9, var2, var10, var9, var2, var10, 10);
+			this.worldObj.scheduleLightingUpdate(EnumSkyBlock.Block, var9, var2, var10, var9, var2, var10, 10);
 			this.updateSkylight_do(var1, var3);
 			if(var4 != 0) {
 				Block.blocksList[var4].onBlockAdded(this.worldObj, var9, var2, var10);
@@ -269,8 +269,8 @@ public class Chunk {
 				this.relightBlock(var1, var2, var3);
 			}
 
-			this.worldObj.scheduleLightingUpdate(EnumSkyBlock.Sky, var8, var2, var9, var8, var2, var9);
-			this.worldObj.scheduleLightingUpdate(EnumSkyBlock.Block, var8, var2, var9, var8, var2, var9);
+			this.worldObj.scheduleLightingUpdate(EnumSkyBlock.Sky, var8, var2, var9, var8, var2, var9, 10);
+			this.worldObj.scheduleLightingUpdate(EnumSkyBlock.Block, var8, var2, var9, var8, var2, var9, 10);
 			this.updateSkylight_do(var1, var3);
 			if(var4 != 0 && !this.worldObj.multiplayerWorld) {
 				Block.blocksList[var4].onBlockAdded(this.worldObj, var8, var2, var9);

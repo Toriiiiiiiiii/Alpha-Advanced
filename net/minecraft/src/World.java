@@ -198,6 +198,7 @@ public class World implements IBlockAccess {
 				this.snowCovered = var7.getBoolean("SnowCovered");
 				this.isAutumn = var7.getBoolean("IsAutumn");
 				if(this.isAutumn) Block.grass.autumn = true;
+				else Block.grass.autumn = false;
 				
 				if(var7.hasKey("Player")) {
 					this.nbtCompoundPlayer = var7.getCompoundTag("Player");
@@ -626,7 +627,9 @@ public class World implements IBlockAccess {
 		}
 	}
 
-	public void neighborLightPropagationChanged(EnumSkyBlock var1, int var2, int var3, int var4, int var5) {
+	public void neighborLightPropagationChanged(EnumSkyBlock var1, int var2, int var3, int var4, int var5, int depth) {
+		if(depth == 0) return;
+		
 		if(this.blockExists(var2, var3, var4)) {
 			if(var1 == EnumSkyBlock.Sky) {
 				if(this.canExistingBlockSeeTheSky(var2, var3, var4)) {
@@ -640,7 +643,7 @@ public class World implements IBlockAccess {
 			}
 
 			if(this.getSavedLightValue(var1, var2, var3, var4) != var5) {
-				this.scheduleLightingUpdate(var1, var2, var3, var4, var2, var3, var4);
+				this.scheduleLightingUpdate(var1, var2, var3, var4, var2, var3, var4, depth);
 			}
 
 		}
@@ -1467,7 +1470,7 @@ public class World implements IBlockAccess {
 		this.saveWorld(true, var1);
 	}
 
-	public boolean updatingLighting() {
+	public boolean updatingLighting(int depth) {
 		int var1 = 1000;
 
 		while(this.lightingToUpdate.size() > 0) {
@@ -1476,17 +1479,17 @@ public class World implements IBlockAccess {
 				return true;
 			}
 
-			((MetadataChunkBlock)this.lightingToUpdate.remove(this.lightingToUpdate.size() - 1)).updateLight(this);
+			((MetadataChunkBlock)this.lightingToUpdate.remove(this.lightingToUpdate.size() - 1)).updateLight(this, depth);
 		}
 
 		return false;
 	}
 
-	public void scheduleLightingUpdate(EnumSkyBlock var1, int var2, int var3, int var4, int var5, int var6, int var7) {
-		this.scheduleLightingUpdate_do(var1, var2, var3, var4, var5, var6, var7, true);
+	public void scheduleLightingUpdate(EnumSkyBlock var1, int var2, int var3, int var4, int var5, int var6, int var7, int depth) {
+		this.scheduleLightingUpdate_do(var1, var2, var3, var4, var5, var6, var7, true, depth);
 	}
 
-	public void scheduleLightingUpdate_do(EnumSkyBlock var1, int var2, int var3, int var4, int var5, int var6, int var7, boolean var8) {
+	public void scheduleLightingUpdate_do(EnumSkyBlock var1, int var2, int var3, int var4, int var5, int var6, int var7, boolean var8, int depth) {
 		int var9 = (var5 + var2) / 2;
 		int var10 = (var7 + var4) / 2;
 		if(this.blockExists(var9, 64, var10)) {
@@ -1508,7 +1511,7 @@ public class World implements IBlockAccess {
 			this.lightingToUpdate.add(new MetadataChunkBlock(var1, var2, var3, var4, var5, var6, var7));
 			if(this.lightingToUpdate.size() > 100000) {
 				while(this.lightingToUpdate.size() > '\uc350') {
-					this.updatingLighting();
+					this.updatingLighting(depth);
 				}
 			}
 
