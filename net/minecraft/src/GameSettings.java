@@ -8,12 +8,27 @@ import java.io.PrintWriter;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.input.Keyboard;
 
+enum OptionId {
+	MUSICVOLUME,
+	SOUNDVOLUME,
+	INVERTMOUSE,
+	MOUSESENSITIVITY,
+	RENDERDISTANCE,
+	VIEWBOBBING,
+	ANAGLYPH,
+	LIMITFRAMERATE,
+	DIFFICULTY,
+	FANCYGRAPHICS,
+	MUSICDELAY,
+}
+
 public class GameSettings {
 	private static final String[] RENDER_DISTANCES = new String[]{"FAR", "NORMAL", "SHORT", "TINY"};
 	private static final String[] DIFFICULTY_LEVELS = new String[]{"Peaceful", "Easy", "Normal", "Hard"};
 	public float musicVolume = 1.0F;
 	public float soundVolume = 1.0F;
 	public float mouseSensitivity = 0.5F;
+	public int musicDelay = 12000;
 	public boolean invertMouse = false;
 	public int renderDistance = 0;
 	public boolean viewBobbing = true;
@@ -33,89 +48,163 @@ public class GameSettings {
 	public KeyBinding[] keyBindings = new KeyBinding[]{this.keyBindForward, this.keyBindLeft, this.keyBindBack, this.keyBindRight, this.keyBindJump, this.keyBindSneak, this.keyBindDrop, this.keyBindInventory, this.keyBindChat, this.keyBindToggleFog};
 	protected Minecraft mc;
 	private File optionsFile;
-	public int numberOfOptions = 10;
+	public int numberOfOptions = 11;
 	public int difficulty = 2;
 	public boolean thirdPersonView = false;
 
-	public GameSettings(Minecraft var1, File var2) {
-		this.mc = var1;
-		this.optionsFile = new File(var2, "options.txt");
+	public GameSettings(Minecraft mc, File optionsFile) {
+		this.mc = mc;
+		this.optionsFile = new File(optionsFile, "options.txt");
 		this.loadOptions();
 	}
 
 	public GameSettings() {
 	}
 
-	public String getKeyBindingDescription(int var1) {
-		return this.keyBindings[var1].keyDescription + ": " + Keyboard.getKeyName(this.keyBindings[var1].keyCode);
+	public String getKeyBindingDescription(int keybindId) {
+		return this.keyBindings[keybindId].keyDescription + ": " + Keyboard.getKeyName(this.keyBindings[keybindId].keyCode);
 	}
 
-	public void setKeyBinding(int var1, int var2) {
-		this.keyBindings[var1].keyCode = var2;
+	public void setKeyBinding(int keybindId, int keyCode) {
+		this.keyBindings[keybindId].keyCode = keyCode;
 		this.saveOptions();
 	}
 
-	public void setOptionFloatValue(int var1, float var2) {
-		if(var1 == 0) {
-			this.musicVolume = var2;
-			this.mc.sndManager.onSoundOptionsChanged();
+	private OptionId intToOptionId(int optionId) {
+		switch (optionId) {
+			case 0:
+				return OptionId.MUSICVOLUME;
+			case 1:
+				return OptionId.SOUNDVOLUME;
+			case 2:
+				return OptionId.INVERTMOUSE;
+			case 3:
+				return OptionId.MOUSESENSITIVITY;
+			case 4:
+				return OptionId.RENDERDISTANCE;
+			case 5:
+				return OptionId.VIEWBOBBING;
+			case 6:
+				return OptionId.ANAGLYPH;
+			case 7:
+				return OptionId.LIMITFRAMERATE;
+			case 8:
+				return OptionId.DIFFICULTY;
+			case 9:
+				return OptionId.FANCYGRAPHICS;
+			case 10:
+				return OptionId.MUSICDELAY;
 		}
-
-		if(var1 == 1) {
-			this.soundVolume = var2;
-			this.mc.sndManager.onSoundOptionsChanged();
-		}
-
-		if(var1 == 3) {
-			this.mouseSensitivity = var2;
-		}
-
+		return OptionId.MUSICVOLUME; // Has to be here for compilation
+																 // TODO: error here
 	}
 
-	public void setOptionValue(int var1, int var2) {
-		if(var1 == 2) {
-			this.invertMouse = !this.invertMouse;
+	public void setOptionFloatValue(int optionId_int, float value) {
+		OptionId optionId = this.intToOptionId(optionId_int);
+		switch (optionId) {
+			case MUSICVOLUME:
+				this.musicVolume = value;
+				this.mc.sndManager.onSoundOptionsChanged();
+				break;
+			case SOUNDVOLUME:
+				this.soundVolume = value;
+				this.mc.sndManager.onSoundOptionsChanged();
+				break;
+			case MOUSESENSITIVITY:
+				this.mouseSensitivity = value;
+				break;
+			case MUSICDELAY:
+				this.musicDelay = (int) (value * 24000 + 1);
+				break;
 		}
-
-		if(var1 == 4) {
-			this.renderDistance = this.renderDistance + var2 & 3;
-		}
-
-		if(var1 == 5) {
-			this.viewBobbing = !this.viewBobbing;
-		}
-
-		if(var1 == 6) {
-			this.anaglyph = !this.anaglyph;
-			this.mc.renderEngine.refreshTextures();
-		}
-
-		if(var1 == 7) {
-			this.limitFramerate = !this.limitFramerate;
-		}
-
-		if(var1 == 8) {
-			this.difficulty = this.difficulty + var2 & 3;
-		}
-
-		if(var1 == 9) {
-			this.fancyGraphics = !this.fancyGraphics;
-			this.mc.renderGlobal.loadRenderers();
-		}
-
 		this.saveOptions();
 	}
 
-	public int isSlider(int var1) {
-		return var1 == 0 ? 1 : (var1 == 1 ? 1 : (var1 == 3 ? 1 : 0));
+	public void setOptionValue(int int_id, int value) {
+		OptionId id = this.intToOptionId(int_id);
+		switch (id) {
+			case INVERTMOUSE:
+				this.invertMouse = !this.invertMouse;
+				break;
+			case RENDERDISTANCE:
+				this.renderDistance = this.renderDistance + value & 3;
+				break;
+			case VIEWBOBBING:
+				this.viewBobbing = !this.viewBobbing;
+				break;
+			case ANAGLYPH:
+				this.anaglyph = !this.anaglyph;
+				this.mc.renderEngine.refreshTextures();
+				break;
+			case LIMITFRAMERATE:
+				this.limitFramerate = !this.limitFramerate;
+				break;
+			case DIFFICULTY:
+				this.difficulty = this.difficulty + value & 3;
+				break;
+			case FANCYGRAPHICS:
+				this.fancyGraphics = !this.fancyGraphics;
+				this.mc.renderGlobal.loadRenderers();
+				break;
+		}
+		this.saveOptions();
 	}
 
-	public float getOptionFloatValue(int var1) {
-		return var1 == 0 ? this.musicVolume : (var1 == 1 ? this.soundVolume : (var1 == 3 ? this.mouseSensitivity : 0.0F));
+	public int isSlider(int optionId_int) {
+		OptionId optionId = this.intToOptionId(optionId_int);
+		switch (optionId) {
+			case MUSICVOLUME:
+			case SOUNDVOLUME:
+			case MOUSESENSITIVITY:
+			case MUSICDELAY:
+				return 1;
+			default:
+				return 0;
+		}
 	}
 
-	public String getOptionDisplayString(int var1) {
-		return var1 == 0 ? "Music: " + (this.musicVolume > 0.0F ? (int)(this.musicVolume * 100.0F) + "%" : "OFF") : (var1 == 1 ? "Sound: " + (this.soundVolume > 0.0F ? (int)(this.soundVolume * 100.0F) + "%" : "OFF") : (var1 == 2 ? "Invert mouse: " + (this.invertMouse ? "ON" : "OFF") : (var1 == 3 ? (this.mouseSensitivity == 0.0F ? "Sensitivity: *yawn*" : (this.mouseSensitivity == 1.0F ? "Sensitivity: HYPERSPEED!!!" : "Sensitivity: " + (int)(this.mouseSensitivity * 200.0F) + "%")) : (var1 == 4 ? "Render distance: " + RENDER_DISTANCES[this.renderDistance] : (var1 == 5 ? "View bobbing: " + (this.viewBobbing ? "ON" : "OFF") : (var1 == 6 ? "3d anaglyph: " + (this.anaglyph ? "ON" : "OFF") : (var1 == 7 ? "Limit framerate: " + (this.limitFramerate ? "ON" : "OFF") : (var1 == 8 ? "Difficulty: " + DIFFICULTY_LEVELS[this.difficulty] : (var1 == 9 ? "Graphics: " + (this.fancyGraphics ? "FANCY" : "FAST") : "")))))))));
+	public float getOptionFloatValue(int optionId_int) {
+		OptionId optionId = this.intToOptionId(optionId_int);
+		switch (optionId) {
+			case MUSICVOLUME:
+				return this.musicVolume;
+			case SOUNDVOLUME:
+				return this.soundVolume;
+			case MOUSESENSITIVITY:
+				return this.mouseSensitivity;
+			case MUSICDELAY:
+				return this.musicDelay;
+		}
+		return 0; // TODO: error here
+	}
+
+	public String getOptionDisplayString(int optionId_int) {
+		OptionId optionId = this.intToOptionId(optionId_int);
+		switch (optionId) {
+			case MUSICVOLUME:
+				return "Music: " + (this.musicVolume > 0.0F ? (int)(this.musicVolume * 100.0F) + "%" : "OFF");
+			case SOUNDVOLUME:
+				return "Sound: " + (this.soundVolume > 0.0F ? (int)(this.soundVolume * 100.0F) + "%" : "OFF");
+			case INVERTMOUSE:
+				return "Invert mouse: " + (this.invertMouse ? "ON" : "OFF");
+			case MOUSESENSITIVITY:
+				return "Sensitivity: " + (this.mouseSensitivity == 0.0F ? "Sensitivity: *yawn*" : (this.mouseSensitivity == 1.0F ? "Sensitivity: HYPERSPEED!!!" : "Sensitivity: " + (int)(this.mouseSensitivity * 200.0F) + "%"));
+			case RENDERDISTANCE:
+				return "Render distance: " + RENDER_DISTANCES[this.renderDistance];
+			case VIEWBOBBING:
+				return "View bobbing: " + (this.viewBobbing ? "ON" : "OFF");
+			case ANAGLYPH:
+				return "3d anaglyph: " + (this.anaglyph ? "ON" : "OFF");
+			case LIMITFRAMERATE:
+				return "Limit framerate: " + (this.limitFramerate ? "ON" : "OFF");
+			case DIFFICULTY:
+				return "Difficulty: " + DIFFICULTY_LEVELS[this.difficulty];
+			case FANCYGRAPHICS:
+				return "Graphics: " + (this.fancyGraphics ? "FANCY" : "FAST");
+			case MUSICDELAY:
+				return "Music delay: " + this.musicDelay + " ticks";
+		}
+		return "NONEXISTANT SETTING"; // TODO: error here
 	}
 
 	public void loadOptions() {
@@ -124,66 +213,62 @@ public class GameSettings {
 				return;
 			}
 
-			BufferedReader var1 = new BufferedReader(new FileReader(this.optionsFile));
-			String var2 = "";
+			BufferedReader reader = new BufferedReader(new FileReader(this.optionsFile));
+			String currentLine = "";
 
 			while(true) {
-				var2 = var1.readLine();
-				if(var2 == null) {
-					var1.close();
+				currentLine = reader.readLine();
+				if(currentLine == null) {
+					reader.close();
 					break;
 				}
 
-				String[] var3 = var2.split(":");
-				if(var3[0].equals("music")) {
-					this.musicVolume = this.parseFloat(var3[1]);
+				String[] settingKeyValue = currentLine.split(":");
+				switch (settingKeyValue[0]) {
+					case "music":
+						this.musicVolume = this.parseFloat(settingKeyValue[1]);
+						break;
+					case "sound":
+						this.soundVolume = this.parseFloat(settingKeyValue[1]);
+						break;
+					case "mouseSensitivity":
+						this.mouseSensitivity = this.parseFloat(settingKeyValue[1]);
+						break;
+					case "invertYMouse":
+						this.invertMouse = settingKeyValue[1].equals("true");
+						break;
+					case "viewDistance":
+						this.renderDistance = Integer.parseInt(settingKeyValue[1]);
+						break;
+					case "bobView":
+						this.viewBobbing = settingKeyValue[1].equals("true");
+						break;
+					case "anaglyph3d":
+						this.anaglyph = settingKeyValue[1].equals("true");
+						break;
+					case "limitFramerate":
+						this.limitFramerate = settingKeyValue[1].equals("true");
+						break;
+					case "difficulty":
+						this.difficulty = Integer.parseInt(settingKeyValue[1]);
+						break;
+					case "fancyGraphics":
+						this.fancyGraphics = settingKeyValue[1].equals("true");
+						break;
+					case "musicDelay":
+						this.musicDelay = Integer.parseInt(settingKeyValue[1]);
+						break;
 				}
 
-				if(var3[0].equals("sound")) {
-					this.soundVolume = this.parseFloat(var3[1]);
-				}
-
-				if(var3[0].equals("mouseSensitivity")) {
-					this.mouseSensitivity = this.parseFloat(var3[1]);
-				}
-
-				if(var3[0].equals("invertYMouse")) {
-					this.invertMouse = var3[1].equals("true");
-				}
-
-				if(var3[0].equals("viewDistance")) {
-					this.renderDistance = Integer.parseInt(var3[1]);
-				}
-
-				if(var3[0].equals("bobView")) {
-					this.viewBobbing = var3[1].equals("true");
-				}
-
-				if(var3[0].equals("anaglyph3d")) {
-					this.anaglyph = var3[1].equals("true");
-				}
-
-				if(var3[0].equals("limitFramerate")) {
-					this.limitFramerate = var3[1].equals("true");
-				}
-
-				if(var3[0].equals("difficulty")) {
-					this.difficulty = Integer.parseInt(var3[1]);
-				}
-
-				if(var3[0].equals("fancyGraphics")) {
-					this.fancyGraphics = var3[1].equals("true");
-				}
-
-				for(int var4 = 0; var4 < this.keyBindings.length; ++var4) {
-					if(var3[0].equals("key_" + this.keyBindings[var4].keyDescription)) {
-						this.keyBindings[var4].keyCode = Integer.parseInt(var3[1]);
+				for(int keyIterator = 0; keyIterator < this.keyBindings.length; ++keyIterator) {
+					if(settingKeyValue[0].equals("key_" + this.keyBindings[keyIterator].keyDescription)) {
+						this.keyBindings[keyIterator].keyCode = Integer.parseInt(settingKeyValue[1]);
 					}
 				}
 			}
-		} catch (Exception var5) {
+		} catch (Exception error) {
 			System.out.println("Failed to load options");
-			var5.printStackTrace();
+			error.printStackTrace();
 		}
 
 	}
@@ -194,26 +279,28 @@ public class GameSettings {
 
 	public void saveOptions() {
 		try {
-			PrintWriter var1 = new PrintWriter(new FileWriter(this.optionsFile));
-			var1.println("music:" + this.musicVolume);
-			var1.println("sound:" + this.soundVolume);
-			var1.println("invertYMouse:" + this.invertMouse);
-			var1.println("mouseSensitivity:" + this.mouseSensitivity);
-			var1.println("viewDistance:" + this.renderDistance);
-			var1.println("bobView:" + this.viewBobbing);
-			var1.println("anaglyph3d:" + this.anaglyph);
-			var1.println("limitFramerate:" + this.limitFramerate);
-			var1.println("difficulty:" + this.difficulty);
-			var1.println("fancyGraphics:" + this.fancyGraphics);
+			PrintWriter writer = new PrintWriter(new FileWriter(this.optionsFile));
+			writer.println("music:" + this.musicVolume);
+			writer.println("sound:" + this.soundVolume);
+			writer.println("invertYMouse:" + this.invertMouse);
+			writer.println("mouseSensitivity:" + this.mouseSensitivity);
+			writer.println("viewDistance:" + this.renderDistance);
+			writer.println("bobView:" + this.viewBobbing);
+			writer.println("anaglyph3d:" + this.anaglyph);
+			writer.println("limitFramerate:" + this.limitFramerate);
+			writer.println("difficulty:" + this.difficulty);
+			writer.println("fancyGraphics:" + this.fancyGraphics);
 
-			for(int var2 = 0; var2 < this.keyBindings.length; ++var2) {
-				var1.println("key_" + this.keyBindings[var2].keyDescription + ":" + this.keyBindings[var2].keyCode);
+			for(int keyIterator = 0; keyIterator < this.keyBindings.length; ++keyIterator) {
+				writer.println("key_" + this.keyBindings[keyIterator].keyDescription + ":" + this.keyBindings[keyIterator].keyCode);
 			}
 
-			var1.close();
-		} catch (Exception var3) {
+			writer.println("musicDelay:" + this.musicDelay);
+			
+			writer.close();
+		} catch (Exception error) {
 			System.out.println("Failed to save options");
-			var3.printStackTrace();
+			error.printStackTrace();
 		}
 
 	}
