@@ -14,14 +14,14 @@ public class GuiOptions extends GuiScreen {
 		for(int var1 = 0; var1 < this.options.numberOfOptions; ++var1) {
 			int var2 = this.options.isSlider(var1);
 			if(var2 == 0) {
-				this.controlList.add(new GuiSmallButton(var1, this.width / 2 - 155 + var1 % 2 * 160, this.height / 6 + 24 * (var1 >> 1), this.options.getOptionDisplayString(var1)));
+				this.controlList.add(new GuiSmallButton(var1, this.width / 2 - 155 + var1 % 2 * 160, this.height / 8 + 24 * (var1 >> 1), this.options.getOptionDisplayString(var1)));
 			} else {
-				this.controlList.add(new GuiSlider(var1, this.width / 2 - 155 + var1 % 2 * 160, this.height / 6 + 24 * (var1 >> 1), var1, this.options.getOptionDisplayString(var1), this.options.getOptionFloatValue(var1)));
+				this.controlList.add(new GuiSlider(var1, this.width / 2 - 155 + var1 % 2 * 160, this.height / 8 + 24 * (var1 >> 1), var1, this.options.getOptionDisplayString(var1), this.options.getOptionFloatValue(var1)));
 			}
 		}
 
-		this.controlList.add(new GuiButton(100, this.width / 2 - 100, this.height / 6 + 120 + 24, "Controls..."));
-		this.controlList.add(new GuiButton(200, this.width / 2 - 100, this.height / 6 + 168, "Done"));
+		this.controlList.add(new GuiButton(100, this.width / 2 - 100, this.height / 6 + 120 + 36, "Controls..."));
+		this.controlList.add(new GuiButton(200, this.width / 2 - 100, this.height / 6 + 168 + 12, "Done"));
 	}
 
 	protected void actionPerformed(GuiButton var1) {
