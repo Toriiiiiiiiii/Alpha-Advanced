@@ -20,6 +20,7 @@ enum OptionId {
 	DIFFICULTY,
 	FANCYGRAPHICS,
 	MUSICDELAY,
+	FOV,
 }
 
 public class GameSettings {
@@ -28,6 +29,7 @@ public class GameSettings {
 	public float musicVolume = 1.0F;
 	public float soundVolume = 1.0F;
 	public float mouseSensitivity = 0.5F;
+	public float fov = 70.0F;
 	public int musicDelay = 600;
 	public boolean invertMouse = false;
 	public int renderDistance = 0;
@@ -48,7 +50,7 @@ public class GameSettings {
 	public KeyBinding[] keyBindings = new KeyBinding[]{this.keyBindForward, this.keyBindLeft, this.keyBindBack, this.keyBindRight, this.keyBindJump, this.keyBindSneak, this.keyBindDrop, this.keyBindInventory, this.keyBindChat, this.keyBindToggleFog};
 	protected Minecraft mc;
 	private File optionsFile;
-	public int numberOfOptions = 11;
+	public int numberOfOptions = 12;
 	public int difficulty = 2;
 	public boolean thirdPersonView = false;
 
@@ -94,6 +96,8 @@ public class GameSettings {
 				return OptionId.FANCYGRAPHICS;
 			case 10:
 				return OptionId.MUSICDELAY;
+			case 11:
+				return OptionId.FOV;
 		}
 		return OptionId.MUSICVOLUME; // Has to be here for compilation
 																 // TODO: error here
@@ -116,6 +120,8 @@ public class GameSettings {
 			case MUSICDELAY:
 				this.musicDelay = (int) (value * 600 + 1);
 				break;
+			case FOV:
+				this.fov = value * 159 + 1;
 		}
 		this.saveOptions();
 	}
@@ -157,6 +163,7 @@ public class GameSettings {
 			case SOUNDVOLUME:
 			case MOUSESENSITIVITY:
 			case MUSICDELAY:
+			case FOV:
 				return 1;
 			default:
 				return 0;
@@ -174,6 +181,8 @@ public class GameSettings {
 				return this.mouseSensitivity;
 			case MUSICDELAY:
 				return this.musicDelay;
+			case FOV:
+				return this.fov;
 		}
 		return 0; // TODO: error here
 	}
@@ -202,7 +211,9 @@ public class GameSettings {
 			case FANCYGRAPHICS:
 				return "Graphics: " + (this.fancyGraphics ? "FANCY" : "FAST");
 			case MUSICDELAY:
-				return "Music delay: " + this.musicDelay + " seconds";
+        return "Music delay: " + this.musicDelay + " seconds";
+			case FOV:
+				return "FOV: " + (int)(this.fov);
 		}
 		return "NONEXISTANT SETTING"; // TODO: error here
 	}
@@ -258,6 +269,8 @@ public class GameSettings {
 					case "musicDelay":
 						this.musicDelay = Integer.parseInt(settingKeyValue[1]);
 						break;
+					case "FOV":
+						this.fov = this.parseFloat(settingKeyValue[1]);
 				}
 
 				for(int keyIterator = 0; keyIterator < this.keyBindings.length; ++keyIterator) {
@@ -296,6 +309,7 @@ public class GameSettings {
 			}
 
 			writer.println("musicDelay:" + this.musicDelay);
+			writer.println("FOV:" + this.fov);
 			
 			writer.close();
 		} catch (Exception error) {
