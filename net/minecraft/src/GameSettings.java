@@ -21,6 +21,7 @@ enum OptionId {
 	FANCYGRAPHICS,
 	MUSICDELAY,
 	FOV,
+	DARKMODE,
 }
 
 public class GameSettings {
@@ -37,6 +38,7 @@ public class GameSettings {
 	public boolean anaglyph = false;
 	public boolean limitFramerate = false;
 	public boolean fancyGraphics = true;
+	public boolean darkMode = false;
 	public KeyBinding keyBindForward = new KeyBinding("Forward", 17);
 	public KeyBinding keyBindLeft = new KeyBinding("Left", 30);
 	public KeyBinding keyBindBack = new KeyBinding("Back", 31);
@@ -50,7 +52,7 @@ public class GameSettings {
 	public KeyBinding[] keyBindings = new KeyBinding[]{this.keyBindForward, this.keyBindLeft, this.keyBindBack, this.keyBindRight, this.keyBindJump, this.keyBindSneak, this.keyBindDrop, this.keyBindInventory, this.keyBindChat, this.keyBindToggleFog};
 	protected Minecraft mc;
 	private File optionsFile;
-	public int numberOfOptions = 12;
+	public int numberOfOptions = 13;
 	public int difficulty = 2;
 	public boolean thirdPersonView = false;
 
@@ -98,6 +100,8 @@ public class GameSettings {
 				return OptionId.MUSICDELAY;
 			case 11:
 				return OptionId.FOV;
+			case 12:
+				return OptionId.DARKMODE;
 		}
 		return OptionId.MUSICVOLUME; // Has to be here for compilation
 																 // TODO: error here
@@ -151,6 +155,9 @@ public class GameSettings {
 			case FANCYGRAPHICS:
 				this.fancyGraphics = !this.fancyGraphics;
 				this.mc.renderGlobal.loadRenderers();
+				break;
+			case DARKMODE:
+				this.darkMode = !this.darkMode;
 				break;
 		}
 		this.saveOptions();
@@ -214,6 +221,8 @@ public class GameSettings {
         return "Music delay: " + this.musicDelay + " seconds";
 			case FOV:
 				return "FOV: " + (int)(this.fov);
+			case DARKMODE:
+				return "Dark mode: " + (this.darkMode ? "ON" : "OFF");
 		}
 		return "NONEXISTANT SETTING"; // TODO: error here
 	}
@@ -271,6 +280,10 @@ public class GameSettings {
 						break;
 					case "FOV":
 						this.fov = this.parseFloat(settingKeyValue[1]);
+						break;
+					case "darkMode":
+						this.darkMode = settingKeyValue[1].equals("true");
+						break;
 				}
 
 				for(int keyIterator = 0; keyIterator < this.keyBindings.length; ++keyIterator) {
@@ -310,6 +323,7 @@ public class GameSettings {
 
 			writer.println("musicDelay:" + this.musicDelay);
 			writer.println("FOV:" + this.fov);
+			writer.println("darkMode:" + this.darkMode);
 			
 			writer.close();
 		} catch (Exception error) {
