@@ -48,7 +48,7 @@ public class GuiNewWorld extends GuiScreen {
 	protected void actionPerformed(GuiButton var1) {
 		if(var1.id == 0) {
 			this.worldType++;
-			if(this.worldType > 2) this.worldType -= 2;
+			if(this.worldType > 2) this.worldType = 0;
 			if(this.worldType == 1) 
 				var1.displayString = "World Type: Winter";
 			else if(this.worldType == 2)
