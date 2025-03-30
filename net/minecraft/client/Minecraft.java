@@ -171,7 +171,7 @@ public abstract class Minecraft implements Runnable {
 			Display.setDisplayMode(new DisplayMode(this.displayWidth, this.displayHeight));
 		}
 
-		Display.setTitle("Minecraft Minecraft Alpha v1.1.2_01");
+		Display.setTitle("Minecraft Minecraft Alpha Advanced");
 
 		try {
 			Display.create();
