@@ -28,9 +28,9 @@ public class EntityRenderer {
 	private float prevFogColor;
 	private float fogColor;
 
-	public EntityRenderer(Minecraft var1) {
-		this.mc = var1;
-		this.itemRenderer = new ItemRenderer(var1);
+	public EntityRenderer(Minecraft mc) {
+		this.mc = mc;
+		this.itemRenderer = new ItemRenderer(mc);
 	}
 
 	public void updateRenderer() {
@@ -96,19 +96,25 @@ public class EntityRenderer {
 		}
 	}
 
-	private float getFOVModifier(float var1) {
-		EntityPlayerSP var2 = this.mc.thePlayer;
-		float var3 = 70.0F;
-		if(var2.isInsideOfMaterial(Material.water)) {
-			var3 = 60.0F;
+	private float getFOVModifier(float ticks) {
+		EntityPlayerSP player = this.mc.thePlayer;
+		float fov;
+		if (this.mc.options != null) {
+			fov = this.mc.options.fov;
+		}
+		else {
+			fov = 70.0F;
+		}
+		if(player.isInsideOfMaterial(Material.water)) {
+			fov = fov - 10.0F;
 		}
 
-		if(var2.health <= 0) {
-			float var4 = (float)var2.deathTime + var1;
-			var3 /= (1.0F - 500.0F / (var4 + 500.0F)) * 2.0F + 1.0F;
+		if(player.health <= 0) {
+			float zoomTime = (float)player.deathTime + ticks;
+			fov /= (1.0F - 500.0F / (zoomTime + 500.0F)) * 2.0F + 1.0F;
 		}
 
-		return var3;
+		return fov;
 	}
 
 	private void hurtCameraEffect(float var1) {
