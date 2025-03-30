@@ -17,7 +17,7 @@ public class SoundManager {
 	public GameSettings options;
 	private static boolean loaded = false;
 	private Random rand = new Random();
-	private int ticksBeforeMusic = this.rand.nextInt(12000);
+	private int ticksBeforeMusic = 200;
 
 	public void loadSoundSettings(GameSettings var1) {
 		this.soundPoolStreaming.isGetRandomSound = false;
@@ -58,6 +58,7 @@ public class SoundManager {
 
 		if(this.options.musicVolume == 0.0F) {
 			sndSystem.stop("BgMusic");
+			this.ticksBeforeMusic = this.rand.nextInt(options.musicDelay) + options.musicDelay;
 		} else {
 			sndSystem.setVolume("BgMusic", this.options.musicVolume);
 		}
@@ -84,6 +85,9 @@ public class SoundManager {
 	}
 
 	public void playRandomMusicIfReady() {
+		if (this.ticksBeforeMusic > options.musicDelay * 2) {
+			this.ticksBeforeMusic = this.rand.nextInt(options.musicDelay) + options.musicDelay;
+		}
 		if(loaded && this.options.musicVolume != 0.0F) {
 			if(!sndSystem.playing("BgMusic") && !sndSystem.playing("streaming")) {
 				if(this.ticksBeforeMusic > 0) {
@@ -91,10 +95,10 @@ public class SoundManager {
 					return;
 				}
 
-				SoundPoolEntry var1 = this.soundPoolMusic.getRandomSound();
-				if(var1 != null) {
-					this.ticksBeforeMusic = this.rand.nextInt(2400) + 2400;
-					sndSystem.backgroundMusic("BgMusic", var1.soundUrl, var1.soundName, false);
+				SoundPoolEntry music = this.soundPoolMusic.getRandomSound();
+				if(music != null) {
+					this.ticksBeforeMusic = this.rand.nextInt(options.musicDelay) + options.musicDelay;
+					sndSystem.backgroundMusic("BgMusic", music.soundUrl, music.soundName, false);
 					sndSystem.setVolume("BgMusic", this.options.musicVolume);
 					sndSystem.play("BgMusic");
 				}
