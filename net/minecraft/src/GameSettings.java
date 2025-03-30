@@ -28,7 +28,7 @@ public class GameSettings {
 	public float musicVolume = 1.0F;
 	public float soundVolume = 1.0F;
 	public float mouseSensitivity = 0.5F;
-	public int musicDelay = 12000;
+	public int musicDelay = 600;
 	public boolean invertMouse = false;
 	public int renderDistance = 0;
 	public boolean viewBobbing = true;
@@ -114,7 +114,7 @@ public class GameSettings {
 				this.mouseSensitivity = value;
 				break;
 			case MUSICDELAY:
-				this.musicDelay = (int) (value * 24000 + 1);
+				this.musicDelay = (int) (value * 600 + 1);
 				break;
 		}
 		this.saveOptions();
@@ -188,7 +188,7 @@ public class GameSettings {
 			case INVERTMOUSE:
 				return "Invert mouse: " + (this.invertMouse ? "ON" : "OFF");
 			case MOUSESENSITIVITY:
-				return "Sensitivity: " + (this.mouseSensitivity == 0.0F ? "Sensitivity: *yawn*" : (this.mouseSensitivity == 1.0F ? "Sensitivity: HYPERSPEED!!!" : "Sensitivity: " + (int)(this.mouseSensitivity * 200.0F) + "%"));
+				return (this.mouseSensitivity == 0.0F ? "Sensitivity: *yawn*" : (this.mouseSensitivity == 1.0F ? "Sensitivity: HYPERSPEED!!!" : "Sensitivity: " + (int)(this.mouseSensitivity * 200.0F) + "%"));
 			case RENDERDISTANCE:
 				return "Render distance: " + RENDER_DISTANCES[this.renderDistance];
 			case VIEWBOBBING:
@@ -202,7 +202,7 @@ public class GameSettings {
 			case FANCYGRAPHICS:
 				return "Graphics: " + (this.fancyGraphics ? "FANCY" : "FAST");
 			case MUSICDELAY:
-				return "Music delay: " + this.musicDelay + " ticks";
+				return "Music delay: " + this.musicDelay + " seconds";
 		}
 		return "NONEXISTANT SETTING"; // TODO: error here
 	}
