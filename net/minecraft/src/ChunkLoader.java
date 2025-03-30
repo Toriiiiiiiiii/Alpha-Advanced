@@ -110,6 +110,13 @@ public class ChunkLoader implements IChunkLoader {
 		var3.setByteArray("Data", var1.data.data);
 		var3.setByteArray("SkyLight", var1.skylightMap.data);
 		var3.setByteArray("BlockLight", var1.blocklightMap.data);
+		if(var1.blocks2 != null) {
+			var3.setByteArray("Blocks2", var1.blocks2);
+			var3.setByteArray("Data2", var1.data2.data);
+			var3.setByteArray("SkyLight2", var1.skylightMap2.data);
+			var3.setByteArray("BlockLight2", var1.blocklightMap2.data);
+		}
+
 		var3.setByteArray("HeightMap", var1.heightMap);
 		var3.setBoolean("TerrainPopulated", var1.isTerrainPopulated);
 		var1.hasEntities = false;
@@ -152,6 +159,13 @@ public class ChunkLoader implements IChunkLoader {
 		var4.data = new NibbleArray(var1.getByteArray("Data"));
 		var4.skylightMap = new NibbleArray(var1.getByteArray("SkyLight"));
 		var4.blocklightMap = new NibbleArray(var1.getByteArray("BlockLight"));
+		if(var1.hasKey("Blocks2")) {
+			var4.blocks2 = var1.getByteArray("Blocks2");
+			var4.data2 = new NibbleArray(var1.getByteArray("Data2"));
+			var4.skylightMap2 = new NibbleArray(var1.getByteArray("SkyLight2"));
+			var4.blocklightMap2 = new NibbleArray(var1.getByteArray("BlockLight2"));
+		}
+
 		var4.heightMap = var1.getByteArray("HeightMap");
 		var4.isTerrainPopulated = var1.getBoolean("TerrainPopulated");
 		if(!var4.data.isValid()) {

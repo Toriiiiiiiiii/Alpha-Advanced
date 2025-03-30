@@ -7,10 +7,10 @@ import javax.imageio.ImageIO;
 
 public class TerrainTextureManager {
 	private float[] texCols = new float[768];
-	private int[] pixels = new int[5120];
-	private int[] zBuf = new int[5120];
-	private int[] waterBuf = new int[5120];
-	private int[] waterBr = new int[5120];
+	private int[] pixels = new int[9216];
+	private int[] zBuf = new int[9216];
+	private int[] waterBuf = new int[9216];
+	private int[] waterBr = new int[9216];
 	private int[] yBuf = new int[34];
 	private int[] textures = new int[768];
 
@@ -81,7 +81,7 @@ public class TerrainTextureManager {
 				var1.noContent = false;
 				Arrays.fill(this.zBuf, 0);
 				Arrays.fill(this.waterBuf, 0);
-				Arrays.fill(this.yBuf, 160);
+				Arrays.fill(this.yBuf, 288);
 
 				for(int var8 = var6 - 1; var8 >= var4; --var8) {
 					for(int var9 = var5 - 1; var9 >= var3; --var9) {
@@ -91,7 +91,7 @@ public class TerrainTextureManager {
 						boolean var13 = true;
 
 						for(int var14 = 0; var14 < 128; ++var14) {
-							int var15 = var11 - var10 - var14 + 160 - 16;
+							int var15 = var11 - var10 - var14 + 288 - 16;
 							if(var15 < this.yBuf[var12] || var15 < this.yBuf[var12 + 1]) {
 								Block var16 = Block.blocksList[var2.getBlockId(var9, var14, var8)];
 								if(var16 == null) {
@@ -101,7 +101,7 @@ public class TerrainTextureManager {
 									if(var24 == 0 || Block.blocksList[var24].material != Material.water) {
 										float var25 = (float)var14 / 127.0F * 0.6F + 0.4F;
 										float var26 = var2.getBrightness(var9, var14 + 1, var8) * var25;
-										if(var15 >= 0 && var15 < 160) {
+										if(var15 >= 0 && var15 < 288) {
 											int var27 = var12 + var15 * 32;
 											if(var12 >= 0 && var12 <= 32 && this.waterBuf[var27] <= var14) {
 												this.waterBuf[var27] = var14;
@@ -132,7 +132,7 @@ public class TerrainTextureManager {
 									int var19;
 									float var20;
 									float var22;
-									if(var15 >= 0 && var15 < 160) {
+									if(var15 >= 0 && var15 < 288) {
 										var18 = var12 + var15 * 32;
 										var19 = this.textures[var16.blockID * 3 + 0];
 										var20 = (var2.getBrightness(var9, var14 + 1, var8) * 0.8F + 0.2F) * var17;
@@ -150,7 +150,7 @@ public class TerrainTextureManager {
 										}
 									}
 
-									if(var15 >= -1 && var15 < 159) {
+									if(var15 >= -1 && var15 < 287) {
 										var18 = var12 + (var15 + 1) * 32;
 										var19 = this.textures[var16.blockID * 3 + 1];
 										var20 = var2.getBrightness(var9 - 1, var14, var8) * 0.8F + 0.2F;
@@ -181,10 +181,10 @@ public class TerrainTextureManager {
 
 				this.postProcess();
 				if(var1.image == null) {
-					var1.image = new BufferedImage(32, 160, 2);
+					var1.image = new BufferedImage(32, 288, 2);
 				}
 
-				var1.image.setRGB(0, 0, 32, 160, this.pixels, 0, 32);
+				var1.image.setRGB(0, 0, 32, 288, this.pixels, 0, 32);
 				var1.rendered = true;
 			}
 		}
@@ -192,7 +192,7 @@ public class TerrainTextureManager {
 
 	private void postProcess() {
 		for(int var1 = 0; var1 < 32; ++var1) {
-			for(int var2 = 0; var2 < 160; ++var2) {
+			for(int var2 = 0; var2 < 288; ++var2) {
 				int var3 = var1 + var2 * 32;
 				if(this.zBuf[var3] == 0) {
 					this.pixels[var3] = 0;

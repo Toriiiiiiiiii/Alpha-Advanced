@@ -10,7 +10,7 @@ public class WorldGenTrees extends WorldGenerator {
 		boolean var7 = true;
 		boolean spooky = var2.nextInt(500) == 0;
 				
-		if(var4 >= 1 && var4 + var6 + 1 <= 128) {
+		if(var4 >= 1 && var4 + var6 + 1 <= 256) {
 			int var8;
 			int var10;
 			int var11;
@@ -27,7 +27,7 @@ public class WorldGenTrees extends WorldGenerator {
 
 				for(var10 = var3 - var9; var10 <= var3 + var9 && var7; ++var10) {
 					for(var11 = var5 - var9; var11 <= var5 + var9 && var7; ++var11) {
-						if(var8 >= 0 && var8 < 128) {
+						if(var8 >= 0 && var8 < 256) {
 							var12 = var1.getBlockId(var10, var8, var11);
 							if(var12 != 0 && var12 != Block.leaves.blockID) {
 								var7 = false;
@@ -43,7 +43,7 @@ public class WorldGenTrees extends WorldGenerator {
 				return false;
 			} else {
 				var8 = var1.getBlockId(var3, var4 - 1, var5);
-				if((var8 == Block.grass.blockID || var8 == Block.dirt.blockID) && var4 < 128 - var6 - 1) {
+				if((var8 == Block.grass.blockID || var8 == Block.dirt.blockID) && var4 < 256 - var6 - 1) {
 					var1.setBlock(var3, var4 - 1, var5, Block.dirt.blockID);
 
 					int var16;

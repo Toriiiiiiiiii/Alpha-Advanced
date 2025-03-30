@@ -200,7 +200,7 @@ public class RenderGlobal implements IWorldAccess {
 		}
 
 		this.renderChunksWide = var1 / 16 + 1;
-		this.renderChunksTall = 8;
+		this.renderChunksTall = 16;
 		this.renderChunksDeep = var1 / 16 + 1;
 		this.worldRenderers = new WorldRenderer[this.renderChunksWide * this.renderChunksTall * this.renderChunksDeep];
 		this.sortedWorldRenderers = new WorldRenderer[this.renderChunksWide * this.renderChunksTall * this.renderChunksDeep];

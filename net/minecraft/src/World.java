@@ -51,6 +51,8 @@ public class World implements IBlockAccess {
 	public final String levelName;
 	public boolean worldChunkLoadOverride;
 	private ArrayList collidingBoundingBoxes;
+	private int lightingUpdatesCounter;
+	static int lightingUpdatesScheduled = 0;
 	private Set positionsToUpdate;
 	private int soundCounter;
 	private List entitiesWithinAABBExcludingEntity;
@@ -126,6 +128,7 @@ public class World implements IBlockAccess {
 		this.randomSeed = 0L;
 		this.sizeOnDisk = 0L;
 		this.collidingBoundingBoxes = new ArrayList();
+		this.lightingUpdatesCounter = 0;
 		this.positionsToUpdate = new HashSet();
 		this.soundCounter = this.rand.nextInt(12000);
 		this.entitiesWithinAABBExcludingEntity = new ArrayList();
@@ -160,6 +163,7 @@ public class World implements IBlockAccess {
 		this.randomSeed = 0L;
 		this.sizeOnDisk = 0L;
 		this.collidingBoundingBoxes = new ArrayList();
+		this.lightingUpdatesCounter = 0;
 		this.positionsToUpdate = new HashSet();
 		this.soundCounter = this.rand.nextInt(12000);
 		this.entitiesWithinAABBExcludingEntity = new ArrayList();
@@ -354,15 +358,19 @@ public class World implements IBlockAccess {
 	}
 
 	public int getBlockId(int var1, int var2, int var3) {
-		return var1 >= -32000000 && var3 >= -32000000 && var1 < 32000000 && var3 <= 32000000 ? (var2 < 0 ? 0 : (var2 >= 128 ? 0 : this.getChunkFromChunkCoords(var1 >> 4, var3 >> 4).getBlockID(var1 & 15, var2, var3 & 15))) : 0;
+		return var1 >= -32000000 && var3 >= -32000000 && var1 < 32000000 && var3 <= 32000000 ? (var2 < 0 ? 0 : (var2 >= 256 ? 0 : this.getChunkFromChunkCoords(var1 >> 4, var3 >> 4).getBlockID(var1 & 15, var2, var3 & 15))) : 0;
 	}
 
 	public boolean blockExists(int var1, int var2, int var3) {
-		return var2 >= 0 && var2 < 128 ? this.chunkExists(var1 >> 4, var3 >> 4) : false;
+		return var2 >= 0 && var2 < 256 ? this.chunkExists(var1 >> 4, var3 >> 4) : false;
+	}
+
+	public boolean doChunksNearChunkExist(int var1, int var2, int var3, int var4) {
+		return this.checkChunksExist(var1 - var4, var2 - var4, var3 - var4, var1 + var4, var2 + var4, var3 + var4);
 	}
 
 	public boolean checkChunksExist(int var1, int var2, int var3, int var4, int var5, int var6) {
-		if(var5 >= 0 && var2 < 128) {
+		if(var5 >= 0 && var2 < 256) {
 			var1 >>= 4;
 			var2 >>= 4;
 			var3 >>= 4;
@@ -400,7 +408,7 @@ public class World implements IBlockAccess {
 		if(var1 >= -32000000 && var3 >= -32000000 && var1 < 32000000 && var3 <= 32000000) {
 			if(var2 < 0) {
 				return false;
-			} else if(var2 >= 128) {
+			} else if(var2 >= 256) {
 				return false;
 			} else {
 				Chunk var6 = this.getChunkFromChunkCoords(var1 >> 4, var3 >> 4);
@@ -415,7 +423,7 @@ public class World implements IBlockAccess {
 		if(var1 >= -32000000 && var3 >= -32000000 && var1 < 32000000 && var3 <= 32000000) {
 			if(var2 < 0) {
 				return false;
-			} else if(var2 >= 128) {
+			} else if(var2 >= 256) {
 				return false;
 			} else {
 				Chunk var5 = this.getChunkFromChunkCoords(var1 >> 4, var3 >> 4);
@@ -435,7 +443,7 @@ public class World implements IBlockAccess {
 		if(var1 >= -32000000 && var3 >= -32000000 && var1 < 32000000 && var3 <= 32000000) {
 			if(var2 < 0) {
 				return 0;
-			} else if(var2 >= 128) {
+			} else if(var2 >= 256) {
 				return 0;
 			} else {
 				Chunk var4 = this.getChunkFromChunkCoords(var1 >> 4, var3 >> 4);
@@ -456,7 +464,7 @@ public class World implements IBlockAccess {
 		if(var1 >= -32000000 && var3 >= -32000000 && var1 < 32000000 && var3 <= 32000000) {
 			if(var2 < 0) {
 				return false;
-			} else if(var2 >= 128) {
+			} else if(var2 >= 256) {
 				return false;
 			} else {
 				Chunk var5 = this.getChunkFromChunkCoords(var1 >> 4, var3 >> 4);
@@ -577,7 +585,7 @@ public class World implements IBlockAccess {
 
 			if(var2 < 0) {
 				return 0;
-			} else if(var2 >= 128) {
+			} else if(var2 >= 256) {
 				var5 = 15 - this.skylightSubtracted;
 				if(var5 < 0) {
 					var5 = 0;
@@ -599,7 +607,7 @@ public class World implements IBlockAccess {
 		if(var1 >= -32000000 && var3 >= -32000000 && var1 < 32000000 && var3 <= 32000000) {
 			if(var2 < 0) {
 				return false;
-			} else if(var2 >= 128) {
+			} else if(var2 >= 256) {
 				return true;
 			} else if(!this.chunkExists(var1 >> 4, var3 >> 4)) {
 				return false;
@@ -650,7 +658,7 @@ public class World implements IBlockAccess {
 	}
 
 	public int getSavedLightValue(EnumSkyBlock var1, int var2, int var3, int var4) {
-		if(var3 >= 0 && var3 < 128 && var2 >= -32000000 && var4 >= -32000000 && var2 < 32000000 && var4 <= 32000000) {
+		if(var3 >= 0 && var3 < 256 && var2 >= -32000000 && var4 >= -32000000 && var2 < 32000000 && var4 <= 32000000) {
 			int var5 = var2 >> 4;
 			int var6 = var4 >> 4;
 			if(!this.chunkExists(var5, var6)) {
@@ -667,7 +675,7 @@ public class World implements IBlockAccess {
 	public void setLightValue(EnumSkyBlock var1, int var2, int var3, int var4, int var5) {
 		if(var2 >= -32000000 && var4 >= -32000000 && var2 < 32000000 && var4 <= 32000000) {
 			if(var3 >= 0) {
-				if(var3 < 128) {
+				if(var3 < 256) {
 					if(this.chunkExists(var2 >> 4, var4 >> 4)) {
 						Chunk var6 = this.getChunkFromChunkCoords(var2 >> 4, var4 >> 4);
 						var6.setLightValue(var1, var2 & 15, var3, var4 & 15, var5);
@@ -925,7 +933,7 @@ public class World implements IBlockAccess {
 
 		for(int var9 = var3; var9 < var4; ++var9) {
 			for(int var10 = var7; var10 < var8; ++var10) {
-				if(this.blockExists(var9, 64, var10)) {
+				if(this.blockExists(var9, 128, var10)) {
 					for(int var11 = var5 - 1; var11 < var6; ++var11) {
 						Block var12 = Block.blocksList[this.getBlockId(var9, var11, var10)];
 						if(var12 != null) {
@@ -1492,7 +1500,7 @@ public class World implements IBlockAccess {
 	public void scheduleLightingUpdate_do(EnumSkyBlock var1, int var2, int var3, int var4, int var5, int var6, int var7, boolean var8, int depth) {
 		int var9 = (var5 + var2) / 2;
 		int var10 = (var7 + var4) / 2;
-		if(this.blockExists(var9, 64, var10)) {
+		if(this.blockExists(var9, 128, var10)) {
 			int var11 = this.lightingToUpdate.size();
 			if(var8) {
 				int var12 = 4;
@@ -1585,7 +1593,7 @@ public class World implements IBlockAccess {
 				var6 = this.updateLCG >> 2;
 				var7 = var6 & 15;
 				var8 = var6 >> 8 & 15;
-				var9 = var6 >> 16 & 127;
+				var9 = var6 >> 16 & 255;
 				var10 = var14.getBlockID(var7, var9, var8);
 				var7 += var3;
 				var8 += var4;
@@ -1604,7 +1612,7 @@ public class World implements IBlockAccess {
 				var7 = var6 & 15;
 				var8 = var6 >> 8 & 15;
 				var9 = this.getTopSolidOrLiquidBlock(var7 + var3, var8 + var4);
-				if(var9 >= 0 && var9 < 128 && var14.getSavedLightValue(EnumSkyBlock.Block, var7, var9, var8) < 10) {
+				if(var9 >= 0 && var9 < 256 && var14.getSavedLightValue(EnumSkyBlock.Block, var7, var9, var8) < 10) {
 					var10 = var14.getBlockID(var7, var9 - 1, var8);
 					if(var14.getBlockID(var7, var9, var8) == 0 && Block.snow.canPlaceBlockAt(this, var7 + var3, var9, var8 + var4)) {
 						this.setBlockWithNotify(var7 + var3, var9, var8 + var4, Block.snow.blockID);
@@ -1856,8 +1864,8 @@ public class World implements IBlockAccess {
 			var13 = 0;
 		}
 
-		if(var14 > 128) {
-			var14 = 128;
+		if(var14 > 256) {
+			var14 = 256;
 		}
 
 		for(int var15 = var8; var15 <= var10; ++var15) {

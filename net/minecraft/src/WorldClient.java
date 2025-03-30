@@ -91,7 +91,7 @@ public class WorldClient extends World {
 		}
 
 		if(!var3) {
-			this.markBlocksDirty(var1 * 16, 0, var2 * 16, var1 * 16 + 15, 128, var2 * 16 + 15);
+			this.markBlocksDirty(var1 * 16, 0, var2 * 16, var1 * 16 + 15, 256, var2 * 16 + 15);
 		}
 
 	}

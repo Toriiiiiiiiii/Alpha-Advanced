@@ -4,28 +4,58 @@ public class ChunkCache implements IBlockAccess {
 	private int chunkX;
 	private int chunkZ;
 	private Chunk[][] chunkArray;
+	private boolean isEmpty;
 	private World worldObj;
 
 	public ChunkCache(World var1, int var2, int var3, int var4, int var5, int var6, int var7) {
+		this(var1, var2, var3, var4, var5, var6, var7, 0);
+	}
+
+	public ChunkCache(World var1, int var2, int var3, int var4, int var5, int var6, int var7, int r) {
 		this.worldObj = var1;
-		this.chunkX = var2 >> 4;
-		this.chunkZ = var4 >> 4;
-		int var8 = var5 >> 4;
-		int var9 = var7 >> 4;
+		this.chunkX = var2 - r >> 4;
+		this.chunkZ = var4 - r >> 4;
+		int var8 = var5 + r >> 4;
+		int var9 = var7 + r >> 4;
 		this.chunkArray = new Chunk[var8 - this.chunkX + 1][var9 - this.chunkZ + 1];
 
-		for(int var10 = this.chunkX; var10 <= var8; ++var10) {
-			for(int var11 = this.chunkZ; var11 <= var9; ++var11) {
-				this.chunkArray[var10 - this.chunkX][var11 - this.chunkZ] = var1.getChunkFromChunkCoords(var10, var11);
+		this.isEmpty = true;
+
+		int x;
+		int z;
+		Chunk chunk;
+		for(x = this.chunkX; x <= var8; ++x) {
+			for(z = this.chunkZ; z <= var9; ++z) {
+				chunk = var1.getChunkFromChunkCoords(x, z);
+				if(chunk == null) {
+					continue;
+				}
+
+				this.chunkArray[x - this.chunkX][z - this.chunkZ] = chunk;
+			}
+		}
+
+		for(x = var2 >> 4; x <= var5 >> 4; ++x) {
+			for(z = var4 >> 4; z <= var7 >> 4; ++z) {
+				chunk = this.chunkArray[x - this.chunkX][z - this.chunkZ];
+				if(chunk == null || chunk.isChunkRendered || var3 >= 128 && chunk.blocks2 == null) {
+					continue;
+				}
+
+				this.isEmpty = false;
 			}
 		}
 
 	}
 
+	public boolean extendedLevelsInChunkCache() {
+		return this.isEmpty;
+	}
+
 	public int getBlockId(int var1, int var2, int var3) {
 		if(var2 < 0) {
 			return 0;
-		} else if(var2 >= 128) {
+		} else if(var2 >= 256) {
 			return 0;
 		} else {
 			int var4 = (var1 >> 4) - this.chunkX;
@@ -82,7 +112,7 @@ public class ChunkCache implements IBlockAccess {
 
 			if(var2 < 0) {
 				return 0;
-			} else if(var2 >= 128) {
+			} else if(var2 >= 256) {
 				var5 = 15 - this.worldObj.skylightSubtracted;
 				if(var5 < 0) {
 					var5 = 0;
@@ -102,7 +132,7 @@ public class ChunkCache implements IBlockAccess {
 	public int getBlockMetadata(int var1, int var2, int var3) {
 		if(var2 < 0) {
 			return 0;
-		} else if(var2 >= 128) {
+		} else if(var2 >= 256) {
 			return 0;
 		} else {
 			int var4 = (var1 >> 4) - this.chunkX;

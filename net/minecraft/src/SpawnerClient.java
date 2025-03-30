@@ -9,9 +9,10 @@ class SpawnerClient extends SpawnerAnimals {
 	}
 
 	protected ChunkPosition getRandomSpawningPointInChunk(World var1, int var2, int var3) {
-		int var4 = var2 + var1.rand.nextInt(16);
-		int var5 = var1.rand.nextInt(var1.rand.nextInt(120) + 8);
-		int var6 = var3 + var1.rand.nextInt(16);
+		Chunk chunk = var1.getChunkFromChunkCoords(var2, var3);
+		int var4 = var2 * 16 + var1.rand.nextInt(16);
+		int var6 = var3 * 16 + var1.rand.nextInt(16);
+		int var5 = var1.rand.nextInt(var1.rand.nextInt(chunk == null ? 248 : (chunk.blocks2 == null ? 119 : 247)) + 8);
 		return new ChunkPosition(var4, var5, var6);
 	}
 }

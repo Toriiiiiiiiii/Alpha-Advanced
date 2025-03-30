@@ -20,16 +20,31 @@ public class MetadataChunkBlock {
 	}
 
 	public void updateLight(World var1, int depth) {
-		int var2 = this.maxX - this.minX;
-		int var3 = this.maxY - this.minY;
-		int var4 = this.maxZ - this.minZ;
+		int var2 = this.maxX - this.minX + 1;
+		int var3 = this.maxY - this.minY + 1;
+		int var4 = this.maxZ - this.minZ + 1;
 		int var5 = var2 * var3 * var4;
-		if(var5 <= -Short.MIN_VALUE) {
+		if(var5 <= 74273) {
 			for(int var6 = this.minX; var6 <= this.maxX; ++var6) {
 				for(int var7 = this.minZ; var7 <= this.maxZ; ++var7) {
-					if(var1.blockExists(var6, 0, var7)) {
+					boolean blockExists = var1.doChunksNearChunkExist(var6, 0, var7, 1);
+					if(blockExists) {
+						Chunk chunk = var1.getChunkFromChunkCoords(var6 >> 4, var7 >> 4);
+						if(chunk.isChunkRendered || this.minY >= 128 && chunk.blocks2 == null) {
+							blockExists = false;
+						}
+					}
+
+					if(blockExists) {
+						if(this.minY < 0) {
+							this.minY = 0;
+						}
+
+						if(this.maxY >= 256) {
+							this.maxY = 255;
+						}
 						for(int var8 = this.minY; var8 <= this.maxY; ++var8) {
-							if(var8 >= 0 && var8 < 128) {
+							{
 								int var9 = var1.getSavedLightValue(this.skyBlock, var6, var8, var7);
 								boolean var10 = false;
 								int var11 = var1.getBlockId(var6, var8, var7);
@@ -117,6 +132,8 @@ public class MetadataChunkBlock {
 				}
 			}
 
+		}else {
+			System.out.println("Light too large, skipping!");
 		}
 	}
 

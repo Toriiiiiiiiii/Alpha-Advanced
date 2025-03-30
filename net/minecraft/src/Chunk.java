@@ -26,10 +26,14 @@ public class Chunk {
 	public boolean isChunkRendered;
 	public boolean hasEntities;
 	public long lastSaveTime;
+	public byte[] blocks2;
+	public NibbleArray data2;
+	public NibbleArray skylightMap2;
+	public NibbleArray blocklightMap2;
 
 	public Chunk(World var1, int var2, int var3) {
 		this.chunkTileEntityMap = new HashMap();
-		this.entities = new List[8];
+		this.entities = new List[16];
 		this.isTerrainPopulated = false;
 		this.isModified = false;
 		this.isChunkRendered = false;
@@ -66,13 +70,13 @@ public class Chunk {
 	}
 
 	public void generateHeightMap() {
-		int var1 = 127;
+		int var1 = this.blocks2 == null ? 127 : 255;
 
 		for(int var2 = 0; var2 < 16; ++var2) {
 			for(int var3 = 0; var3 < 16; ++var3) {
-				int var4 = 127;
+				int var4 = this.blocks2 == null ? 127 : 255;
 
-				for(int var5 = var2 << 11 | var3 << 7; var4 > 0 && Block.lightOpacity[this.blocks[var5 + var4 - 1]] == 0; --var4) {
+				for(int var5 = var2 << 11 | var3 << 7; var4 > 0 && Block.lightOpacity[var4 > 128 ? (this.blocks2 == null ? 0 : this.blocks2[var5 + var4 - 129]) : this.blocks[var5 + var4 - 1]] == 0; --var4) {
 				}
 
 				this.heightMap[var3 << 4 | var2] = (byte)var4;
@@ -87,17 +91,38 @@ public class Chunk {
 	}
 
 	public void generateSkylightMap() {
-		int var1 = 127;
+		int var1 = this.blocks2 == null ? 127 : 255;
 
 		int var2;
 		int var3;
 		for(var2 = 0; var2 < 16; ++var2) {
 			for(var3 = 0; var3 < 16; ++var3) {
-				this.heightMap[var3 << 4 | var2] = -128;
-				this.relightBlock(var2, 127, var3);
-				if((this.heightMap[var3 << 4 | var2] & 255) < var1) {
-					var1 = this.heightMap[var3 << 4 | var2] & 255;
+				int var4 = this.blocks2 == null ? 127 : 255;
+
+				int var5;
+				for(var5 = var2 << 11 | var3 << 7; var4 > 0 && Block.lightOpacity[var4 > 128 ? (this.blocks2 == null ? 0 : this.blocks2[var5 + var4 - 129]) : this.blocks[var5 + var4 - 1]] == 0; --var4) {
 				}
+
+				this.heightMap[var3 << 4 | var2] = (byte)var4;
+				if(var4 < var1) {
+					var1 = var4;
+				}
+
+				int var6 = 15;
+				int var7 = this.blocks2 == null ? 127 : 255;
+
+				do {
+					var6 -= Block.lightOpacity[var7 > 127 ? (this.blocks2 == null ? 0 : this.blocks2[var5 + var7 - 128]) : this.blocks[var5 + var7]];
+					if(var6 > 0) {
+						if((var7 & 128) == 0) {
+							this.skylightMap.set(var2, var7, var3, var6);
+						} else if(this.blocks2 != null) {
+							this.skylightMap2.set(var2, var7 & 127, var3, var6);
+						}
+					}
+
+					--var7;
+				} while(var7 > 0 && var6 > 0);
 			}
 		}
 
@@ -140,7 +165,7 @@ public class Chunk {
 			var5 = var2;
 		}
 
-		for(int var6 = var1 << 11 | var3 << 7; var5 > 0 && Block.lightOpacity[this.blocks[var6 + var5 - 1]] == 0; --var5) {
+		for(int var6 = var1 << 11 | var3 << 7; var5 > 0 && Block.lightOpacity[var5 > 128 ? (this.blocks2 == null ? 0 : this.blocks2[var6 + var5 - 129]) : this.blocks[var6 + var5 - 1]] == 0; --var5) {
 		}
 
 		if(var5 != var4) {
@@ -152,7 +177,7 @@ public class Chunk {
 			if(var5 < this.height) {
 				this.height = var5;
 			} else {
-				var7 = 127;
+				var7 = this.blocks2 == null ? 127 : 255;
 
 				for(var8 = 0; var8 < 16; ++var8) {
 					for(var9 = 0; var9 < 16; ++var9) {
@@ -169,12 +194,27 @@ public class Chunk {
 			var8 = this.zPosition * 16 + var3;
 			if(var5 < var4) {
 				for(var9 = var5; var9 < var4; ++var9) {
+					if((var9 & 128) != 0) {
+						if(this.blocks2 != null) {
+							this.skylightMap2.set(var1, var9 & 127, var3, 15);
+						}
+
+						continue;
+					}
+
 					this.skylightMap.set(var1, var9, var3, 15);
 				}
 			} else {
 				this.worldObj.scheduleLightingUpdate(EnumSkyBlock.Sky, var7, var4, var8, var7, var5, var8, 10);
 
 				for(var9 = var4; var9 < var5; ++var9) {
+					if((var9 & 128) != 0) {
+						if(this.blocks2 != null) {
+							this.skylightMap2.set(var1, var9 & 127, var3, 0);
+						}
+
+						continue;
+					}
 					this.skylightMap.set(var1, var9, var3, 0);
 				}
 			}
@@ -182,7 +222,7 @@ public class Chunk {
 			var9 = 15;
 
 			int var10;
-			for(var10 = var5; var5 > 0 && var9 > 0; this.skylightMap.set(var1, var5, var3, var9)) {
+			for(var10 = var5; var5 > 0 && var9 > 0;) {
 				--var5;
 				int var11 = Block.lightOpacity[this.getBlockID(var1, var5, var3)];
 				if(var11 == 0) {
@@ -193,6 +233,16 @@ public class Chunk {
 				if(var9 < 0) {
 					var9 = 0;
 				}
+
+				if((var5 & 128) != 0) {
+					if(this.blocks2 != null) {
+						this.skylightMap2.set(var1, var5 & 127, var3, var9);
+					}
+
+					continue;
+				}
+
+				this.skylightMap.set(var1, var5, var3, var9);
 			}
 
 			while(var5 > 0 && Block.lightOpacity[this.getBlockID(var1, var5 - 1, var3)] == 0) {
@@ -208,33 +258,64 @@ public class Chunk {
 	}
 
 	public int getBlockID(int var1, int var2, int var3) {
+		if((var2 & 128) != 0) {
+			if(this.blocks2 == null) {
+				return 0;
+			}
+
+			return this.blocks2[var1 << 11 | var3 << 7 | var2 & 127];
+		}
 		return this.blocks[var1 << 11 | var3 << 7 | var2];
 	}
 
 	public boolean setBlockIDWithMetadata(int var1, int var2, int var3, int var4, int var5) {
 		byte var6 = (byte)var4;
 		int var7 = this.heightMap[var3 << 4 | var1] & 255;
-		int var8 = this.blocks[var1 << 11 | var3 << 7 | var2] & 255;
-		if(var8 == var4 && this.data.get(var1, var2, var3) == var5) {
+		int var8 = (var2 & 128) == 0 ? this.blocks[var1 << 11 | var3 << 7 | var2] & 255 : (this.blocks2 == null ? 0 : this.blocks2[var1 << 11 | var3 << 7 | var2 & 127] & 255);
+		if(var8 == var4 && ((var2 & 128) == 0 ? this.data.get(var1, var2, var3) : (this.blocks2 == null ? 0 : this.data2.get(var1, var2 & 127, var3))) == var5) {
 			return false;
 		} else {
+			boolean generateSkylightMap = false;
+			if((var2 & 128) != 0 && this.blocks2 == null) {
+				if(var4 == 0) {
+					return false;
+				}
+
+				this.blocks2 = new byte[this.blocks.length];
+				this.data2 = new NibbleArray(this.blocks.length);
+				this.skylightMap2 = new NibbleArray(this.blocks.length);
+				this.blocklightMap2 = new NibbleArray(this.blocks.length);
+				generateSkylightMap = var2 >= var7;
+			}
 			int var9 = this.xPosition * 16 + var1;
 			int var10 = this.zPosition * 16 + var3;
-			this.blocks[var1 << 11 | var3 << 7 | var2] = var6;
+			if((var2 & 128) == 0) {
+				this.blocks[var1 << 11 | var3 << 7 | var2] = var6;
+			} else {
+				this.blocks2[var1 << 11 | var3 << 7 | var2 & 127] = var6;
+			}
 			if(var8 != 0 && !this.worldObj.multiplayerWorld) {
 				Block.blocksList[var8].onBlockRemoval(this.worldObj, var9, var2, var10);
 			}
 
-			this.data.set(var1, var2, var3, var5);
-			if(Block.lightOpacity[var6] != 0) {
-				if(var2 >= var7) {
-					this.relightBlock(var1, var2 + 1, var3);
-				}
-			} else if(var2 == var7 - 1) {
-				this.relightBlock(var1, var2, var3);
+			if((var2 & 128) == 0) {
+				this.data.set(var1, var2, var3, var5);
+			} else {
+				this.data2.set(var1, var2 & 127, var3, var5);
 			}
 
-			this.worldObj.scheduleLightingUpdate(EnumSkyBlock.Sky, var9, var2, var10, var9, var2, var10, 10);
+			if(generateSkylightMap) {
+				this.generateSkylightMap();
+			} else {
+				if(Block.lightOpacity[var6] != 0) {
+					if(var2 >= var7) {
+						this.relightBlock(var1, var2 + 1, var3);
+					}
+				} else if(var2 == var7 - 1) {
+					this.relightBlock(var1, var2, var3);
+				}
+			} 	this.worldObj.scheduleLightingUpdate(EnumSkyBlock.Sky, var9, var2, var10, var9, var2, var10, 10);
+
 			this.worldObj.scheduleLightingUpdate(EnumSkyBlock.Block, var9, var2, var10, var9, var2, var10, 10);
 			this.updateSkylight_do(var1, var3);
 			if(var4 != 0) {
@@ -249,25 +330,51 @@ public class Chunk {
 	public boolean setBlockID(int var1, int var2, int var3, int var4) {
 		byte var5 = (byte)var4;
 		int var6 = this.heightMap[var3 << 4 | var1] & 255;
-		int var7 = this.blocks[var1 << 11 | var3 << 7 | var2] & 255;
+		int var7 = (var2 & 128) == 0 ? this.blocks[var1 << 11 | var3 << 7 | var2] & 255 : (this.blocks2 == null ? 0 : this.blocks2[var1 << 11 | var3 << 7 | var2 & 127] & 255);
 		if(var7 == var4) {
 			return false;
 		} else {
+			boolean generateSkylightMap = false;
+			if((var2 & 128) != 0 && this.blocks2 == null) {
+				if(var4 == 0) {
+					return false;
+				}
+
+				this.blocks2 = new byte[this.blocks.length];
+				this.data2 = new NibbleArray(this.blocks.length);
+				this.skylightMap2 = new NibbleArray(this.blocks.length);
+				this.blocklightMap2 = new NibbleArray(this.blocks.length);
+				generateSkylightMap = var2 >= var6;
+			}
 			int var8 = this.xPosition * 16 + var1;
 			int var9 = this.zPosition * 16 + var3;
-			this.blocks[var1 << 11 | var3 << 7 | var2] = var5;
+			if((var2 & 128) == 0) {
+				this.blocks[var1 << 11 | var3 << 7 | var2] = var5;
+			} else {
+				this.blocks2[var1 << 11 | var3 << 7 | var2 & 127] = var5;
+			}
+
 			if(var7 != 0) {
 				Block.blocksList[var7].onBlockRemoval(this.worldObj, var8, var2, var9);
 			}
 
-			this.data.set(var1, var2, var3, 0);
-			if(Block.lightOpacity[var5] != 0) {
-				if(var2 >= var6) {
-					this.relightBlock(var1, var2 + 1, var3);
-				}
-			} else if(var2 == var6 - 1) {
-				this.relightBlock(var1, var2, var3);
+			if((var2 & 128) == 0) {
+				this.data.set(var1, var2, var3, 0);
+			} else {
+				this.data2.set(var1, var2 & 127, var3, 0);
 			}
+
+			if(generateSkylightMap) {
+				this.generateSkylightMap();
+			} else {
+				if(Block.lightOpacity[var5] != 0) {
+					if(var2 >= var6) {
+						this.relightBlock(var1, var2 + 1, var3);
+					}
+				} else if(var2 == var6 - 1) {
+					this.relightBlock(var1, var2, var3);
+				}
+			} this.worldObj.scheduleLightingUpdate(EnumSkyBlock.Sky, var8, var2, var9, var8, var2, var9, 10);
 
 			this.worldObj.scheduleLightingUpdate(EnumSkyBlock.Sky, var8, var2, var9, var8, var2, var9, 10);
 			this.worldObj.scheduleLightingUpdate(EnumSkyBlock.Block, var8, var2, var9, var8, var2, var9, 10);
@@ -282,19 +389,60 @@ public class Chunk {
 	}
 
 	public int getBlockMetadata(int var1, int var2, int var3) {
+		if((var2 & 128) != 0) {
+			if(this.blocks2 == null) {
+				return 0;
+			}
+
+			return this.data2.get(var1, var2 & 127, var3);
+		}
 		return this.data.get(var1, var2, var3);
 	}
 
 	public void setBlockMetadata(int var1, int var2, int var3, int var4) {
+		if((var2 & 128) != 0) {
+			if(this.blocks2 == null) {
+				return;
+			}
+
+			this.isModified = true;
+			this.data2.set(var1, var2 & 127, var3, var4);
+			return;
+		}
 		this.isModified = true;
 		this.data.set(var1, var2, var3, var4);
 	}
 
 	public int getSavedLightValue(EnumSkyBlock var1, int var2, int var3, int var4) {
+		if((var3 & 128) != 0) {
+			if(this.blocks2 == null) {
+				return this.canBlockSeeTheSky(var2, var3, var4) ? var1.defaultLightValue : 0;
+			}
+
+			return var1 == EnumSkyBlock.Sky ? this.skylightMap2.get(var2, var3 & 127, var4) : (var1 == EnumSkyBlock.Block ? this.blocklightMap2.get(var2, var3 & 127, var4) : 0);
+		}
 		return var1 == EnumSkyBlock.Sky ? this.skylightMap.get(var2, var3, var4) : (var1 == EnumSkyBlock.Block ? this.blocklightMap.get(var2, var3, var4) : 0);
 	}
 
 	public void setLightValue(EnumSkyBlock var1, int var2, int var3, int var4, int var5) {
+		if((var3 & 128) != 0) {
+			if(this.blocks2 == null) {
+				this.blocks2 = new byte[this.blocks.length];
+				this.data2 = new NibbleArray(this.blocks.length);
+				this.skylightMap2 = new NibbleArray(this.blocks.length);
+				this.blocklightMap2 = new NibbleArray(this.blocks.length);
+				this.generateSkylightMap();
+			}
+
+			this.isModified = true;
+			if(var1 == EnumSkyBlock.Sky) {
+				this.skylightMap2.set(var2, var3 & 127, var4, var5);
+			} else if(var1 == EnumSkyBlock.Block) {
+				this.blocklightMap2.set(var2, var3 & 127, var4, var5);
+			}
+
+			return;
+		}
 		this.isModified = true;
 		if(var1 == EnumSkyBlock.Sky) {
 			this.skylightMap.set(var2, var3, var4, var5);
@@ -309,6 +457,24 @@ public class Chunk {
 	}
 
 	public int getBlockLightValue(int var1, int var2, int var3, int var4) {
+		if((var2 & 128) != 0) {
+			if(this.blocks2 == null) {
+				return var4 < EnumSkyBlock.Sky.defaultLightValue ? EnumSkyBlock.Sky.defaultLightValue - var4 : 0;
+			}
+
+			int var5 = this.skylightMap2.get(var1, var2 & 127, var3);
+			if(var5 > 0) {
+				isLit = true;
+			}
+
+			var5 -= var4;
+			int var6 = this.blocklightMap2.get(var1, var2 & 127, var3);
+			if(var6 > var5) {
+				var5 = var6;
+			}
+
+			return var5;
+		}
 		int var5 = this.skylightMap.get(var1, var2, var3);
 		if(var5 > 0) {
 			isLit = true;
@@ -499,16 +665,32 @@ public class Chunk {
 	}
 
 	public int setChunkData(byte[] var1, int var2, int var3, int var4, int var5, int var6, int var7, int var8) {
+		if(var6 > 128 && this.blocks2 == null) {
+			this.blocks2 = new byte[this.blocks.length];
+			this.data2 = new NibbleArray(this.blocks.length);
+			this.skylightMap2 = new NibbleArray(this.blocks.length);
+			this.blocklightMap2 = new NibbleArray(this.blocks.length);
+		}
+
 		int var9;
 		int var10;
 		int var11;
 		int var12;
 		for(var9 = var2; var9 < var5; ++var9) {
 			for(var10 = var4; var10 < var7; ++var10) {
-				var11 = var9 << 11 | var10 << 7 | var3;
-				var12 = var6 - var3;
-				System.arraycopy(var1, var8, this.blocks, var11, var12);
-				var8 += var12;
+				if(var3 < 128) {
+					var11 = var9 << 11 | var10 << 7 | var3;
+					var12 = (var6 > 128 ? 128 : var6) - var3;
+					System.arraycopy(var1, var8, this.blocks, var11, var12);
+					var8 += var12;
+				}
+
+				if(var6 > 128) {
+					var11 = var9 << 11 | var10 << 7 | (var3 < 128 ? 0 : var3 & 127);
+					var12 = var6 - (var3 < 128 ? 128 : var3);
+					System.arraycopy(var1, var8, this.blocks2, var11, var12);
+					var8 += var12;
+				}
 			}
 		}
 
@@ -516,28 +698,55 @@ public class Chunk {
 
 		for(var9 = var2; var9 < var5; ++var9) {
 			for(var10 = var4; var10 < var7; ++var10) {
-				var11 = (var9 << 11 | var10 << 7 | var3) >> 1;
-				var12 = (var6 - var3) / 2;
-				System.arraycopy(var1, var8, this.data.data, var11, var12);
-				var8 += var12;
+				if(var3 < 128) {
+					var11 = (var9 << 11 | var10 << 7 | var3) >> 1;
+					var12 = ((var6 > 128 ? 128 : var6) - var3) / 2;
+					System.arraycopy(var1, var8, this.data.data, var11, var12);
+					var8 += var12;
+				}
+
+				if(var6 > 128) {
+					var11 = (var9 << 11 | var10 << 7 | (var3 < 128 ? 0 : var3 & 127)) >> 1;
+					var12 = (var6 - (var3 < 128 ? 128 : var3)) / 2;
+					System.arraycopy(var1, var8, this.data2.data, var11, var12);
+					var8 += var12;
+				}
 			}
 		}
 
 		for(var9 = var2; var9 < var5; ++var9) {
 			for(var10 = var4; var10 < var7; ++var10) {
-				var11 = (var9 << 11 | var10 << 7 | var3) >> 1;
-				var12 = (var6 - var3) / 2;
-				System.arraycopy(var1, var8, this.blocklightMap.data, var11, var12);
-				var8 += var12;
+				if(var3 < 128) {
+					var11 = (var9 << 11 | var10 << 7 | var3) >> 1;
+					var12 = ((var6 > 128 ? 128 : var6) - var3) / 2;
+					System.arraycopy(var1, var8, this.blocklightMap.data, var11, var12);
+					var8 += var12;
+				}
+
+				if(var6 > 128) {
+					var11 = (var9 << 11 | var10 << 7 | (var3 < 128 ? 0 : var3 & 127)) >> 1;
+					var12 = (var6 - (var3 < 128 ? 128 : var3)) / 2;
+					System.arraycopy(var1, var8, this.blocklightMap2.data, var11, var12);
+					var8 += var12;
+				}
 			}
 		}
 
 		for(var9 = var2; var9 < var5; ++var9) {
 			for(var10 = var4; var10 < var7; ++var10) {
-				var11 = (var9 << 11 | var10 << 7 | var3) >> 1;
-				var12 = (var6 - var3) / 2;
-				System.arraycopy(var1, var8, this.skylightMap.data, var11, var12);
-				var8 += var12;
+				if(var3 < 128) {
+					var11 = (var9 << 11 | var10 << 7 | var3) >> 1;
+					var12 = ((var6 > 128 ? 128 : var6) - var3) / 2;
+					System.arraycopy(var1, var8, this.skylightMap.data, var11, var12);
+					var8 += var12;
+				}
+
+				if(var6 > 128) {
+					var11 = (var9 << 11 | var10 << 7 | (var3 < 128 ? 0 : var3 & 127)) >> 1;
+					var12 = (var6 - (var3 < 128 ? 128 : var3)) / 2;
+					System.arraycopy(var1, var8, this.skylightMap2.data, var11, var12);
+					var8 += var12;
+				}
 			}
 		}
 
