@@ -87,7 +87,8 @@ public class GuiMainMenu extends GuiScreen {
 		this.controlList.add(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 48, "Singleplayer"));
 		this.controlList.add(new GuiButton(2, this.width / 2 - 100, this.height / 4 + 72, "Multiplayer"));
 		this.controlList.add(new GuiButton(3, this.width / 2 - 100, this.height / 4 + 96, "Play tutorial level"));
-		this.controlList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 120 + 12, "Options..."));
+		this.controlList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 120, "Options..."));
+		this.controlList.add(new GuiButton(4, this.width / 2 - 100, this.height / 4 + 120 + 24, "Credits"));
 		((GuiButton)this.controlList.get(1)).enabled = false;
 		((GuiButton)this.controlList.get(2)).enabled = false;
 		if(this.mc.session == null) {
@@ -108,6 +109,10 @@ public class GuiMainMenu extends GuiScreen {
 
 		if(var1.id == 2) {
 			this.mc.displayGuiScreen(new GuiMultiplayer(this));
+		}
+		
+		if(var1.id == 4) {
+			this.mc.displayGuiScreen(new GuiCredits(this));
 		}
 
 	}
@@ -200,7 +205,7 @@ public class GuiMainMenu extends GuiScreen {
 		GL11.glScalef(var5, var5, var5);
 		this.drawCenteredString(this.fontRenderer, this.splashString, 0, -8, 16776960);
 		GL11.glPopMatrix();
-		String var6 = "Alpha Advanced Public Beta Build b1.4.2 by Tori";
+		String var6 = "Alpha Advanced b1.4.3";
 		this.drawString(this.fontRenderer, var6, this.width - this.fontRenderer.getStringWidth(var6) - 2, this.height - 10, 16777215);
 		long var7 = Runtime.getRuntime().maxMemory();
 		long var9 = Runtime.getRuntime().totalMemory();

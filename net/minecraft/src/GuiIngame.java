@@ -160,7 +160,7 @@ public class GuiIngame extends Gui {
 			var21 = "Allocated memory: " + var27 * 100L / var22 + "% (" + var27 / 1024L / 1024L + "MB)";
 			this.drawString(var8, var21, var6 - var8.getStringWidth(var21) - 2, 12, 14737632);
 		} else {
-			var8.drawStringWithShadow("Alpha Advanced by Tori", 2, 2, 16777215);
+			var8.drawStringWithShadow("Minecraft Alpha Advanced", 2, 2, 16777215);
 		}
 
 		if(this.recordPlayingUpFor > 0) {

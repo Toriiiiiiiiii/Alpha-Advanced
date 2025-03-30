@@ -224,7 +224,7 @@ public class RenderGlobal implements IWorldAccess {
 		for(var4 = 0; var4 < this.renderChunksWide; ++var4) {
 			for(int var5 = 0; var5 < this.renderChunksTall; ++var5) {
 				for(int var6 = 0; var6 < this.renderChunksDeep; ++var6) {
-					this.worldRenderers[(var6 * this.renderChunksTall + var5) * this.renderChunksWide + var4] = new WorldRenderer(this.theWorld, this.tileEntities, var4 * 16, var5 * 16, var6 * 16, 16, this.glRenderListBase + var2);
+					this.worldRenderers[(var6 * this.renderChunksTall + var5) * this.renderChunksWide + var4] = new WorldRenderer(this.theWorld, this.tileEntities, var4 * 32, var5 * 32, var6 * 32, 16, this.glRenderListBase + var2);
 					if(this.occlusionEnabled) {
 						this.worldRenderers[(var6 * this.renderChunksTall + var5) * this.renderChunksWide + var4].glOcclusionQuery = this.glOcclusionQueryBase.get(var3);
 					}

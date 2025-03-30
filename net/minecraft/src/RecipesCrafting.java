@@ -19,5 +19,8 @@ public class RecipesCrafting {
 		var1.addRecipe(new ItemStack(Item.teaLeaves, 4), new Object[] {"#", Character.valueOf('#'), Block.plantTea});
 		var1.addRecipe(new ItemStack(Item.mug), new Object[]{"# #", " # ", Character.valueOf('#'), Item.brick});
 		var1.addRecipe(new ItemStack(Item.tea), new Object[] {"#X", Character.valueOf('#'), Item.mug, Character.valueOf('X'), Item.teaLeaves});
+
+		var1.addRecipe(new ItemStack(Block.blockFlint), new Object[]{"##", "##", Character.valueOf('#'), Item.flint});
+		var1.addRecipe(new ItemStack(Item.flint, 4), new Object[]{"#", Character.valueOf('#'), Block.blockFlint});
 	}
 }
