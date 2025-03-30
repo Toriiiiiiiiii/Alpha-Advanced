@@ -121,7 +121,7 @@ public class GameSettings {
 				this.musicDelay = (int) (value * 600 + 1);
 				break;
 			case FOV:
-				this.fov = value * 159 + 1;
+				this.fov = value * 100 + 1;
 		}
 		this.saveOptions();
 	}
