@@ -96,10 +96,10 @@ public class EntityRenderer {
 		}
 	}
 
-	private float getFOVModifier(float ticks) {
+	private float getFOVModifier(float ticks, boolean hand) {
 		EntityPlayerSP player = this.mc.thePlayer;
 		float fov;
-		if (this.mc.options != null) {
+		if (!hand && this.mc.options != null) {
 			fov = this.mc.options.fov;
 		}
 		else {
@@ -192,7 +192,7 @@ public class EntityRenderer {
 		GL11.glRotatef(var2.prevRotationYaw + (var2.rotationYaw - var2.prevRotationYaw) * var1 + 180.0F, 0.0F, 1.0F, 0.0F);
 	}
 
-	private void setupCameraTransform(float var1, int var2) {
+	private void setupCameraTransform(float var1, int var2, boolean hand) {
 		this.farPlaneDistance = (float)(256 >> this.mc.options.renderDistance);
 		GL11.glMatrixMode(GL11.GL_PROJECTION);
 		GL11.glLoadIdentity();
@@ -201,7 +201,7 @@ public class EntityRenderer {
 			GL11.glTranslatef((float)(-(var2 * 2 - 1)) * var3, 0.0F, 0.0F);
 		}
 
-		GLU.gluPerspective(this.getFOVModifier(var1), (float)this.mc.displayWidth / (float)this.mc.displayHeight, 0.05F, this.farPlaneDistance);
+		GLU.gluPerspective(this.getFOVModifier(var1, hand), (float)this.mc.displayWidth / (float)this.mc.displayHeight, 0.05F, this.farPlaneDistance);
 		GL11.glMatrixMode(GL11.GL_MODELVIEW);
 		GL11.glLoadIdentity();
 		if(this.mc.options.anaglyph) {
@@ -319,7 +319,7 @@ public class EntityRenderer {
 			this.updateFogColor(var1);
 			GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT | GL11.GL_COLOR_BUFFER_BIT);
 			GL11.glEnable(GL11.GL_CULL_FACE);
-			this.setupCameraTransform(var1, var11);
+			this.setupCameraTransform(var1, var11, false);
 			ClippingHelperImplementation.getInstance();
 			if(this.mc.options.renderDistance < 2) {
 				this.setupFog(-1);
@@ -398,6 +398,7 @@ public class EntityRenderer {
 			GL11.glDisable(GL11.GL_FOG);
 			this.setupFog(1);
 			GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
+			this.setupCameraTransform(var1, var11, true);
 			this.renderHand(var1, var11);
 			if(!this.mc.options.anaglyph) {
 				return;
