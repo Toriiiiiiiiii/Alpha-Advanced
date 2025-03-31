@@ -43,7 +43,13 @@ public class GuiChest extends GuiContainer {
 	}
 
 	protected void drawGuiContainerBackgroundLayer(float var1) {
-		int var2 = this.mc.renderEngine.getTexture("/gui/container.png");
+		int var2;
+		
+		if(!this.mc.options.darkMode)
+			var2 = this.mc.renderEngine.getTexture("/gui/container.png");
+		else
+			var2 = this.mc.renderEngine.getTexture("/gui/container_dark.png");
+		
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		this.mc.renderEngine.bindTexture(var2);
 		int var3 = (this.width - this.xSize) / 2;
