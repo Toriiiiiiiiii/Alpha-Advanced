@@ -22,6 +22,7 @@ public class GuiNewWorld extends GuiScreen {
 	public void initGui() {
 		File var1 = Minecraft.getMinecraftDir();
 
+		this.controlList.clear();
 		this.controlList.add(new GuiButton(0, this.width / 2 - 100, this.height / 6 + 56, "World Type: Normal"));
 		this.controlList.add(new GuiButton(1, this.width / 2 - 100, this.height / 6 + 86, "Create!"));
 //		for(int var2 = 0; var2 < 5; ++var2) {
@@ -84,7 +85,7 @@ public class GuiNewWorld extends GuiScreen {
 		this.drawCenteredString(this.fontRenderer, this.screenTitle, this.width / 2, 20, 16777215);
 		this.drawCenteredString(this.fontRenderer, "Seed (leave blank for random)", this.width / 2, 60, 16777215);
 		int var4 = this.width / 2 - 100;
-		int var5 = this.height / 4 + 10;
+		int var5 = this.height / 6 + 32;
 		short var6 = 200;
 		byte var7 = 20;
 		this.drawRect(var4 - 1, var5 - 1, var4 + var6 + 1, var5 + var7 + 1, -6250336);

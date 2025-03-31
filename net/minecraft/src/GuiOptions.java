@@ -11,6 +11,7 @@ public class GuiOptions extends GuiScreen {
 	}
 
 	public void initGui() {
+		this.controlList.clear();
 		for(int var1 = 0; var1 < this.options.numberOfOptions; ++var1) {
 			int var2 = this.options.isSlider(var1);
 			if(var2 == 0) {
