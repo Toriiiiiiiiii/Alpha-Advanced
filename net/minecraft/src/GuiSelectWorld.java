@@ -72,7 +72,7 @@ public class GuiSelectWorld extends GuiScreen {
 		if(!this.selected) {
 			this.selected = true;
 			this.mc.playerController = new PlayerControllerSP(this.mc);
-			this.mc.startWorld("World" + var1, false, false);
+			this.mc.startWorld("World" + var1, false, false, 0);
 			this.mc.displayGuiScreen((GuiScreen)null);
 		}
 	}

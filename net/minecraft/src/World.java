@@ -220,6 +220,7 @@ public class World implements IBlockAccess {
 			var15 = true;
 		}
 
+		this.rand.setSeed(randomSeed);
 		this.chunkProvider = this.getChunkProvider(this.saveDirectory);
 		if(var15) {
 			this.worldChunkLoadOverride = true;
@@ -233,6 +234,7 @@ public class World implements IBlockAccess {
 			this.worldChunkLoadOverride = false;
 		}
 
+//		this.rand.setSeed(randomSeed);
 		this.calculateInitialSkylight();
 	}
 
@@ -250,11 +252,14 @@ public class World implements IBlockAccess {
 			this.spawnZ += this.rand.nextInt(8) - this.rand.nextInt(8);
 		}
 
+//		this.spawnX = 0;
+//		this.spawnZ = 0;
 	}
 
 	private boolean findSpawn(int var1, int var2) {
 		int var3 = this.getFirstUncoveredBlock(var1, var2);
 		return var3 == Block.sand.blockID;
+//		return var3 != 0;
 	}
 
 	private int getFirstUncoveredBlock(int var1, int var2) {

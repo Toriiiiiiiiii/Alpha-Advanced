@@ -48,6 +48,7 @@ import net.minecraft.src.RenderEngine;
 import net.minecraft.src.RenderGlobal;
 import net.minecraft.src.RenderManager;
 import net.minecraft.src.ScaledResolution;
+import net.minecraft.src.ScreenShotHelper;
 import net.minecraft.src.Session;
 import net.minecraft.src.SoundManager;
 import net.minecraft.src.Tessellator;
@@ -863,6 +864,10 @@ public abstract class Minecraft implements Runnable {
 												if(Keyboard.getEventKey() == Keyboard.KEY_ESCAPE) {
 													this.displayInGameMenu();
 												}
+												
+												if(Keyboard.getEventKey() == Keyboard.KEY_F2) {
+													this.ingameGUI.addChatMessage(ScreenShotHelper.takeScreenshot(minecraftDir, displayWidth, displayHeight));
+												}
 
 												if(Keyboard.getEventKey() == Keyboard.KEY_S && Keyboard.isKeyDown(Keyboard.KEY_F3)) {
 													this.forceReload();
@@ -986,10 +991,12 @@ public abstract class Minecraft implements Runnable {
 		return this.theWorld != null && this.theWorld.multiplayerWorld;
 	}
 
-	public void startWorld(String var1, boolean snowy, boolean autumn) {
+	public void startWorld(String var1, boolean snowy, boolean autumn, int seed) {
 		this.changeWorld1((World)null);
 		System.gc();
-		World var2 = new World(new File(getMinecraftDir(), "saves"), var1);
+		
+		World var2 = new World(new File(getMinecraftDir(), "saves"), var1, seed);
+		
 		if(var2.isNewWorld) {
 			var2.snowCovered = snowy;
 			var2.isAutumn = autumn;
