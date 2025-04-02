@@ -99,6 +99,21 @@ public class BlockCrops extends BlockFlower {
 
 	}
 
+	public boolean blockActivated(World var1, int var2, int var3, int var4, EntityPlayer var5) {
+		if(var5.inventory.getCurrentItem() == null) return true;
+		
+		if(var5.inventory.getCurrentItem().itemID == Item.fertilizer.shiftedIndex) {
+			var1.setBlockWithNotify(var2, var3, var4, 0);
+			var1.setBlockWithNotify(var2, var3, var4, this.blockID);
+			var1.setBlockMetadataWithNotify(var2, var3, var4, 7);
+			var1.notifyBlocksOfNeighborChange(var2, var3, var4, this.blockID);
+			
+			var5.inventory.getCurrentItem().stackSize--;
+		}
+		
+		return true;
+	}
+	
 	public int idDropped(int var1, Random var2) {
 		System.out.println("Get resource: " + var1);
 		return var1 == 7 ? Item.wheat.shiftedIndex : -1;

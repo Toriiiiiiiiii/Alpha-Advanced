@@ -31,7 +31,7 @@ public class BlockFlower extends Block {
 		this.checkFlowerChange(var1, var2, var3, var4);
 	}
 	
-	public boolean blockActivated(World var1, int var2, int var3, int var4, EntityPlayer var5) {
+	public boolean blockActivated(World var1, int var2, int var3, int var4, EntityPlayer var5) {		
 		if(this.blockID != Block.plantBlack.blockID && this.blockID != Block.plantBlue.blockID && this.blockID != Block.plantPink.blockID && this.blockID != Block.plantRed.blockID && this.blockID != Block.plantYellow.blockID && this.blockID != Block.plantTea.blockID)
 			return true;
 		
