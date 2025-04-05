@@ -75,6 +75,10 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.glu.GLU;
 
 public abstract class Minecraft implements Runnable {
+	public int versionMajor    = 1;
+	public int versionMinor    = 0;
+	public int versionSubMinor = 0;
+	
 	public boolean hideUI = false;
 	public PlayerController playerController;
 	private boolean fullscreen = false;
