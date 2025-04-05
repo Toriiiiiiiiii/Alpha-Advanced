@@ -86,10 +86,10 @@ public class GuiMainMenu extends GuiScreen {
 		this.controlList.clear();
 		this.controlList.add(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 40, "Singleplayer"));
 		this.controlList.add(new GuiButton(2, this.width / 2 - 100, this.height / 4 + 40 + 24, "Multiplayer"));
-		this.controlList.add(new GuiButton(3, this.width / 2 - 100, this.height / 4 + 40 + 24 * 2, "Play tutorial level"));
-		this.controlList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 40 + 24 * 3, "Options..."));
-		this.controlList.add(new GuiButton(4, this.width / 2 - 100, this.height / 4 + 40 + 24 * 4, "Credits"));
-		this.controlList.add(new GuiButton(5, this.width / 2 - 100, this.height / 4 + 40 + 24 * 5, "Quit"));
+//		this.controlList.add(new GuiButton(3, this.width / 2 - 100, this.height / 4 + 40 + 24 * 2, "Play tutorial level"));
+		this.controlList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 40 + 24 * 2, "Options..."));
+		this.controlList.add(new GuiButton(4, this.width / 2 - 100, this.height / 4 + 40 + 24 * 3, "Credits"));
+		this.controlList.add(new GuiButton(5, this.width / 2 - 100, this.height / 4 + 40 + 24 * 4, "Quit"));
 		((GuiButton)this.controlList.get(1)).enabled = false;
 		((GuiButton)this.controlList.get(2)).enabled = false;
 		if(this.mc.session == null) {
@@ -118,6 +118,7 @@ public class GuiMainMenu extends GuiScreen {
 
 		if(button.id == 5) {
 			this.mc.shutdown();
+			this.mc.shutdownMinecraftApplet();
 		}
 
 	}
