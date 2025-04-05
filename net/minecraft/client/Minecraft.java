@@ -409,6 +409,7 @@ public abstract class Minecraft implements Runnable {
 		}
 
 		System.gc();
+		this.running = false;
 	}
 
 	public void run() {
