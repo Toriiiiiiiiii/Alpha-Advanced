@@ -84,11 +84,12 @@ public class GuiMainMenu extends GuiScreen {
 		}
 
 		this.controlList.clear();
-		this.controlList.add(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 48, "Singleplayer"));
-		this.controlList.add(new GuiButton(2, this.width / 2 - 100, this.height / 4 + 72, "Multiplayer"));
-		this.controlList.add(new GuiButton(3, this.width / 2 - 100, this.height / 4 + 96, "Play tutorial level"));
-		this.controlList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 120, "Options..."));
-		this.controlList.add(new GuiButton(4, this.width / 2 - 100, this.height / 4 + 120 + 24, "Credits"));
+		this.controlList.add(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 40, "Singleplayer"));
+		this.controlList.add(new GuiButton(2, this.width / 2 - 100, this.height / 4 + 40 + 24, "Multiplayer"));
+		this.controlList.add(new GuiButton(3, this.width / 2 - 100, this.height / 4 + 40 + 24 * 2, "Play tutorial level"));
+		this.controlList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 40 + 24 * 3, "Options..."));
+		this.controlList.add(new GuiButton(4, this.width / 2 - 100, this.height / 4 + 40 + 24 * 4, "Credits"));
+		this.controlList.add(new GuiButton(5, this.width / 2 - 100, this.height / 4 + 40 + 24 * 5, "Quit"));
 		((GuiButton)this.controlList.get(1)).enabled = false;
 		((GuiButton)this.controlList.get(2)).enabled = false;
 		if(this.mc.session == null) {
@@ -98,21 +99,25 @@ public class GuiMainMenu extends GuiScreen {
 		this.lastTime = System.currentTimeMillis();
 	}
 
-	protected void actionPerformed(GuiButton var1) {
-		if(var1.id == 0) {
+	protected void actionPerformed(GuiButton button) {
+		if(button.id == 0) {
 			this.mc.displayGuiScreen(new GuiOptions(this, this.mc.options));
 		}
 
-		if(var1.id == 1) {
+		if(button.id == 1) {
 			this.mc.displayGuiScreen(new GuiSelectWorld(this));
 		}
 
-		if(var1.id == 2) {
+		if(button.id == 2) {
 			this.mc.displayGuiScreen(new GuiMultiplayer(this));
 		}
 		
-		if(var1.id == 4) {
+		if(button.id == 4) {
 			this.mc.displayGuiScreen(new GuiCredits(this));
+		}
+
+		if(button.id == 5) {
+			this.mc.shutdown();
 		}
 
 	}
