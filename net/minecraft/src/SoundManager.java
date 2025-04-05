@@ -19,10 +19,10 @@ public class SoundManager {
 	private Random rand = new Random();
 	private int ticksBeforeMusic = 200;
 
-	public void loadSoundSettings(GameSettings var1) {
+	public void loadSoundSettings(GameSettings settings) {
 		this.soundPoolStreaming.isGetRandomSound = false;
-		this.options = var1;
-		if(!loaded && (var1 == null || var1.soundVolume != 0.0F || var1.musicVolume != 0.0F)) {
+		this.options = settings;
+		if(!loaded) {
 			this.tryToSetLibraryAndCodecs();
 		}
 
