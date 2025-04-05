@@ -12,6 +12,6 @@ public class BlockDirt extends Block {
 			var5.inventory.getCurrentItem().stackSize--;
 		}
 		
-		return true;
+		return super.blockActivated(var1, var2, var3, var4, var5);
 	}
 }
