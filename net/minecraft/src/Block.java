@@ -121,6 +121,7 @@ public class Block {
 	public static final Block blockCopper = (new Block(99, 7+3*16, Material.iron)).setHardness(5.0F).setResistance(10.0F).setStepSound(soundMetalFootstep);
 	public static final Block leafPile = (new BlockLeafPile(100, 14+8*16)).setHardness(0.1F).setStepSound(soundGrassFootstep);
 	public static final Block blockFlint = (new Block(101, Block.brickStone.blockIndexInTexture + 16, Material.rock)).setHardness(2.0F).setResistance(10.0F).setStepSound(soundStoneFootstep);
+	public static final BlockFlower plantPurple = (BlockFlower)(new BlockFlower(102, 46+16)).setHardness(0.0F).setStepSound(soundGrassFootstep);
 	public int blockIndexInTexture;
 	public final int blockID;
 	protected float hardness;

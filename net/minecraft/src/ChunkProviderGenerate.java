@@ -414,6 +414,13 @@ public class ChunkProviderGenerate implements IChunkProvider {
 			(new WorldGenFlowers(Block.plantRed.blockID)).generate(this.worldObj, this.rand, var14, var15, var16);
 		}
 		
+		if(this.rand.nextInt(2) == 0) {
+			var14 = var4 + this.rand.nextInt(16) + 8;
+			var15 = this.rand.nextInt(128);
+			var16 = var5 + this.rand.nextInt(16) + 8;
+			(new WorldGenFlowers(Block.plantPurple.blockID)).generate(this.worldObj, this.rand, var14, var15, var16);
+		}
+		
 //		if(this.worldObj.isAutumn &&  this.rand.nextInt(1) == 0) {
 //			var14 = var4 + this.rand.nextInt(16) + 8;
 //			var15 = this.rand.nextInt(64)+64;

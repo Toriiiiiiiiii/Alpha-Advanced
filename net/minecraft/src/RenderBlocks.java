@@ -688,10 +688,12 @@ public class RenderBlocks {
 	}
 
 	public boolean renderBlockReed(Block var1, int var2, int var3, int var4) {
+		GL11.glDisable(GL11.GL_CULL_FACE);
 		Tessellator var5 = Tessellator.instance;
 		float var6 = var1.getBlockBrightness(this.blockAccess, var2, var3, var4);
 		var5.setColorOpaque_F(var6, var6, var6);
 		this.renderCrossedSquares(var1, this.blockAccess.getBlockMetadata(var2, var3, var4), (double)var2, (double)var3, (double)var4);
+		GL11.glEnable(GL11.GL_CULL_FACE);
 		return true;
 	}
 
