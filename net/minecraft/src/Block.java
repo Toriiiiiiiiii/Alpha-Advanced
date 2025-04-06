@@ -50,10 +50,10 @@ public class Block {
 	public static final Block clothCapri = null;
 	public static final Block clothUltramarine = null;
 	public static final Block clothViolet = null;
-	public static final Block clothPurple = null;
+	public static final Block clothPurple = (new Block(31, 120+16, Material.cloth)).setHardness(0.8F).setStepSound(soundClothFootstep);
 	public static final Block clothMagenta = null;
 	public static final Block clothRose = (new Block(33, 119, Material.cloth)).setHardness(0.8F).setStepSound(soundClothFootstep);
-	public static final Block clothDarkGray = (new Block(34, 121, Material.cloth)).setHardness(0.8F).setStepSound(soundClothFootstep);;
+	public static final Block clothDarkGray = (new Block(34, 121, Material.cloth)).setHardness(0.8F).setStepSound(soundClothFootstep);
 	public static final Block cloth = (new Block(35, 64, Material.cloth)).setHardness(0.8F).setStepSound(soundClothFootstep);
 	public static final Block clothWhite = null;
 	public static final BlockFlower plantYellow = (BlockFlower)(new BlockFlower(37, 13)).setHardness(0.0F).setStepSound(soundGrassFootstep);
