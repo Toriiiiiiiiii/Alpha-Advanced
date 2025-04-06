@@ -275,7 +275,10 @@ public class GuiIngame extends Gui {
 				GL11.glTranslatef((float)(-(var2 + 8)), (float)(-(var3 + 12)), 0.0F);
 			}
 
+//			GL11.glEnable(GL11.GL_DEPTH_TEST);
 			itemRenderer.renderItemIntoGUI(this.mc.fontRenderer, this.mc.renderEngine, var5, var2, var3);
+//			GL11.glDisable(GL11.GL_DEPTH_TEST);
+			
 			if(var6 > 0.0F) {
 				GL11.glPopMatrix();
 			}

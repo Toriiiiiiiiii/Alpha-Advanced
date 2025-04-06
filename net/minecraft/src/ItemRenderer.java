@@ -16,6 +16,7 @@ public class ItemRenderer {
 	}
 
 	public void renderItem(ItemStack var1) {
+		GL11.glEnable(GL11.GL_DEPTH_TEST);
 		GL11.glPushMatrix();
 		if(var1.itemID < 256 && RenderBlocks.renderItemIn3d(Block.blocksList[var1.itemID].getRenderType())) {
 			GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.mc.renderEngine.getTexture("/terrain.png"));
@@ -120,6 +121,7 @@ public class ItemRenderer {
 			GL11.glDisable(GL12.GL_RESCALE_NORMAL);
 		}
 
+		GL11.glDisable(GL11.GL_DEPTH_TEST);
 		GL11.glPopMatrix();
 	}
 

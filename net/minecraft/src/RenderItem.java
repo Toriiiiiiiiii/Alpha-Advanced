@@ -38,6 +38,7 @@ public class RenderItem extends Render {
 		float var17;
 		float var18;
 		if(var10.itemID < 256 && RenderBlocks.renderItemIn3d(Block.blocksList[var10.itemID].getRenderType())) {
+//			GL11.glEnable(GL11.GL_DEPTH_TEST);
 			GL11.glRotatef(var12, 0.0F, 1.0F, 0.0F);
 			this.loadTexture("/terrain.png");
 			float var27 = 0.25F;
@@ -59,6 +60,7 @@ public class RenderItem extends Render {
 				this.itemRenderBlocks.renderBlockOnInventory(Block.blocksList[var10.itemID]);
 				GL11.glPopMatrix();
 			}
+//			GL11.glDisable(GL11.GL_DEPTH_TEST);
 		} else {
 			GL11.glScalef(0.5F, 0.5F, 0.5F);
 			int var14 = var10.getIconIndex();
@@ -105,6 +107,8 @@ public class RenderItem extends Render {
 	public void renderItemIntoGUI(FontRenderer var1, RenderEngine var2, ItemStack var3, int var4, int var5) {
 		if(var3 != null) {
 			if(var3.itemID < 256 && RenderBlocks.renderItemIn3d(Block.blocksList[var3.itemID].getRenderType())) {
+//				GL11.glEnable(GL11.GL_DEPTH_TEST);
+//				GL11.glDisable(GL11.GL_LIGHTING);
 				int var6 = var3.itemID;
 				var2.bindTexture(var2.getTexture("/terrain.png"));
 				Block var7 = Block.blocksList[var6];
@@ -116,8 +120,10 @@ public class RenderItem extends Render {
 				GL11.glRotatef(45.0F, 0.0F, 1.0F, 0.0F);
 				GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 				GL11.glScalef(1.0F, 1.0F, 1.0F);
-				this.itemRenderBlocks.renderBlockOnInventory(var7);
+				this.itemRenderBlocks.renderBlockOnInventoryOverlay(var7);
 				GL11.glPopMatrix();
+//				GL11.glDisable(GL11.GL_DEPTH_TEST);
+//				GL11.glEnable(GL11.GL_LIGHTING);
 			} else if(var3.getIconIndex() >= 0) {
 				GL11.glDisable(GL11.GL_LIGHTING);
 				if(var3.itemID < 256) {
