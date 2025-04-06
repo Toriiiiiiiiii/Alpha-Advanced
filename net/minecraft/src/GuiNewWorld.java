@@ -62,7 +62,7 @@ public class GuiNewWorld extends GuiScreen {
 		}
 		
 		if(var1.id == 1) {
-			this.selectWorld(this.worldType == 1, this.worldType == 2, this.seedText.length() > 0 ? Integer.parseInt(this.seedText) : 0);
+			this.selectWorld(this.worldType == 1, this.worldType == 2, this.seedText.length() > 0 ? (int)(Long.parseLong(this.seedText) & 2^31) : 0);
 		}
 		
 		if(var1.id == 6) {
@@ -101,7 +101,7 @@ public class GuiNewWorld extends GuiScreen {
 				var3 = "";
 			}
 
-			int var4 = 32 - this.seedText.length();
+			int var4 = 11 - this.seedText.length();
 			if(var4 > var3.length()) {
 				var4 = var3.length();
 			}
@@ -119,7 +119,7 @@ public class GuiNewWorld extends GuiScreen {
 			this.seedText = this.seedText.substring(0, this.seedText.length() - 1);
 		}
 
-		if(" !\"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_\'abcdefghijklmnopqrstuvwxyz{|}~\u2302\u00c7\u00fc\u00e9\u00e2\u00e4\u00e0\u00e5\u00e7\u00ea\u00eb\u00e8\u00ef\u00ee\u00ec\u00c4\u00c5\u00c9\u00e6\u00c6\u00f4\u00f6\u00f2\u00fb\u00f9\u00ff\u00d6\u00dc\u00f8\u00a3\u00d8\u00d7\u0192\u00e1\u00ed\u00f3\u00fa\u00f1\u00d1\u00aa\u00ba\u00bf\u00ae\u00ac\u00bd\u00bc\u00a1\u00ab\u00bb".indexOf(var1) >= 0 && this.seedText.length() < 32) {
+		if("-0123456789".indexOf(var1) >= 0 && this.seedText.length() < 11) {
 			this.seedText = this.seedText + var1;
 		}
 
