@@ -17,7 +17,7 @@ public class SoundManager {
 	public GameSettings options;
 	private static boolean loaded = false;
 	private Random rand = new Random();
-	private int ticksBeforeMusic = 200;
+	public int ticksBeforeMusic = 200;
 
 	public void loadSoundSettings(GameSettings settings) {
 		this.soundPoolStreaming.isGetRandomSound = false;
@@ -85,11 +85,12 @@ public class SoundManager {
 	}
 
 	public void playRandomMusicIfReady() {
-		if (this.ticksBeforeMusic > options.musicDelay * 2) {
+		if (this.ticksBeforeMusic > options.musicDelay * 40) {
 			this.ticksBeforeMusic = this.rand.nextInt(options.musicDelay * 20) + options.musicDelay * 20;
 		}
 		if(loaded && this.options.musicVolume != 0.0F) {
 			if(!sndSystem.playing("BgMusic") && !sndSystem.playing("streaming")) {
+//				System.out.println(this.ticksBeforeMusic);
 				if(this.ticksBeforeMusic > 0) {
 					--this.ticksBeforeMusic;
 					return;

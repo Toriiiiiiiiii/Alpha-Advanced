@@ -156,6 +156,9 @@ public class GameSettings {
 				this.fancyGraphics = !this.fancyGraphics;
 				this.mc.renderGlobal.loadRenderers();
 				break;
+			case MUSICDELAY:
+				this.musicDelay = (int)value;
+				break;
 			case DARKMODE:
 				this.darkMode = !this.darkMode;
 				break;

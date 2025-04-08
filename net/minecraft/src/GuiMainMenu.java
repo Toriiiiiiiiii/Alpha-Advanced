@@ -186,6 +186,7 @@ public class GuiMainMenu extends GuiScreen {
 		if(sm != null) {
 			if(!sm.sndSystem.playing("BgMusic") && !sm.sndSystem.playing("streaming")) {
 				SoundPoolEntry entry = sm.soundPoolMusic.getRandomSound();
+				sm.ticksBeforeMusic = this.rand.nextInt(sm.options.musicDelay * 20) + sm.options.musicDelay * 20;
 				if(entry != null) {
 					sm.sndSystem.backgroundMusic("BgMusic", entry.soundUrl, entry.soundName, false);
 					sm.sndSystem.setVolume("BgMusic", sm.options.musicVolume);
