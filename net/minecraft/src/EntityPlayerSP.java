@@ -10,7 +10,7 @@ public class EntityPlayerSP extends EntityPlayer {
 		super(var2);
 		this.mc = var1;
 		if(var3 != null && var3.username != null && var3.username.length() > 0) {
-			this.skinUrl = "http://mineskin.eu/skin/" + var3.username + ".png";
+			this.skinUrl = "https://mineskin.eu/skin/" + var3.username + ".png";
 			System.out.println("Loading texture " + this.skinUrl);
 		}
 
