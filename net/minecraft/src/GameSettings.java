@@ -179,6 +179,22 @@ public class GameSettings {
 				return 0;
 		}
 	}
+	
+	public int sliderLimit(int optionId_int) {
+		OptionId optionId = this.intToOptionId(optionId_int);
+		switch (optionId) {
+			case MUSICVOLUME:
+			case SOUNDVOLUME:
+			case MOUSESENSITIVITY:
+				return 1;
+			case MUSICDELAY:
+				return 601;
+			case FOV:
+				return 101;
+			default:
+				return 0;
+		}
+	}
 
 	public float getOptionFloatValue(int optionId_int) {
 		OptionId optionId = this.intToOptionId(optionId_int);

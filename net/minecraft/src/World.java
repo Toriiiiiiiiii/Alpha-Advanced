@@ -215,6 +215,10 @@ public class World implements IBlockAccess {
 		}
 
 		boolean var15 = false;
+		if(var3 == 0L) {
+			var3 = new Random().nextLong();
+		}
+		
 		if(this.randomSeed == 0L) {
 			this.randomSeed = var3;
 			var15 = true;

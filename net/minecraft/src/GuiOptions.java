@@ -17,7 +17,7 @@ public class GuiOptions extends GuiScreen {
 			if(var2 == 0) {
 				this.controlList.add(new GuiSmallButton(var1, this.width / 2 - 155 + var1 % 2 * 160, this.height / 8 + 24 * (var1 >> 1), this.options.getOptionDisplayString(var1)));
 			} else {
-				this.controlList.add(new GuiSlider(var1, this.width / 2 - 155 + var1 % 2 * 160, this.height / 8 + 24 * (var1 >> 1), var1, this.options.getOptionDisplayString(var1), this.options.getOptionFloatValue(var1)));
+				this.controlList.add(new GuiSlider(var1, this.width / 2 - 155 + var1 % 2 * 160, this.height / 8 + 24 * (var1 >> 1), var1, this.options.getOptionDisplayString(var1), this.options.getOptionFloatValue(var1), (float)this.options.sliderLimit(var1)));
 			}
 		}
 

@@ -8,6 +8,8 @@ import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Graphics;
 import java.io.File;
+import java.util.Random;
+
 import net.minecraft.src.AxisAlignedBB;
 import net.minecraft.src.Block;
 import net.minecraft.src.EffectRenderer;
@@ -1005,6 +1007,7 @@ public abstract class Minecraft implements Runnable {
 		if(var2.isNewWorld) {
 			var2.snowCovered = snowy;
 			var2.isAutumn = autumn;
+			
 			Block.grass.autumn = autumn;
 			this.changeWorld(var2, "Generating level");
 		} else {
