@@ -4,8 +4,8 @@ import java.util.Random;
 
 public class WorldGenCreepySign extends WorldGenerator {
 	private int blockId;
-	private String[] messages = new String[]{"You're not alone.", "Turn Around.", "I will find you.", "You cannot hide.", "Be prepared.", "Leave.", "This world isn't"};
-	private String[] messages2 = new String[] {"", "", "", "", "", "", "yours."};
+	private String[] messages = new String[]{"Hello.", "Behind you.", "NULL", "Leave."};
+	private String[] messages2 = new String[] {"", "", "", "", "", ""};
 	
 	public WorldGenCreepySign() {
 		this.blockId = Block.signStanding.blockID;

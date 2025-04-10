@@ -332,6 +332,13 @@ public class ChunkProviderGenerate implements IChunkProvider {
 			var15 = var5 + this.rand.nextInt(16);
 			(new WorldGenMinable(Block.gravel.blockID, 32)).generate(this.worldObj, this.rand, var13, var14, var15);
 		}
+		
+		for(var12 = 0; var12 < 8; ++var12) {
+			var13 = var4 + this.rand.nextInt(16);
+			var14 = this.rand.nextInt(128);
+			var15 = var5 + this.rand.nextInt(16);
+			(new WorldGenMinable(Block.marble.blockID, 32)).generate(this.worldObj, this.rand, var13, var14, var15);
+		}
 
 		for(var12 = 0; var12 < 20; ++var12) {
 			var13 = var4 + this.rand.nextInt(16);
@@ -421,7 +428,7 @@ public class ChunkProviderGenerate implements IChunkProvider {
 			(new WorldGenFlowers(Block.plantPurple.blockID)).generate(this.worldObj, this.rand, var14, var15, var16);
 		}
 		
-		if(this.rand.nextInt(2) == 0) {
+		if(this.rand.nextInt(10) == 0) {
 			var14 = var4 + this.rand.nextInt(16) + 8;
 			var15 = this.rand.nextInt(128);
 			var16 = var5 + this.rand.nextInt(16) + 8;
