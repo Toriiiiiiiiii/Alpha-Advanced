@@ -90,7 +90,7 @@ public class GuiMainMenu extends GuiScreen {
 		this.controlList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 40 + 24 * 2, "Options..."));
 		this.controlList.add(new GuiButton(4, this.width / 2 - 100, this.height / 4 + 40 + 24 * 3, "Credits"));
 //		this.controlList.add(new GuiButton(5, this.width / 2 - 100, this.height / 4 + 40 + 24 * 4, "Quit"));
-		((GuiButton)this.controlList.get(1)).enabled = false;
+//		((GuiButton)this.controlList.get(1)).enabled = false;
 		// ((GuiButton)this.controlList.get(2)).enabled = false;
 		if(this.mc.session == null) {
 			((GuiButton)this.controlList.get(1)).enabled = false;
