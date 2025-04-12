@@ -39,6 +39,7 @@ public class GameSettings {
 	public boolean limitFramerate = false;
 	public boolean fancyGraphics = true;
 	public boolean darkMode = false;
+	public String ipText = "";
 	public KeyBinding keyBindForward = new KeyBinding("Forward", 17);
 	public KeyBinding keyBindLeft = new KeyBinding("Left", 30);
 	public KeyBinding keyBindBack = new KeyBinding("Back", 31);
@@ -303,6 +304,14 @@ public class GameSettings {
 					case "darkMode":
 						this.darkMode = settingKeyValue[1].equals("true");
 						break;
+					case "ipText":
+						if (settingKeyValue.length == 2) {
+							this.ipText = settingKeyValue[1];
+						}
+						else {
+							this.ipText = "";
+						}
+						break;
 				}
 
 				for(int keyIterator = 0; keyIterator < this.keyBindings.length; ++keyIterator) {
@@ -343,6 +352,7 @@ public class GameSettings {
 			writer.println("musicDelay:" + this.musicDelay);
 			writer.println("FOV:" + this.fov);
 			writer.println("darkMode:" + this.darkMode);
+			writer.println("ipText:" + this.ipText);
 			
 			writer.close();
 		} catch (Exception error) {
