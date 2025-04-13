@@ -5,8 +5,11 @@ public class GuiMultiplayer extends GuiScreen {
 	private int updateCounter = 0;
 	private String ipText = "";
 
-	public GuiMultiplayer(GuiScreen var1) {
-		this.parentScreen = var1;
+	public GuiMultiplayer(GuiScreen parent) {
+		this.parentScreen = parent;
+		
+		parent.mc.options.loadOptions();
+		this.ipText = parent.mc.options.ipText;
 	}
 
 	public void updateScreen() {
@@ -23,8 +26,12 @@ public class GuiMultiplayer extends GuiScreen {
 	protected void actionPerformed(GuiButton var1) {
 		if(var1.enabled) {
 			if(var1.id == 1) {
+				this.mc.options.ipText = this.ipText;
+				this.mc.options.saveOptions();
 				this.mc.displayGuiScreen(this.parentScreen);
 			} else if(var1.id == 0) {
+				this.mc.options.ipText = this.ipText;
+				this.mc.options.saveOptions();
 				String[] var2 = this.ipText.split(":");
 				this.mc.displayGuiScreen(new GuiConnecting(this.mc, var2[0], var2.length > 1 ? Integer.parseInt(var2[1]) : 25565));
 			}
