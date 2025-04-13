@@ -87,6 +87,16 @@ public class BlockDoor extends Block {
 	}
 
 	public boolean blockActivated(World var1, int var2, int var3, int var4, EntityPlayer var5) {
+		if(var1.multiplayerWorld) {
+			if(Math.random() < 0.5D) {
+				var1.playSoundEffect((double)var2 + 0.5D, (double)var3 + 0.5D, (double)var4 + 0.5D, "random.door_open", 1.0F, var1.rand.nextFloat() * 0.1F + 0.9F);
+			} else {
+				var1.playSoundEffect((double)var2 + 0.5D, (double)var3 + 0.5D, (double)var4 + 0.5D, "random.door_close", 1.0F, var1.rand.nextFloat() * 0.1F + 0.9F);
+			}
+			
+			return true;
+		}
+		
 		if(this.material == Material.iron) {
 			return true;
 		} else {

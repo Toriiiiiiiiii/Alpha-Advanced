@@ -18,7 +18,7 @@ public class BlockFurnace extends BlockContainer {
 
 	public void onBlockAdded(World var1, int var2, int var3, int var4) {
 		super.onBlockAdded(var1, var2, var3, var4);
-		//this.setDefaultDirection(var1, var2, var3, var4);
+//		this.setDefaultDirection(var1, var2, var3, var4);
 	}
 
 	public void onBlockPlaced(World world, int x, int y, int z, int var5) {
