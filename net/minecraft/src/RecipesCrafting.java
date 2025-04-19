@@ -13,6 +13,8 @@ public class RecipesCrafting {
 		var1.addRecipe(new ItemStack(Block.clothDarkGray), new Object[] {"#X", Character.valueOf('#'), Block.plantBlack, Character.valueOf('X'), Block.cloth});
 		var1.addRecipe(new ItemStack(Block.clothCyan), new Object[] {"#X", Character.valueOf('#'), Block.plantBlue, Character.valueOf('X'), Block.cloth});
 		var1.addRecipe(new ItemStack(Block.clothPurple), new Object[] {"#X", Character.valueOf('#'), Block.plantPurple, Character.valueOf('X'), Block.cloth});
+		var1.addRecipe(new ItemStack(Block.clothOrange), new Object[] {"#X", Character.valueOf('#'), Item.teaLeaves, Character.valueOf('X'), Block.cloth});
+		var1.addRecipe(new ItemStack(Block.clothGreen), new Object[] {"#X", Character.valueOf('#'), Block.cactus, Character.valueOf('X'), Block.cloth});
 		var1.addRecipe(new ItemStack(Block.minecartTrackPowered, 4), new Object[] {"# #", "#X#", "# #", Character.valueOf('#'), Item.ingotCopper, Character.valueOf('X'), Item.stick});
 		var1.addRecipe(new ItemStack(Block.brickStone, 4), new Object[] {"##","##", Character.valueOf('#'), Block.cobblestone});
 		var1.addRecipe(new ItemStack(Block.brickSmooth, 4), new Object[] {"##","##", Character.valueOf('#'), Block.stone});
