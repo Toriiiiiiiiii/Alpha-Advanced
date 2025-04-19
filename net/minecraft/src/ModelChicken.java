@@ -1,5 +1,7 @@
 package net.minecraft.src;
 
+import org.lwjgl.opengl.GL11;
+
 public class ModelChicken extends ModelBase {
 	public ModelRenderer head;
 	public ModelRenderer body;
@@ -9,6 +11,7 @@ public class ModelChicken extends ModelBase {
 	public ModelRenderer leftWing;
 	public ModelRenderer bill;
 	public ModelRenderer chin;
+	public ModelRenderer tail;
 
 	public ModelChicken() {
 		byte var1 = 16;
@@ -36,6 +39,11 @@ public class ModelChicken extends ModelBase {
 		this.leftWing = new ModelRenderer(24, 13);
 		this.leftWing.addBox(-1.0F, 0.0F, -3.0F, 1, 4, 6);
 		this.leftWing.setRotationPoint(4.0F, (float)(-3 + var1), 0.0F);
+		
+		this.tail = new ModelRenderer(0, 26);
+		this.tail.addBox(0.0F, 8.0F, 0.0F, 0, 4, 8);
+		this.tail.setRotationPoint(0.0F, (float)(0 + var1), 0.0F);
+		this.tail.mirror = true;
 	}
 
 	public void render(float var1, float var2, float var3, float var4, float var5, float var6) {
@@ -48,6 +56,11 @@ public class ModelChicken extends ModelBase {
 		this.leftLeg.render(var6);
 		this.rightWing.render(var6);
 		this.leftWing.render(var6);
+		
+//		GL11.glEnable(GL11.GL_CULL_FACE);
+//		this.tail.render(var6);
+//		GL11.glDisable(GL11.GL_CULL_FACE);
+		
 	}
 
 	public void setRotationAngles(float var1, float var2, float var3, float var4, float var5, float var6) {
@@ -62,5 +75,6 @@ public class ModelChicken extends ModelBase {
 		this.leftLeg.rotateAngleX = MathHelper.cos(var1 * 0.6662F + (float)Math.PI) * 1.4F * var2;
 		this.rightWing.rotateAngleZ = var3;
 		this.leftWing.rotateAngleZ = -var3;
+		this.tail.rotateAngleX = (float)Math.PI * 0.5F;
 	}
 }
