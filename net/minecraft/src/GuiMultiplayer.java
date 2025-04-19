@@ -20,7 +20,7 @@ public class GuiMultiplayer extends GuiScreen {
 		this.controlList.clear();
 		this.controlList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 96 + 12, "Connect"));
 		this.controlList.add(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 120 + 12, "Cancel"));
-		((GuiButton)this.controlList.get(0)).enabled = false;
+		((GuiButton)this.controlList.get(0)).enabled = this.ipText.length() > 0;
 	}
 
 	protected void actionPerformed(GuiButton var1) {

@@ -244,6 +244,7 @@ public class EntityRenderer {
 			this.setupViewBobbing(var1);
 		}
 
+		GL11.glEnable(GL11.GL_DEPTH_TEST);
 	}
 
 	public void updateCameraAndRender(float var1) {

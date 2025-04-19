@@ -11,6 +11,8 @@ public class ItemBucket extends Item {
 	}
 
 	public ItemStack onItemRightClick(ItemStack var1, World var2, EntityPlayer var3) {
+		if(var2.multiplayerWorld) return var1;
+		
 		float var4 = 1.0F;
 		float var5 = var3.prevRotationPitch + (var3.rotationPitch - var3.prevRotationPitch) * var4;
 		float var6 = var3.prevRotationYaw + (var3.rotationYaw - var3.prevRotationYaw) * var4;

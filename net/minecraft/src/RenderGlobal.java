@@ -630,9 +630,14 @@ public class RenderGlobal implements IWorldAccess {
 	}
 
 	public void renderClouds(float var1) {
-		if(this.mc.options.fancyGraphics) {
-			this.renderCloudsFancy(var1);
-		} else {
+//		if(this.mc.options.fancyGraphics) {
+//			this.renderCloudsFancy(var1, 0);
+////			this.renderCloudsFancy(var1, 10);
+//		} else {
+			GL11.glEnable(GL11.GL_DEPTH_TEST);
+			int iMax = 2;
+			if(this.mc.options.fancyGraphics) iMax = 3;
+			for(int i = 0; i < iMax; ++i) {
 			GL11.glDisable(GL11.GL_CULL_FACE);
 			float var2 = (float)(this.mc.thePlayer.lastTickPosY + (this.mc.thePlayer.posY - this.mc.thePlayer.lastTickPosY) * (double)var1);
 			byte var3 = 32;
@@ -641,7 +646,7 @@ public class RenderGlobal implements IWorldAccess {
 			GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.renderEngine.getTexture("/clouds.png"));
 			GL11.glEnable(GL11.GL_BLEND);
 			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-			Vec3D var6 = this.theWorld.getCloudColor(var1);
+			Vec3D var6 = this.theWorld.getCloudColor(var1 + 10*i);
 			float var7 = (float)var6.xCoord;
 			float var8 = (float)var6.yCoord;
 			float var9 = (float)var6.zCoord;
@@ -656,43 +661,53 @@ public class RenderGlobal implements IWorldAccess {
 			}
 
 			var10 = 0.5F / 1024.0F;
-			double var22 = this.mc.thePlayer.prevPosX + (this.mc.thePlayer.posX - this.mc.thePlayer.prevPosX) * (double)var1 + (double)(((float)this.cloudTickCounter + var1) * 0.03F);
+			double var22 = this.mc.thePlayer.prevPosX + (this.mc.thePlayer.posX - this.mc.thePlayer.prevPosX) * (double)var1 + (double)(((float)this.cloudTickCounter + (100000*i) + var1) * 0.03F);
 			double var13 = this.mc.thePlayer.prevPosZ + (this.mc.thePlayer.posZ - this.mc.thePlayer.prevPosZ) * (double)var1;
 			int var15 = MathHelper.floor_double(var22 / 2048.0D);
 			int var16 = MathHelper.floor_double(var13 / 2048.0D);
 			var22 -= (double)(var15 * 2048);
 			var13 -= (double)(var16 * 2048);
-			float var17 = 120.0F - var2 + 0.33F;
+			float var17 = 100.0F + (30*i) - var2 + 0.33F;
 			float var18 = (float)(var22 * (double)var10);
 			float var19 = (float)(var13 * (double)var10);
 			var5.startDrawingQuads();
 			var5.setColorRGBA_F(var7, var8, var9, 0.8F);
 
+			GL11.glEnable(GL11.GL_DEPTH_TEST);
 			for(int var20 = -var3 * var4; var20 < var3 * var4; var20 += var3) {
 				for(int var21 = -var3 * var4; var21 < var3 * var4; var21 += var3) {
 					var5.addVertexWithUV((double)(var20 + 0), (double)var17, (double)(var21 + var3), (double)((float)(var20 + 0) * var10 + var18), (double)((float)(var21 + var3) * var10 + var19));
 					var5.addVertexWithUV((double)(var20 + var3), (double)var17, (double)(var21 + var3), (double)((float)(var20 + var3) * var10 + var18), (double)((float)(var21 + var3) * var10 + var19));
 					var5.addVertexWithUV((double)(var20 + var3), (double)var17, (double)(var21 + 0), (double)((float)(var20 + var3) * var10 + var18), (double)((float)(var21 + 0) * var10 + var19));
 					var5.addVertexWithUV((double)(var20 + 0), (double)var17, (double)(var21 + 0), (double)((float)(var20 + 0) * var10 + var18), (double)((float)(var21 + 0) * var10 + var19));
+//					var5.addVertexWithUV((double)(var20 + 0), (double)var17+5, (double)(var21 + var3), (double)((float)(var20 + 0) * var10 + var18), (double)((float)(var21 + var3) * var10 + var19));
+//					var5.addVertexWithUV((double)(var20 + var3), (double)var17+5, (double)(var21 + var3), (double)((float)(var20 + var3) * var10 + var18), (double)((float)(var21 + var3) * var10 + var19));
+//					var5.addVertexWithUV((double)(var20 + var3), (double)var17+5, (double)(var21 + 0), (double)((float)(var20 + var3) * var10 + var18), (double)((float)(var21 + 0) * var10 + var19));
+//					var5.addVertexWithUV((double)(var20 + 0), (double)var17+50, (double)(var21 + 0), (double)((float)(var20 + 0) * var10 + var18), (double)((float)(var21 + 0) * var10 + var19));
 				}
+//				for(int var21 = -var3 * var4; var21 < var3 * var4; var21 += var3) {
+//				}
 			}
+			GL11.glEnable(GL11.GL_DEPTH_TEST);
 
 			var5.draw();
 			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 			GL11.glDisable(GL11.GL_BLEND);
 			GL11.glEnable(GL11.GL_CULL_FACE);
-		}
+			}
+//		}
 	}
 
-	public void renderCloudsFancy(float var1) {
+	public void renderCloudsFancy(float var1, float offset) {
 		GL11.glDisable(GL11.GL_CULL_FACE);
+		for(int i = 0; i < 2; ++i) {
 		float var2 = (float)(this.mc.thePlayer.lastTickPosY + (this.mc.thePlayer.posY - this.mc.thePlayer.lastTickPosY) * (double)var1);
 		Tessellator var3 = Tessellator.instance;
 		float var4 = 12.0F;
 		float var5 = 4.0F;
-		double var6 = (this.mc.thePlayer.prevPosX + (this.mc.thePlayer.posX - this.mc.thePlayer.prevPosX) * (double)var1 + (double)(((float)this.cloudTickCounter + var1) * 0.03F)) / (double)var4;
+		double var6 = (this.mc.thePlayer.prevPosX + (this.mc.thePlayer.posX - this.mc.thePlayer.prevPosX) * (double)var1 + (double)(((float)this.cloudTickCounter + (100000*i) + var1) * 0.03F)) / (double)var4;
 		double var8 = (this.mc.thePlayer.prevPosZ + (this.mc.thePlayer.posZ - this.mc.thePlayer.prevPosZ) * (double)var1) / (double)var4 + (double)0.33F;
-		float var10 = 130.0F - var2 + 0.33F;
+		float var10 = 100.0F - (10*i) - var2 + 0.33F;
 		int var11 = MathHelper.floor_double(var6 / 2048.0D);
 		int var12 = MathHelper.floor_double(var8 / 2048.0D);
 		var6 -= (double)(var11 * 2048);
@@ -811,10 +826,12 @@ public class RenderGlobal implements IWorldAccess {
 				}
 			}
 		}
-
+		}
+		
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		GL11.glDisable(GL11.GL_BLEND);
 		GL11.glEnable(GL11.GL_CULL_FACE);
+		
 	}
 
 	public boolean updateRenderers(EntityPlayer var1, boolean var2) {
