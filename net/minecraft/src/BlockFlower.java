@@ -34,7 +34,7 @@ public class BlockFlower extends Block {
 	public boolean blockActivated(World var1, int var2, int var3, int var4, EntityPlayer var5) {		
 		if(var1.multiplayerWorld) return true;
 		
-		if(this.blockID != Block.plantBlack.blockID && this.blockID != Block.plantBlue.blockID && this.blockID != Block.plantPink.blockID && this.blockID != Block.plantRed.blockID && this.blockID != Block.plantYellow.blockID && this.blockID != Block.plantTea.blockID)
+		if(this.blockID != Block.plantBlack.blockID && this.blockID != Block.plantBlue.blockID && this.blockID != Block.plantPink.blockID && this.blockID != Block.plantRed.blockID && this.blockID != Block.plantYellow.blockID && this.blockID != Block.plantTea.blockID && this.blockID != Block.plantPurple.blockID)
 			return true;
 		
 		ItemStack currentItem = var5.inventory.getCurrentItem();
