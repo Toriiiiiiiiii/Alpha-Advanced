@@ -31,7 +31,7 @@ public class RecipesCrafting {
 		
 		for(int i = 0; i < wools.length; ++i) {
 			if(dyes[i] == null) continue;
-			for(int j = 0; j < wools.length; ++i) {
+			for(int j = 0; j < wools.length; ++j) {
 				var1.addRecipe(new ItemStack(wools[i]), new Object[]{"#X", Character.valueOf('#'), dyes[i], Character.valueOf('X'), wools[j]});
 			}
 		}
