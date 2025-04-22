@@ -12,7 +12,7 @@ public class EntitySheep extends EntityAnimal {
 	public boolean attackEntityFrom(Entity var1, int var2) {
 		if(!this.sheared && var1 instanceof EntityLiving) {
 			this.sheared = true;
-			int var3 = 1 + this.rand.nextInt(1);
+			int var3 = 1 + this.rand.nextInt(2);
 
 			for(int var4 = 0; var4 < var3; ++var4) {
 				EntityItem var5 = this.entityDropItem(Block.cloth.blockID, 1, 1.0F);
@@ -30,7 +30,7 @@ public class EntitySheep extends EntityAnimal {
 		if(var2 != null && !this.sheared && var2.itemID == Item.shears.shiftedIndex) {
 			this.sheared = true;
 			var2.damageItem(1);
-			int var3 = 3 + this.rand.nextInt(1);
+			int var3 = 3 + this.rand.nextInt(3);
 
 			for(int var4 = 0; var4 < var3; ++var4) {
 				EntityItem var5 = this.entityDropItem(Block.cloth.blockID, 1, 1.0F);
