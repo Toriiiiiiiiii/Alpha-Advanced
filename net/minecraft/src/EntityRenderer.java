@@ -600,11 +600,11 @@ public class EntityRenderer {
 			}
 		} else {
 			GL11.glFogi(GL11.GL_FOG_MODE, GL11.GL_LINEAR);
-			GL11.glFogf(GL11.GL_FOG_START, this.farPlaneDistance * 0.25F);
+			GL11.glFogf(GL11.GL_FOG_START, this.farPlaneDistance * 0.125F);
 			GL11.glFogf(GL11.GL_FOG_END, this.farPlaneDistance);
 			if(var1 < 0) {
 				GL11.glFogf(GL11.GL_FOG_START, 0.0F);
-				GL11.glFogf(GL11.GL_FOG_END, this.farPlaneDistance * 0.8F);
+				GL11.glFogf(GL11.GL_FOG_END, this.farPlaneDistance * 0.75F);
 			}
 
 			if(GLContext.getCapabilities().GL_NV_fog_distance) {

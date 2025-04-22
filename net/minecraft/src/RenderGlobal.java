@@ -624,7 +624,7 @@ public class RenderGlobal implements IWorldAccess {
 		GL11.glPopMatrix();
 		GL11.glColor3f(var3 * 0.2F + 0.04F, var4 * 0.2F + 0.04F, var5 * 0.6F + 0.1F);
 		GL11.glDisable(GL11.GL_TEXTURE_2D);
-		GL11.glCallList(this.glSkyList2);
+//		GL11.glCallList(this.glSkyList2);
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
 		GL11.glDepthMask(true);
 	}
