@@ -25,6 +25,7 @@ public class RecipesCrafting {
 
 		var1.addRecipe(new ItemStack(Block.blockFlint), new Object[]{"##", "##", Character.valueOf('#'), Item.flint});
 		var1.addRecipe(new ItemStack(Item.flint, 4), new Object[]{"#", Character.valueOf('#'), Block.blockFlint});
+		var1.addRecipe(new ItemStack(Block.marblePillar, 4), new Object[]{"##", "##", Character.valueOf('#'), Block.marble});
 		
 		Block wools[] = {Block.clothWhite, Block.clothYellow, Block.clothRed, Block.clothRose, Block.clothDarkGray, Block.clothCyan, Block.clothPurple, Block.clothOrange, Block.clothGreen};
 		Object dyes[] = {null, Block.plantYellow, Block.plantRed, Block.plantPink, Block.plantBlack, Block.plantBlue, Block.plantPurple, Item.teaLeaves, Block.cactus};
