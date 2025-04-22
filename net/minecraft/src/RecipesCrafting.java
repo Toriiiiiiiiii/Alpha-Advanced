@@ -27,14 +27,6 @@ public class RecipesCrafting {
 		var1.addRecipe(new ItemStack(Item.flint, 4), new Object[]{"#", Character.valueOf('#'), Block.blockFlint});
 		var1.addRecipe(new ItemStack(Block.marblePillar, 4), new Object[]{"##", "##", Character.valueOf('#'), Block.marble});
 		
-		Block wools[] = {Block.clothWhite, Block.clothYellow, Block.clothRed, Block.clothRose, Block.clothDarkGray, Block.clothCyan, Block.clothPurple, Block.clothOrange, Block.clothGreen};
-		Object dyes[] = {null, Block.plantYellow, Block.plantRed, Block.plantPink, Block.plantBlack, Block.plantBlue, Block.plantPurple, Item.teaLeaves, Block.cactus};
 		
-		for(int i = 0; i < wools.length; ++i) {
-			if(dyes[i] == null) continue;
-			for(int j = 0; j < wools.length; ++j) {
-				var1.addRecipe(new ItemStack(wools[i]), new Object[]{"#X", Character.valueOf('#'), dyes[i], Character.valueOf('X'), wools[j]});
-			}
-		}
 	}
 }

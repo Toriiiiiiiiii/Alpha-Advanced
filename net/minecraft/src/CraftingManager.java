@@ -61,6 +61,18 @@ public class CraftingManager {
 		this.addRecipe(new ItemStack(Block.stairCompactStoneBrick, 6), new Object[]{"#  ", "## ", "###", Character.valueOf('#'), Block.brickStone});
 		this.addRecipe(new ItemStack(Block.stairCompactBrick, 6), new Object[]{"#  ", "## ", "###", Character.valueOf('#'), Block.brick});
 		this.addRecipe(new ItemStack(Block.stairCompactSmoothBrick, 6), new Object[]{"#  ", "## ", "###", Character.valueOf('#'), Block.brickSmooth});
+		
+		Block wools[] = {Block.cloth, Block.clothYellow, Block.clothRed, Block.clothRose, Block.clothDarkGray, Block.clothCyan, Block.clothPurple, Block.clothOrange, Block.clothGreen};
+		Object dyes[] = {Item.clay, Block.plantYellow, Block.plantRed, Block.plantPink, Block.plantBlack, Block.plantBlue, Block.plantPurple, Item.teaLeaves, Block.cactus};
+		
+		for(int i = 0; i < wools.length; ++i) {
+			if(dyes[i] == null) continue;
+			for(int j = 0; j < wools.length; ++j) {
+				if(wools[i] == wools[j]) continue;
+				this.addRecipe(new ItemStack(wools[i]), new Object[]{"#X", Character.valueOf('#'), dyes[i], Character.valueOf('X'), wools[j]});
+			}
+		}
+		
 		Collections.sort(this.recipes, new RecipeSorter(this));
 		System.out.println(this.recipes.size() + " recipes");
 	}
