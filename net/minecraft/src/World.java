@@ -24,6 +24,7 @@ public class World implements IBlockAccess {
 	public long worldTime;
 	public boolean snowCovered;
 	public boolean isAutumn;
+	public boolean isSpring;
 	private long skyColor;
 	private long fogColor;
 	private long cloudColor;
@@ -112,6 +113,8 @@ public class World implements IBlockAccess {
 		this.loadedTileEntityList = new ArrayList();
 		this.worldTime = 0L;
 		this.snowCovered = false;
+		this.isSpring = false;
+		this.isAutumn = false;
 		this.skyColor = 8961023L;
 		this.fogColor = 12638463L;
 		this.cloudColor = 16777215L;
@@ -201,6 +204,7 @@ public class World implements IBlockAccess {
 				this.sizeOnDisk = var7.getLong("SizeOnDisk");
 				this.snowCovered = var7.getBoolean("SnowCovered");
 				this.isAutumn = var7.getBoolean("IsAutumn");
+				this.isSpring = var7.getBoolean("IsSpring");
 				if(this.isAutumn) Block.grass.autumn = true;
 				else Block.grass.autumn = false;
 				
@@ -314,6 +318,7 @@ public class World implements IBlockAccess {
 		var1.setLong("SizeOnDisk", this.sizeOnDisk);
 		var1.setBoolean("SnowCovered", this.snowCovered);
 		var1.setBoolean("IsAutumn", this.isAutumn);
+		var1.setBoolean("IsSpring", this.isSpring);
 		var1.setLong("LastPlayed", System.currentTimeMillis());
 		EntityPlayer var2 = null;
 		if(this.playerEntities.size() > 0) {

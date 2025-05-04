@@ -77,9 +77,10 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.glu.GLU;
 
 public abstract class Minecraft implements Runnable {
-	public byte versionMajor    = 1;
-	public byte versionMinor    = 4;
-	public byte versionSubMinor = 1;
+	public byte versionMajor      = 1;
+	public byte versionMinor      = 5;
+	public byte versionSubMinor   = 0;
+	public boolean previewVersion = true;
 	
 	public boolean hideUI = false;
 	public PlayerController playerController;
@@ -887,6 +888,11 @@ public abstract class Minecraft implements Runnable {
 												if(Keyboard.getEventKey() == Keyboard.KEY_F5) {
 													this.options.thirdPersonView = !this.options.thirdPersonView;
 												}
+												
+												// TODO: Make this work
+//												if(Keyboard.getEventKey() == Keyboard.KEY_F7) {
+//													this.entityRenderer.grabLargeScreenshot();
+//												}
 
 												if(Keyboard.getEventKey() == this.options.keyBindInventory.keyCode) {
 													this.displayGuiScreen(new GuiInventory(this.thePlayer.inventory, this.thePlayer.inventory.craftingInventory));
@@ -998,7 +1004,7 @@ public abstract class Minecraft implements Runnable {
 		return this.theWorld != null && this.theWorld.multiplayerWorld;
 	}
 
-	public void startWorld(String var1, boolean snowy, boolean autumn, int seed) {
+	public void startWorld(String var1, boolean snowy, boolean autumn, boolean spring, int seed) {
 		this.changeWorld1((World)null);
 		System.gc();
 		
@@ -1007,6 +1013,7 @@ public abstract class Minecraft implements Runnable {
 		if(var2.isNewWorld) {
 			var2.snowCovered = snowy;
 			var2.isAutumn = autumn;
+			var2.isSpring = spring;
 			
 			Block.grass.autumn = autumn;
 			this.changeWorld(var2, "Generating level");

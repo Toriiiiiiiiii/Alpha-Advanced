@@ -150,6 +150,13 @@ public class WorldRenderer {
 										else
 											var24.blockIndexInTexture = 14 + 7*16;
 									}
+									
+									else if(this.worldObj.isSpring) {
+										if(var24.isOpaqueCube())
+											var24.blockIndexInTexture = 10 + 9*16;
+										else
+											var24.blockIndexInTexture = 9 + 9*16;
+									}
 								}
 								
 								int var20 = var24.getRenderBlockPass();

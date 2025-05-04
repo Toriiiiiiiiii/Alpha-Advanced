@@ -399,7 +399,8 @@ public class ChunkProviderGenerate implements IChunkProvider {
 		}
 
 		int var16;
-		for(var14 = 0; var14 < var12; ++var14) {
+		float mult = this.worldObj.isSpring ? 3.0f : 1;
+		for(var14 = 0; var14 < var12*mult; ++var14) {
 			var15 = var4 + this.rand.nextInt(16) + 8;
 			var16 = var5 + this.rand.nextInt(16) + 8;
 			((WorldGenerator)var18).setScale(1.0D, 1.0D, 1.0D);
@@ -407,21 +408,21 @@ public class ChunkProviderGenerate implements IChunkProvider {
 		}
 
 		int var17;
-		for(var14 = 0; var14 < 2; ++var14) {
+		for(var14 = 0; var14 < 2*mult; ++var14) {
 			var15 = var4 + this.rand.nextInt(16) + 8;
 			var16 = this.rand.nextInt(128);
 			var17 = var5 + this.rand.nextInt(16) + 8;
 			(new WorldGenFlowers(Block.plantYellow.blockID)).generate(this.worldObj, this.rand, var15, var16, var17);
 		}
 
-		if(this.rand.nextInt(2) == 0) {
+		if(this.rand.nextInt(2) <= 1*mult) {
 			var14 = var4 + this.rand.nextInt(16) + 8;
 			var15 = this.rand.nextInt(128);
 			var16 = var5 + this.rand.nextInt(16) + 8;
 			(new WorldGenFlowers(Block.plantRed.blockID)).generate(this.worldObj, this.rand, var14, var15, var16);
 		}
 		
-		if(this.rand.nextInt(2) == 0) {
+		if(this.rand.nextInt(2) <= 1*mult) {
 			var14 = var4 + this.rand.nextInt(16) + 8;
 			var15 = this.rand.nextInt(128);
 			var16 = var5 + this.rand.nextInt(16) + 8;

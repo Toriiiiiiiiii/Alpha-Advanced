@@ -211,7 +211,13 @@ public class GuiMainMenu extends GuiScreen {
 		GL11.glScalef(var5, var5, var5);
 		this.drawCenteredString(this.fontRenderer, this.splashString, 0, -8, 16776960);
 		GL11.glPopMatrix();
-		String var6 = "Alpha Advanced v" + String.valueOf(this.mc.versionMajor) + "." + String.valueOf(this.mc.versionMinor) + "." + String.valueOf(this.mc.versionSubMinor);
+		
+		String var6;
+		if(!this.mc.previewVersion)
+			var6 = "Alpha Advanced v" + String.valueOf(this.mc.versionMajor) + "." + String.valueOf(this.mc.versionMinor) + "." + String.valueOf(this.mc.versionSubMinor);
+		else
+			var6 = "Alpha Advanced v" + String.valueOf(this.mc.versionMajor) + "." + String.valueOf(this.mc.versionMinor) + "." + String.valueOf(this.mc.versionSubMinor) + " (Preview)";
+		
 		this.drawString(this.fontRenderer, var6, this.width - this.fontRenderer.getStringWidth(var6) - 2, this.height - 20, 0xAAAAff);
 		this.drawString(this.fontRenderer, "Not associated with Mojang or Microsoft.", this.width - this.fontRenderer.getStringWidth("Not associated with Mojang or Microsoft.") - 2, this.height-10, 16777215);
 		long var7 = Runtime.getRuntime().maxMemory();

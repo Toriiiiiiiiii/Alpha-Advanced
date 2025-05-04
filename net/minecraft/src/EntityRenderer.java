@@ -1,8 +1,16 @@
 package net.minecraft.src;
 
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.nio.FloatBuffer;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Random;
+
+import javax.imageio.ImageIO;
+
 import net.minecraft.client.Minecraft;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
@@ -47,6 +55,130 @@ public class EntityRenderer {
 
 	}
 
+	public final void grabLargeScreenshot() {
+		this.mc.loadingScreen.displayProgressMessage("Grabbing large screenshot");
+		File var1 = new File(System.getProperty("user.home", "."));
+		int var2 = 0;
+
+		while(true) {
+			File var3 = new File(var1, "mc_map_" + new DecimalFormat("0000").format((long)var2) + ".png");
+			if(!var3.exists()) {
+				var3 = var3.getAbsoluteFile();
+				this.mc.loadingScreen.displayLoadingString("Rendering");
+				this.mc.loadingScreen.setLoadingProgress(0);
+
+				try {
+					int var19 = (128 << 4) + (128 << 4);
+					var2 = (256 << 4) + var19 / 2;
+					BufferedImage var4 = new BufferedImage(var19, var2, 1);
+					Graphics var5 = var4.getGraphics();
+					int var6 = this.mc.displayWidth;
+					int var7 = this.mc.displayHeight;
+					int var8 = (var19 / var6 + 1) * (var2 / var7 + 1);
+					int var9 = 0;
+
+					for(int var10 = 0; var10 < var19; var10 += var6) {
+						for(int var11 = 0; var11 < var2; var11 += var7) {
+							++var9;
+							this.mc.loadingScreen.setLoadingProgress(var9 * 100 / var8);
+							int var10001 = var10 - var19 / 2;
+							int var10002 = var11 - var2 / 2;
+							float var12 = 0.0F;
+							int var14 = var10002;
+							int var13 = var10001;
+							EntityPlayerSP var15 = this.mc.thePlayer;
+							World var16 = this.mc.theWorld;
+							RenderGlobal var17 = this.mc.renderGlobal;
+							GL11.glViewport(0, 0, this.mc.displayWidth, this.mc.displayHeight);
+							this.updateFogColor(0.0F);
+							GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT | GL11.GL_COLOR_BUFFER_BIT);
+							GL11.glEnable(GL11.GL_CULL_FACE);
+							this.farPlaneDistance = (float)(512 >> (this.mc.options.renderDistance << 1));
+							GL11.glMatrixMode(GL11.GL_PROJECTION);
+							GL11.glLoadIdentity();
+							GL11.glOrtho(0.0D, (double)this.mc.displayWidth, 0.0D, (double)this.mc.displayHeight, 10.0D, 10000.0D);
+							GL11.glMatrixMode(GL11.GL_MODELVIEW);
+							GL11.glLoadIdentity();
+							GL11.glTranslatef((float)(-var13), (float)(-var14), -5000.0F);
+							GL11.glScalef(16.0F, -16.0F, -16.0F);
+							float var22 = 1.0F;
+							GL11.glRotatef(0.0F, 0.0F, 1.0F, 0.0F);
+							GL11.glTranslatef((float)(-128) / 2.0F, (float)(-256) / 2.0F, (float)(-128) / 2.0F);
+							IsomCamera var24 = new IsomCamera();
+//							this.mc.renderGlobal.clipRenderersByFrustrum(var24, true);
+							this.mc.renderGlobal.updateRenderers(var15, true);
+							this.setupFog(1);
+							GL11.glEnable(GL11.GL_FOG);
+							GL11.glFogi(GL11.GL_FOG_MODE, GL11.GL_LINEAR);
+							float var23 = (float)256 * 8.0F;
+							GL11.glFogf(GL11.GL_FOG_START, 5000.0F - var23);
+							GL11.glFogf(GL11.GL_FOG_END, 5000.0F + var23 * 8.0F);
+							RenderHelper.enableStandardItemLighting();
+//							var17.renderEntities(this.orientCamera(0.0F), var24, 0.0F);
+							RenderHelper.disableStandardItemLighting();
+							GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.mc.renderEngine.getTexture("/terrain.png"));
+							var17.sortAndRender(var15, 0, 0);
+//							var17.oobGroundRenderer();
+//							if(var16.cloudHeight < var16.height) {
+//								var17.renderSky(0.0F);
+//							}
+
+							GL11.glEnable(GL11.GL_BLEND);
+							GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+							GL11.glColorMask(false, false, false, false);
+							var13 = var17.sortAndRender(var15, 1, 0);
+							GL11.glColorMask(true, true, true, true);
+							if(var13 > 0) {
+								var17.renderAllRenderLists();
+							}
+
+//							if(var16.getGroundLevel() >= 0) {
+//								var17.oobWaterRenderer();
+//							}
+
+							GL11.glDepthMask(true);
+							GL11.glDisable(GL11.GL_BLEND);
+							GL11.glDisable(GL11.GL_FOG);
+//							this.entityByteBuffer.clear();
+							GL11.glPixelStorei(GL11.GL_PACK_ALIGNMENT, 1);
+//							GL11.glReadPixels(0, 0, this.mc.displayWidth, this.mc.displayHeight, GL11.GL_RGB, GL11.GL_UNSIGNED_BYTE, (ByteBuffer)this.entityByteBuffer);
+//							BufferedImage var21 = screenshotBuffer(this.entityByteBuffer, var6, var7);
+//							var5.drawImage(var21, var10, var11, (ImageObserver)null);
+						}
+					}
+
+					var5.dispose();
+					this.mc.loadingScreen.displayLoadingString("Saving as " + var3.toString());
+					this.mc.loadingScreen.setLoadingProgress(100);
+					FileOutputStream var20 = new FileOutputStream(var3);
+					ImageIO.write(var4, "png", var20);
+					var20.close();
+					return;
+				} catch (Throwable var18) {
+					var18.printStackTrace();
+					return;
+				}
+			}
+
+			++var2;
+		}
+	}
+
+//	private static BufferedImage screenshotBuffer(ByteBuffer var0, int var1, int var2) {
+//		var0.position(0).limit(var1 * var2 << 2);
+//		BufferedImage var3 = new BufferedImage(var1, var2, 1);
+//		int[] var4 = ((DataBufferInt)var3.getRaster().getDataBuffer()).getData();
+//
+//		for(int var5 = 0; var5 < var1 * var2; ++var5) {
+//			int var6 = var0.get(var5 * 3) & 255;
+//			int var7 = var0.get(var5 * 3 + 1) & 255;
+//			int var8 = var0.get(var5 * 3 + 2) & 255;
+//			var4[var5] = var6 << 16 | var7 << 8 | var8;
+//		}
+//
+//		return var3;
+//	}
+	
 	public void getMouseOver(float var1) {
 		if(this.mc.thePlayer != null) {
 			double var2 = (double)this.mc.playerController.getBlockReachDistance();

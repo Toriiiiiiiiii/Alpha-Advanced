@@ -1,6 +1,8 @@
 package net.minecraft.src;
 
 import java.io.File;
+import java.util.Random;
+
 import net.minecraft.client.Minecraft;
 
 public class GuiNewWorld extends GuiScreen {
@@ -23,7 +25,7 @@ public class GuiNewWorld extends GuiScreen {
 		File var1 = Minecraft.getMinecraftDir();
 
 		this.controlList.clear();
-		this.controlList.add(new GuiButton(0, this.width / 2 - 100, this.height / 6 + 56, "World Type: Normal"));
+		this.controlList.add(new GuiButton(0, this.width / 2 - 100, this.height / 6 + 56, "Season: Random"));
 		this.controlList.add(new GuiButton(1, this.width / 2 - 100, this.height / 6 + 86, "Create!"));
 //		for(int var2 = 0; var2 < 5; ++var2) {
 //			NBTTagCompound var3 = World.getLevelData(var1, "World" + (var2 + 1));
@@ -52,17 +54,25 @@ public class GuiNewWorld extends GuiScreen {
 	protected void actionPerformed(GuiButton var1) {
 		if(var1.id == 0) {
 			this.worldType++;
-			if(this.worldType > 2) this.worldType = 0;
-			if(this.worldType == 1) 
-				var1.displayString = "World Type: Winter";
+			if(this.worldType > 4) this.worldType = 0;
+			if(this.worldType == 3) 
+				var1.displayString = "Season: Winter";
 			else if(this.worldType == 2)
-				var1.displayString = "World Type: Autumn";
+				var1.displayString = "Season: Autumn";
+			else if(this.worldType == 4) 
+				var1.displayString = "Season: Spring";
+			else if(this.worldType == 1)
+				var1.displayString = "Season: Summer";
 			else
-				var1.displayString = "World Type: Normal";
+				var1.displayString = "Season: Random";
 		}
 		
 		if(var1.id == 1) {
-			this.selectWorld(this.worldType == 1, this.worldType == 2, this.seedText.length() > 0 ? (int)(Long.parseLong(this.seedText) & 2^31) : 0);
+			int type = this.worldType;
+			if(type == 0) {
+				type = new Random().nextInt(4) + 1;
+			}
+			this.selectWorld(type == 3, type == 2, type == 4, this.seedText.length() > 0 ? (int)(Long.parseLong(this.seedText) & 2^31) : 0);
 		}
 		
 		if(var1.id == 6) {
@@ -70,12 +80,12 @@ public class GuiNewWorld extends GuiScreen {
 		}
 	}
 
-	public void selectWorld(boolean snowy, boolean autumn, int seed) {
+	public void selectWorld(boolean snowy, boolean autumn, boolean spring, int seed) {
 		this.mc.displayGuiScreen((GuiScreen)null);
 		if(!this.selected) {
 			this.selected = true;
 			this.mc.playerController = new PlayerControllerSP(this.mc);
-			this.mc.startWorld("World" + this.worldID, snowy, autumn, seed);
+			this.mc.startWorld("World" + this.worldID, snowy, autumn, spring, seed);
 			this.mc.displayGuiScreen((GuiScreen)null);
 		}
 	}

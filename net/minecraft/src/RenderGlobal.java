@@ -553,6 +553,13 @@ public class RenderGlobal implements IWorldAccess {
 		}
 
 	}
+	
+	public void renderAllRenderLists() {
+		for(int var4 = 0; var4 < this.allRenderLists.length; ++var4) {
+			this.allRenderLists[var4].render();
+		}
+
+	}
 
 	public void updateClouds() {
 		++this.cloudTickCounter;
