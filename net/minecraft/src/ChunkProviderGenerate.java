@@ -399,7 +399,7 @@ public class ChunkProviderGenerate implements IChunkProvider {
 		}
 
 		int var16;
-		float mult = this.worldObj.isSpring ? 3.0f : 1;
+		float mult = this.worldObj.isSpring ? 15.0f : 1;
 		for(var14 = 0; var14 < var12; ++var14) {
 			var15 = var4 + this.rand.nextInt(16) + 8;
 			var16 = var5 + this.rand.nextInt(16) + 8;
@@ -415,14 +415,14 @@ public class ChunkProviderGenerate implements IChunkProvider {
 			(new WorldGenFlowers(Block.plantYellow.blockID)).generate(this.worldObj, this.rand, var15, var16, var17);
 		}
 
-		if(this.rand.nextInt(2) <= 1*mult) {
+		if(this.rand.nextInt(2*(int)(mult/3)) <= 1*mult) {
 			var14 = var4 + this.rand.nextInt(16) + 8;
 			var15 = this.rand.nextInt(128);
 			var16 = var5 + this.rand.nextInt(16) + 8;
 			(new WorldGenFlowers(Block.plantRed.blockID)).generate(this.worldObj, this.rand, var14, var15, var16);
 		}
 		
-		if(this.rand.nextInt(2) <= 1*mult) {
+		if(this.rand.nextInt(2*(int)(mult/3)) <= 1*mult) {
 			var14 = var4 + this.rand.nextInt(16) + 8;
 			var15 = this.rand.nextInt(128);
 			var16 = var5 + this.rand.nextInt(16) + 8;
@@ -443,7 +443,7 @@ public class ChunkProviderGenerate implements IChunkProvider {
 //			(new WorldGenLeafPiles(Block.leafPile.blockID)).generate(this.worldObj, this.rand, var14, var15, var16);
 //		}
 		
-		if(this.rand.nextInt(4) == 0) {
+		if(this.rand.nextInt(4*(int)(mult/3)) <= 1*mult) {
 			var14 = var4 + this.rand.nextInt(16) + 8;
 			var15 = this.rand.nextInt(128);
 			var16 = var5 + this.rand.nextInt(16) + 8;
@@ -457,14 +457,14 @@ public class ChunkProviderGenerate implements IChunkProvider {
 			(new WorldGenFlowers(Block.plantPink.blockID)).generate(this.worldObj, this.rand, var14, var15, var16);
 		}
 		
-		if(this.rand.nextInt(2) == 0) {
+		if(this.rand.nextInt(2*(int)(mult/3)) <= 1*mult) {
 			var14 = var4 + this.rand.nextInt(16) + 8;
 			var15 = this.rand.nextInt(128);
 			var16 = var5 + this.rand.nextInt(16) + 8;
 			(new WorldGenFlowers(Block.plantBlack.blockID)).generate(this.worldObj, this.rand, var14, var15, var16);
 		}
 		
-		if(this.rand.nextInt(2) == 0) {
+		if(this.rand.nextInt(2*(int)(mult/3)) <= 1*mult) {
 			var14 = var4 + this.rand.nextInt(16) + 8;
 			var15 = this.rand.nextInt(128);
 			var16 = var5 + this.rand.nextInt(16) + 8;
