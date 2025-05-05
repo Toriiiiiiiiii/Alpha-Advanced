@@ -4,6 +4,7 @@ import java.util.Random;
 
 public class BlockGrass extends Block {
 	public boolean autumn;
+	public boolean spring;
 	
 	protected BlockGrass(int var1) {
 		super(var1, Material.grass);
@@ -13,12 +14,12 @@ public class BlockGrass extends Block {
 
 	public int getBlockTexture(IBlockAccess var1, int var2, int var3, int var4, int var5) {
 		if(var5 == 1) {
-			return autumn ? Block.leafPile.blockIndexInTexture - 1 : 0;
+			return autumn ? Block.leafPile.blockIndexInTexture - 1 : (spring ? 9+10*16 : 0);
 		} else if(var5 == 0) {
 			return 2;
 		} else {
 			Material var6 = var1.getBlockMaterial(var2, var3 + 1, var4);
-			return var6 != Material.snow && var6 != Material.craftedSnow ? (autumn ? Block.leafPile.blockIndexInTexture - 2 : 3) : 68;
+			return var6 != Material.snow && var6 != Material.craftedSnow ? (autumn ? Block.leafPile.blockIndexInTexture - 2 : (spring ? 10+10*16 : 3)) : 68;
 		}
 	}
 

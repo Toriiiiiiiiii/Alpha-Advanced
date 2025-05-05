@@ -55,13 +55,13 @@ public class GuiNewWorld extends GuiScreen {
 		if(var1.id == 0) {
 			this.worldType++;
 			if(this.worldType > 4) this.worldType = 0;
-			if(this.worldType == 3) 
+			if(this.worldType == 4) 
 				var1.displayString = "Season: Winter";
-			else if(this.worldType == 2)
+			else if(this.worldType == 3)
 				var1.displayString = "Season: Autumn";
-			else if(this.worldType == 4) 
+			else if(this.worldType == 1) 
 				var1.displayString = "Season: Spring";
-			else if(this.worldType == 1)
+			else if(this.worldType == 2)
 				var1.displayString = "Season: Summer";
 			else
 				var1.displayString = "Season: Random";
@@ -72,7 +72,7 @@ public class GuiNewWorld extends GuiScreen {
 			if(type == 0) {
 				type = new Random().nextInt(4) + 1;
 			}
-			this.selectWorld(type == 3, type == 2, type == 4, this.seedText.length() > 0 ? (int)(Long.parseLong(this.seedText) & 2^31) : 0);
+			this.selectWorld(type == 4, type == 3, type == 1, this.seedText.length() > 0 ? (int)(Long.parseLong(this.seedText) & 2^31) : 0);
 		}
 		
 		if(var1.id == 6) {

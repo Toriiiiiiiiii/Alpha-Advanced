@@ -400,7 +400,7 @@ public class ChunkProviderGenerate implements IChunkProvider {
 
 		int var16;
 		float mult = this.worldObj.isSpring ? 3.0f : 1;
-		for(var14 = 0; var14 < var12*mult; ++var14) {
+		for(var14 = 0; var14 < var12; ++var14) {
 			var15 = var4 + this.rand.nextInt(16) + 8;
 			var16 = var5 + this.rand.nextInt(16) + 8;
 			((WorldGenerator)var18).setScale(1.0D, 1.0D, 1.0D);

@@ -1016,6 +1016,7 @@ public abstract class Minecraft implements Runnable {
 			var2.isSpring = spring;
 			
 			Block.grass.autumn = autumn;
+			Block.grass.spring = spring;
 			this.changeWorld(var2, "Generating level");
 		} else {
 			this.changeWorld(var2, "Loading level");
