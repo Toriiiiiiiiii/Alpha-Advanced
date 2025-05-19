@@ -163,7 +163,7 @@ public class World implements IBlockAccess {
 		this.rand = new Random();
 		this.isNewWorld = false;
 		this.worldAccesses = new ArrayList();
-		this.randomSeed = 0L;
+		this.randomSeed = var3;
 		this.sizeOnDisk = 0L;
 		this.collidingBoundingBoxes = new ArrayList();
 		this.lightingUpdatesCounter = 0;
@@ -190,6 +190,7 @@ public class World implements IBlockAccess {
 			throw new RuntimeException("Failed to check session lock, aborting");
 		}
 
+		boolean var15 = false;
 		var5 = new File(this.saveDirectory, "level.dat");
 		this.isNewWorld = !var5.exists();
 		if(var5.exists()) {
@@ -221,17 +222,14 @@ public class World implements IBlockAccess {
 			}
 		} else {
 			this.snowCovered = this.rand.nextInt(4) == 0;
-		}
-
-		boolean var15 = false;
-		if(var3 == 0L) {
-			var3 = new Random().nextLong();
-		}
-		
-		if(this.randomSeed == 0L) {
+			if(var3 == 0L) {
+				var3 = new Random().nextLong();
+			}
+			
 			this.randomSeed = var3;
 			var15 = true;
 		}
+
 
 		this.rand.setSeed(randomSeed);
 		this.chunkProvider = this.getChunkProvider(this.saveDirectory);
@@ -1655,7 +1653,7 @@ public class World implements IBlockAccess {
 				}
 			}
 		}
-
+		
 	}
 
 	public boolean tickUpdates(boolean var1) {

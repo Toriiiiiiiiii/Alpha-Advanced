@@ -116,6 +116,8 @@ public class RenderGlobal implements IWorldAccess {
 
 		var4.draw();
 		GL11.glEndList();
+		
+		
 	}
 
 	private void renderStars() {

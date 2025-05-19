@@ -72,7 +72,7 @@ public class GuiNewWorld extends GuiScreen {
 			if(type == 0) {
 				type = new Random().nextInt(4) + 1;
 			}
-			this.selectWorld(type == 4, type == 3, type == 1, this.seedText.length() > 0 ? (int)(Long.parseLong(this.seedText) & 2^31) : 0);
+			this.selectWorld(type == 4, type == 3, type == 1, this.seedText.length() > 0 ? (int)(Long.parseLong(this.seedText) & (2^31-1)) : 0);
 		}
 		
 		if(var1.id == 6) {
