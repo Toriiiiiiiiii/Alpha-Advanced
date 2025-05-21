@@ -15,6 +15,8 @@ public class GuiNewWorld extends GuiScreen {
 	
 	private String seedText = "";
 	private int updateCounter = 0;
+	
+	private int state = 0;
 
 	public GuiNewWorld(GuiScreen var1, int id) {
 		this.parentScreen = var1;
@@ -25,8 +27,10 @@ public class GuiNewWorld extends GuiScreen {
 		File var1 = Minecraft.getMinecraftDir();
 
 		this.controlList.clear();
-		this.controlList.add(new GuiButton(0, this.width / 2 - 100, this.height / 6 + 56, "Season: Random"));
-		this.controlList.add(new GuiButton(1, this.width / 2 - 100, this.height / 6 + 86, "Create!"));
+		if(state == 0) {
+			this.controlList.add(new GuiButton(0, this.width / 2 - 100, this.height / 6 + 56, "Season: Random"));
+			this.controlList.add(new GuiButton(1, this.width / 2 - 100, this.height / 6 + 86, "Next"));
+		}
 //		for(int var2 = 0; var2 < 5; ++var2) {
 //			NBTTagCompound var3 = World.getLevelData(var1, "World" + (var2 + 1));
 //			if(var3 == null) {
@@ -51,7 +55,7 @@ public class GuiNewWorld extends GuiScreen {
 		this.controlList.add(new GuiButton(6, this.width / 2 - 100, this.height / 6 + 168, "Cancel"));
 	}
 
-	protected void actionPerformed(GuiButton var1) {
+	private void actionState0(GuiButton var1) {
 		if(var1.id == 0) {
 			this.worldType++;
 			if(this.worldType > 4) this.worldType = 0;
@@ -72,12 +76,17 @@ public class GuiNewWorld extends GuiScreen {
 			if(type == 0) {
 				type = new Random().nextInt(4) + 1;
 			}
-			this.selectWorld(type == 4, type == 3, type == 1, this.seedText.length() > 0 ? (int)(Long.parseLong(this.seedText) & (2^31-1)) : 0);
+			this.selectWorld(type == 4, type == 3, type == 1, this.seedText.length() > 0 ? (int)(Long.parseLong(this.seedText)) : 0);
 		}
 		
 		if(var1.id == 6) {
 			this.mc.displayGuiScreen(parentScreen);
 		}
+	}
+	
+	protected void actionPerformed(GuiButton var1) {
+		if(state == 0) this.actionState0(var1);
+		
 	}
 
 	public void selectWorld(boolean snowy, boolean autumn, boolean spring, int seed) {

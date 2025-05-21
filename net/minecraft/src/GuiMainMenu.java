@@ -136,14 +136,9 @@ public class GuiMainMenu extends GuiScreen {
 		var2.addVertexWithUV(this.width, this.height, 0, 1, 1);
 		var2.addVertexWithUV(this.width, 0, 0, 1, 0);
 		var2.addVertexWithUV(0, 0, 0, 0, 0);
-//		var2.addVertexWithUV(0.0D, (double)this.height, 0.0D, 0.0D, (double)((float)this.height / var3 + (float)var1));
-//		var2.addVertexWithUV((double)this.width, (double)this.height, 0.0D, (double)((float)this.width / var3), (double)((float)this.height / var3 + (float)var1));
-//		var2.addVertexWithUV((double)this.width, 0.0D, 0.0D, (double)((float)this.width / var3), (double)(0 + var1));
-//		var2.addVertexWithUV(0.0D, 0.0D, 0.0D, 0.0D, (double)(0 + var1));
 		var2.draw();
 		
 		if(this.fadeState == 1) {
-//			this.bgCol -= (long)((float)0x010101 * (float)System.currentTimeMillis() / 1000F);
 			int change = System.currentTimeMillis() % 3 == 0 ? 1 : 0;
 			this.bgCol -= change | (change << 8) | (change << 16);
 			
@@ -157,7 +152,6 @@ public class GuiMainMenu extends GuiScreen {
 		}
 		
 		if(this.fadeState == 2) {
-//			this.bgCol += (long)((float)0x010101 * (float)System.currentTimeMillis() / 1000F);
 			int change = System.currentTimeMillis() % 3 == 0 ? 1 : 0;
 			this.bgCol += change | (change << 8) | (change << 16);
 			if(this.bgCol >= 0xefefef) {

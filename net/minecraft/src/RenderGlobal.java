@@ -646,7 +646,7 @@ public class RenderGlobal implements IWorldAccess {
 			GL11.glEnable(GL11.GL_DEPTH_TEST);
 			int iMax = 2;
 			if(this.mc.options.fancyGraphics) iMax = 3;
-			for(int i = 0; i < iMax; ++i) {
+			for(int i = iMax-1; i >= 0; --i) {
 			GL11.glDisable(GL11.GL_CULL_FACE);
 			float var2 = (float)(this.mc.thePlayer.lastTickPosY + (this.mc.thePlayer.posY - this.mc.thePlayer.lastTickPosY) * (double)var1);
 			byte var3 = 32;
@@ -676,7 +676,7 @@ public class RenderGlobal implements IWorldAccess {
 			int var16 = MathHelper.floor_double(var13 / 2048.0D);
 			var22 -= (double)(var15 * 2048);
 			var13 -= (double)(var16 * 2048);
-			float var17 = 100.0F + (30*i) - var2 + 0.33F;
+			float var17 = 128.0F + (15*i) - var2 + 0.33F;
 			float var18 = (float)(var22 * (double)var10);
 			float var19 = (float)(var13 * (double)var10);
 			var5.startDrawingQuads();
