@@ -30,6 +30,9 @@ public class GuiSelectWorld extends GuiScreen {
 				}
 			} else {
 				String var4 = "World " + (var2 + 1);
+				if(getSaveName(var2+1) != null)
+					var4 = getSaveName(var2+1);
+				
 				long var5 = var3.getLong("SizeOnDisk");
 				var4 = var4 + " (" + (float)(var5 / 1024L * 100L / 1024L) / 100.0F + " MB)";
 				this.controlList.add(new GuiButton(var2, this.width / 2 - 100, this.height / 6 + 24 * this.numWorlds, var4));
@@ -43,7 +46,8 @@ public class GuiSelectWorld extends GuiScreen {
 
 	protected String getSaveName(int var1) {
 		File var2 = Minecraft.getMinecraftDir();
-		return World.getLevelData(var2, "World" + var1) != null ? "World" + var1 : null;
+		NBTTagCompound nbt = World.getLevelData(var2, "World" + var1);
+		return nbt != null && nbt.getString("WorldName") != "" ? nbt.getString("WorldName") : null;
 	}
 
 	public void initButtons() {
@@ -72,7 +76,7 @@ public class GuiSelectWorld extends GuiScreen {
 		if(!this.selected) {
 			this.selected = true;
 			this.mc.playerController = new PlayerControllerSP(this.mc);
-			this.mc.startWorld("World" + var1, false, false, false, 0);
+			this.mc.startWorld("World" + var1, false, false, false, 0, "");
 			this.mc.displayGuiScreen((GuiScreen)null);
 		}
 	}

@@ -525,7 +525,7 @@ public class EntityRenderer {
 			if(this.pointedEntity != null) {
 			}
 
-			this.setupFog(0);
+			this.setupFog(-1);
 			GL11.glEnable(GL11.GL_FOG);
 			var3.renderClouds(var1);
 			GL11.glDisable(GL11.GL_FOG);

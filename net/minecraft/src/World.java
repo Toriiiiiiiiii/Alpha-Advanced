@@ -58,6 +58,7 @@ public class World implements IBlockAccess {
 	private int soundCounter;
 	private List entitiesWithinAABBExcludingEntity;
 	public boolean multiplayerWorld;
+	public String worldName;
 
 	public static NBTTagCompound getLevelData(File var0, String var1) {
 		File var2 = new File(var0, "saves");
@@ -206,6 +207,7 @@ public class World implements IBlockAccess {
 				this.snowCovered = var7.getBoolean("SnowCovered");
 				this.isAutumn = var7.getBoolean("IsAutumn");
 				this.isSpring = var7.getBoolean("IsSpring");
+				this.worldName = var7.getString("WorldName");
 				if(this.isAutumn) Block.grass.autumn = true;
 				else Block.grass.autumn = false;
 				if(this.isSpring) Block.grass.spring = true;
@@ -323,6 +325,7 @@ public class World implements IBlockAccess {
 		var1.setBoolean("IsAutumn", this.isAutumn);
 		var1.setBoolean("IsSpring", this.isSpring);
 		var1.setLong("LastPlayed", System.currentTimeMillis());
+		var1.setString("WorldName", this.worldName);
 		EntityPlayer var2 = null;
 		if(this.playerEntities.size() > 0) {
 			var2 = (EntityPlayer)this.playerEntities.get(0);

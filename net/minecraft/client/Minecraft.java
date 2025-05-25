@@ -1004,7 +1004,7 @@ public abstract class Minecraft implements Runnable {
 		return this.theWorld != null && this.theWorld.multiplayerWorld;
 	}
 
-	public void startWorld(String var1, boolean snowy, boolean autumn, boolean spring, int seed) {
+	public void startWorld(String var1, boolean snowy, boolean autumn, boolean spring, int seed, String worldName) {
 		this.changeWorld1((World)null);
 		System.gc();
 		
@@ -1014,6 +1014,7 @@ public abstract class Minecraft implements Runnable {
 			var2.snowCovered = snowy;
 			var2.isAutumn = autumn;
 			var2.isSpring = spring;
+			var2.worldName = worldName;
 			
 			Block.grass.autumn = autumn;
 			Block.grass.spring = spring;
