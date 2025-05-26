@@ -39,6 +39,7 @@ public class EntityPainting extends Entity {
 
 		if(var6.size() > 0) {
 			this.art = (EnumArt)var6.get(this.rand.nextInt(var6.size()));
+//			this.art = EnumArt.HomeFromAfar;
 		}
 
 		this.setDirection(var5);

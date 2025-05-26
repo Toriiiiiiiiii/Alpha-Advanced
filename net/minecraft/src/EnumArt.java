@@ -24,7 +24,10 @@ public enum EnumArt {
 	Pointer("Pointer", 64, 64, 0, 192),
 	Pigscene("Pigscene", 64, 64, 64, 192),
 	Skeleton("Skeleton", 64, 48, 192, 64),
-	DonkeyKong("DonkeyKong", 64, 48, 192, 112);
+	DonkeyKong("DonkeyKong", 64, 48, 192, 112),
+	HomeFromAfar("HomeFromAfar", 64, 64, 128, 192),
+	SunsetInSpring("SunsetInSpring", 32, 32, 128+32, 128),
+	TownCenter("TownCenter", 64, 64, 192, 192);
 
 	public final String title;
 	public final int sizeX;

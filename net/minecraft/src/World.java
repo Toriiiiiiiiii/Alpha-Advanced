@@ -223,7 +223,7 @@ public class World implements IBlockAccess {
 				var11.printStackTrace();
 			}
 		} else {
-			this.snowCovered = this.rand.nextInt(4) == 0;
+//			this.snowCovered = this.rand.nextInt(4) == 0;
 			if(var3 == 0L) {
 				var3 = new Random().nextLong();
 			}
