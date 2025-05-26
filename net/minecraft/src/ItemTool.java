@@ -11,9 +11,9 @@ public class ItemTool extends Item {
 		this.toolMaterial = var3;
 		this.blocksEffectiveAgainst = var4;
 		this.maxStackSize = 1;
-		this.maxDamage = 36 << var3;
+		this.maxDamage = 48 << var3;
 		if(var3 == 3) {
-			this.maxDamage *= 4;
+			this.maxDamage *= 3;
 		}
 
 		this.efficiencyOnProperMaterial = (float)((var3+1) * 2);

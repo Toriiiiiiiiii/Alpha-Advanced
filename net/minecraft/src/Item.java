@@ -102,11 +102,11 @@ public class Item {
 	public static Item shears = (new ItemTool(2002, 3, 2, new Block[] {Block.leaves, Block.leavesPlr})).setIconIndex(242);
 	public static Item ingotCopper = (new Item(2003)).setIconIndex(243);
 	
-	public static Item swordCopper = (new ItemSword(2004, 2)).setIconIndex(244);
-	public static Item shovelCopper = (new ItemSpade(20205, 2)).setIconIndex(245);
-	public static Item pickaxeCopper = (new ItemPickaxe(2006, 2)).setIconIndex(246);
-	public static Item axeCopper = (new ItemAxe(2007, 2)).setIconIndex(247);
-	public static Item hoeCopper = (new ItemHoe(2008, 2)).setIconIndex(248);
+	public static Item swordCopper = (new ItemSword(2004, 2)).setIconIndex(244).setMaxDamage(36 << 2).setEfficiencyOnProperMaterial(10);
+	public static Item shovelCopper = (new ItemSpade(20205, 2)).setIconIndex(245).setMaxDamage(36 << 2).setEfficiencyOnProperMaterial(10);
+	public static Item pickaxeCopper = (new ItemPickaxe(2006, 2)).setIconIndex(246).setMaxDamage(36 << 2).setEfficiencyOnProperMaterial(10);
+	public static Item axeCopper = (new ItemAxe(2007, 2)).setIconIndex(247).setMaxDamage(36 << 2).setEfficiencyOnProperMaterial(10);
+	public static Item hoeCopper = (new ItemHoe(2008, 2)).setIconIndex(248).setMaxDamage(36 << 2).setEfficiencyOnProperMaterial(10);
 	
 	public static Item fertilizer = (new Item(2009)).setIconIndex(249);
 	public static Item hamburger = (new ItemFood(2010, 5, 8)).setIconIndex(250);
@@ -122,9 +122,20 @@ public class Item {
 	protected int maxDamage = 32;
 	protected int iconIndex;
 	protected boolean bFull3D = false;
+	protected float efficiencyOnProperMaterial;
 
 	public Item setMaxStackSize(int size) {
 		this.maxStackSize = size;
+		return this;
+	}
+	
+	public Item setMaxDamage(int maxDmg) {
+		this.maxDamage = maxDmg;
+		return this;
+	}
+	
+	public Item setEfficiencyOnProperMaterial(float efficiency) {
+		this.efficiencyOnProperMaterial = efficiency;
 		return this;
 	}
 	
