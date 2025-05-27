@@ -125,6 +125,16 @@ public class Block {
 	public static final Block cobbleMarble = (new Block(103, Block.blockFlint.blockIndexInTexture + 17, Material.rock)).setHardness(1.5F).setResistance(10.0F).setStepSound(soundStoneFootstep);
 	public static final Block marble = (new BlockStone(104, Block.blockFlint.blockIndexInTexture + 16, Block.cobbleMarble.blockID)).setHardness(1.5F).setResistance(10.0F).setStepSound(soundStoneFootstep);
 	public static final Block marblePillar = (new BlockMarblePillar(105)).setHardness(1.5F).setResistance(10.0F).setStepSound(soundStoneFootstep);
+	public static final Block coralRed = (new Block(106, Block.marble.blockIndexInTexture + 16, Material.leaves)).setStepSound(soundGrassFootstep).setHardness(.2f);
+	public static final Block coralBlue = (new Block(107, Block.marble.blockIndexInTexture + 17, Material.leaves)).setStepSound(soundGrassFootstep).setHardness(.2f);
+	public static final Block coralGreen = (new Block(108, Block.marble.blockIndexInTexture + 18, Material.leaves)).setStepSound(soundGrassFootstep).setHardness(.2f);
+	public static final Block cobbleAzure =  (new Block(109, Block.coralRed.blockIndexInTexture + 17, Material.rock)).setHardness(1.5F).setResistance(10.0F).setStepSound(soundStoneFootstep);
+	public static final Block azure = (new BlockStone(110, Block.coralRed.blockIndexInTexture + 16, Block.cobbleAzure.blockID)).setHardness(1.5F).setResistance(10.0F).setStepSound(soundStoneFootstep);
+	public static final Block aquamarineOre = (new BlockOre(111, Block.coralRed.blockIndexInTexture + 18)).setHardness(3.0F).setResistance(1.5F).setStepSound(soundStoneFootstep);
+	public static final Block corallightRed = (new Block(112, Block.coralRed.blockIndexInTexture -5, Material.leaves)).setStepSound(soundGrassFootstep).setHardness(.2f).setLightValue(1.0F);
+	public static final Block corallightGreen = (new Block(113, Block.coralRed.blockIndexInTexture -4, Material.leaves)).setStepSound(soundGrassFootstep).setHardness(.2f).setLightValue(1.0F);
+	public static final Block corallightBlue = (new Block(114, Block.coralRed.blockIndexInTexture -3, Material.leaves)).setStepSound(soundGrassFootstep).setHardness(.2f).setLightValue(1.0F);
+	public static final Block blockAquamarine = (new Block(115, Block.aquamarineOre.blockIndexInTexture + 1, Material.iron)).setHardness(3.0F).setResistance(10.0F).setStepSound(soundMetalFootstep);
 	public int blockIndexInTexture;
 	public final int blockID;
 	protected float hardness;

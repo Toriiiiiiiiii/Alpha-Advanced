@@ -1,7 +1,7 @@
 package net.minecraft.src;
 
 public class ItemPickaxe extends ItemTool {
-	private static Block[] blocksEffectiveAgainst = new Block[]{Block.cobblestone, Block.stairDouble, Block.stairSingle, Block.stone, Block.cobblestoneMossy, Block.oreIron, Block.blockSteel, Block.oreCoal, Block.blockGold, Block.oreGold, Block.oreDiamond, Block.blockDiamond, Block.ice, Block.stoneOvenIdle, Block.stoneOvenActive, Block.oreCopper, Block.brick, Block.brickStone, Block.stairCompactStone, Block.oreRedstone, Block.oreRedstoneGlowing, Block.doorSteel, Block.stairCompactStoneBrick, Block.stairCompactBrick, Block.pressurePlateStone, Block.brickSmooth, Block.stairCompactSmoothBrick, Block.blockCopper, Block.blockFlint, Block.marble, Block.cobbleMarble, Block.marblePillar};
+	private static Block[] blocksEffectiveAgainst = new Block[]{Block.cobblestone, Block.stairDouble, Block.stairSingle, Block.stone, Block.cobblestoneMossy, Block.oreIron, Block.blockSteel, Block.oreCoal, Block.blockGold, Block.oreGold, Block.oreDiamond, Block.blockDiamond, Block.ice, Block.stoneOvenIdle, Block.stoneOvenActive, Block.oreCopper, Block.brick, Block.brickStone, Block.stairCompactStone, Block.oreRedstone, Block.oreRedstoneGlowing, Block.doorSteel, Block.stairCompactStoneBrick, Block.stairCompactBrick, Block.pressurePlateStone, Block.brickSmooth, Block.stairCompactSmoothBrick, Block.blockCopper, Block.blockFlint, Block.marble, Block.cobbleMarble, Block.marblePillar, Block.aquamarineOre, Block.azure, Block.cobbleAzure, Block.blockAquamarine};
 	private int harvestLevel;
 
 	public ItemPickaxe(int var1, int var2) {

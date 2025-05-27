@@ -173,6 +173,7 @@ public class TileEntityFurnace extends TileEntity implements IInventory {
 	}
 
 	private int getCookedItem(int var1) {
+		if(var1 == Block.cobbleAzure.blockID) return Block.azure.blockID;
 		if(var1 == Block.cobbleMarble.blockID) return Block.marble.blockID;
 		if(var1 == Item.egg.shiftedIndex) return Item.friedEgg.shiftedIndex;
 		if(var1 == Item.seeds.shiftedIndex || var1 == Item.wheat.shiftedIndex || var1 == Item.bread.shiftedIndex || var1 == Block.plantBlack.blockID || var1 == Block.plantBlue.blockID || var1 == Block.plantPink.blockID || var1 == Block.plantRed.blockID || var1 == Block.plantYellow.blockID || var1 == Block.sapling.blockID || var1 == Block.plantTea.blockID) return Item.fertilizer.shiftedIndex;

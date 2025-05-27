@@ -68,7 +68,7 @@ public class GuiMainMenu extends GuiScreen {
 
 	public void initGui() {
 		Random rand = new Random();
-		this.bgIndex = 1 + rand.nextInt(4);
+		this.bgIndex = 1 + rand.nextInt(10);
 		this.millisToChangeBackground = 10000;
 		
 		Calendar var1 = Calendar.getInstance();
@@ -145,7 +145,7 @@ public class GuiMainMenu extends GuiScreen {
 			if(this.bgCol <= 0) {
 				this.fadeState = 2;
 				this.bgIndex++;
-				if(this.bgIndex > 7) this.bgIndex -= 7;
+				if(this.bgIndex > 11) this.bgIndex -= 11;
 			}
 			
 			return;

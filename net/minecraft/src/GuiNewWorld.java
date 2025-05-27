@@ -162,11 +162,10 @@ public class GuiNewWorld extends GuiScreen {
 
 		if(var1 == Character.valueOf('\b') && this.worldName.length() > 0) 
 			this.worldName = this.worldName.substring(0, this.worldName.length() - 1);
-		if(var2 == 14 && this.worldName.length() > 0) {
+		else if(var2 == 14 && this.worldName.length() > 0) {
 			this.worldName = this.worldName.substring(0, this.worldName.length() - 1);
 		}
-
-		if(this.worldName.length() < maxLength) {
+		else if(this.worldName.length() < maxLength) {
 			this.worldName = this.worldName + var1;
 		}
 	}

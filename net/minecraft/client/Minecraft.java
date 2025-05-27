@@ -80,7 +80,7 @@ public abstract class Minecraft implements Runnable {
 	public byte versionMajor      = 1;
 	public byte versionMinor      = 5;
 	public byte versionSubMinor   = 0;
-	public boolean previewVersion = true;
+	public boolean previewVersion = false;
 	
 	public boolean hideUI = false;
 	public PlayerController playerController;

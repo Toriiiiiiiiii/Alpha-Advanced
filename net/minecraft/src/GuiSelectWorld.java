@@ -30,7 +30,8 @@ public class GuiSelectWorld extends GuiScreen {
 				}
 			} else {
 				String var4 = "World " + (var2 + 1);
-				if(getSaveName(var2+1) != null)
+				String name = getSaveName(var2+1);
+				if(name != null && name.length() > 0)
 					var4 = getSaveName(var2+1);
 				
 				long var5 = var3.getLong("SizeOnDisk");
@@ -47,7 +48,11 @@ public class GuiSelectWorld extends GuiScreen {
 	protected String getSaveName(int var1) {
 		File var2 = Minecraft.getMinecraftDir();
 		NBTTagCompound nbt = World.getLevelData(var2, "World" + var1);
-		return nbt != null && nbt.getString("WorldName") != "" ? nbt.getString("WorldName") : null;
+		return (nbt != null) ? nbt.getString("WorldName") : null;
+	}
+	
+	protected String getBaseSaveName(int var1) {
+		return "World" + var1;
 	}
 
 	public void initButtons() {

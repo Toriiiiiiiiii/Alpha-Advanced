@@ -1,7 +1,7 @@
 package net.minecraft.src;
 
 public class RecipesIngots {
-	private Object[][] recipeItems = new Object[][]{{Block.blockGold, Item.ingotGold}, {Block.blockSteel, Item.ingotIron}, {Block.blockDiamond, Item.diamond}, {Block.blockCopper, Item.ingotCopper}};
+	private Object[][] recipeItems = new Object[][]{{Block.blockGold, Item.ingotGold}, {Block.blockSteel, Item.ingotIron}, {Block.blockDiamond, Item.diamond}, {Block.blockCopper, Item.ingotCopper}, {Block.blockAquamarine, Item.aquamarine}};
 
 	public void addRecipes(CraftingManager var1) {
 		for(int var2 = 0; var2 < this.recipeItems.length; ++var2) {

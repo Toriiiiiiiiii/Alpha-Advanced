@@ -525,7 +525,7 @@ public class EntityRenderer {
 			if(this.pointedEntity != null) {
 			}
 
-			this.setupFog(-1);
+			this.setupFog(0);
 			GL11.glEnable(GL11.GL_FOG);
 			var3.renderClouds(var1);
 			GL11.glDisable(GL11.GL_FOG);
@@ -733,7 +733,7 @@ public class EntityRenderer {
 		} else {
 			GL11.glFogi(GL11.GL_FOG_MODE, GL11.GL_LINEAR);
 			GL11.glFogf(GL11.GL_FOG_START, this.farPlaneDistance * 0.125F);
-			GL11.glFogf(GL11.GL_FOG_END, this.farPlaneDistance);
+			GL11.glFogf(GL11.GL_FOG_END, this.farPlaneDistance*0.75f);
 			if(var1 < 0) {
 				GL11.glFogf(GL11.GL_FOG_START, 0.0F);
 				GL11.glFogf(GL11.GL_FOG_END, this.farPlaneDistance * 0.75F);
