@@ -145,7 +145,7 @@ public class GuiMainMenu extends GuiScreen {
 			if(this.bgCol <= 0) {
 				this.fadeState = 2;
 				this.bgIndex++;
-				if(this.bgIndex > 11) this.bgIndex -= 11;
+				if(this.bgIndex > 10) this.bgIndex -= 10;
 			}
 			
 			return;
