@@ -135,6 +135,7 @@ public class Block {
 	public static final Block corallightGreen = (new Block(113, Block.coralRed.blockIndexInTexture -4, Material.leaves)).setStepSound(soundGrassFootstep).setHardness(.2f).setLightValue(1.0F);
 	public static final Block corallightBlue = (new Block(114, Block.coralRed.blockIndexInTexture -3, Material.leaves)).setStepSound(soundGrassFootstep).setHardness(.2f).setLightValue(1.0F);
 	public static final Block blockAquamarine = (new Block(115, Block.aquamarineOre.blockIndexInTexture + 1, Material.iron)).setHardness(3.0F).setResistance(10.0F).setStepSound(soundMetalFootstep);
+	public static final Block blockStainedGlass = (new BlockGlass(116, Block.blockLamp.blockIndexInTexture + 16, Material.glass, true)).setHardness(.5f).setStepSound(soundGlassFootstep).setLightOpacity(3);
 	public int blockIndexInTexture;
 	public final int blockID;
 	protected float hardness;
