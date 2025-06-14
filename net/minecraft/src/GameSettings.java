@@ -30,8 +30,8 @@ public class GameSettings {
 	public float musicVolume = 1.0F;
 	public float soundVolume = 1.0F;
 	public float mouseSensitivity = 0.5F;
-	public float fov = 70.0F;
-	public int musicDelay = 600;
+	public float fov = 0.5F;					// Sliders are between 0.0-1.0, and the variables that modify them should be too
+	public float musicDelay = 0.5F;	
 	public boolean invertMouse = false;
 	public int renderDistance = 0;
 	public boolean viewBobbing = true;
@@ -123,10 +123,12 @@ public class GameSettings {
 				this.mouseSensitivity = value;
 				break;
 			case MUSICDELAY:
-				this.musicDelay = (int) (value * 600 + 1);
+				// this.musicDelay = (int) (value * 600 + 1);
+				this.musicDelay = value;
 				break;
 			case FOV:
-				this.fov = value * 100 + 1;
+				// this.fov = value * 100 + 1;
+				this.fov = value;
 		}
 		this.saveOptions();
 	}
@@ -157,9 +159,9 @@ public class GameSettings {
 				this.fancyGraphics = !this.fancyGraphics;
 				this.mc.renderGlobal.loadRenderers();
 				break;
-			case MUSICDELAY:
+			/*case MUSICDELAY:
 				this.musicDelay = (int)value;
-				break;
+				break;*/
 			case DARKMODE:
 				this.darkMode = !this.darkMode;
 				break;
@@ -187,11 +189,15 @@ public class GameSettings {
 			case MUSICVOLUME:
 			case SOUNDVOLUME:
 			case MOUSESENSITIVITY:
-				return 1;
+
 			case MUSICDELAY:
+			case FOV:
+				return 1;
+			/*case MUSICDELAY:
 				return 601;
 			case FOV:
-				return 101;
+				// return 101;
+				return 110;*/
 			default:
 				return 0;
 		}
@@ -238,9 +244,11 @@ public class GameSettings {
 			case FANCYGRAPHICS:
 				return "Graphics: " + (this.fancyGraphics ? "FANCY" : "FAST");
 			case MUSICDELAY:
-        return "Music delay: " + this.musicDelay + " seconds";
+				int actualMusicDelay = (int)((this.musicDelay * 600 + 1));
+        		return "Music delay: " + actualMusicDelay + " seconds";
 			case FOV:
-				return "FOV: " + (int)(this.fov);
+				int actualFoV = (int)((this.fov - 0.5F) * 80F + 70F);
+				return "FOV: " + actualFoV;
 			case DARKMODE:
 				return "Dark mode: " + (this.darkMode ? "ON" : "OFF");
 		}
@@ -296,10 +304,12 @@ public class GameSettings {
 						this.fancyGraphics = settingKeyValue[1].equals("true");
 						break;
 					case "musicDelay":
-						this.musicDelay = Integer.parseInt(settingKeyValue[1]);
+						this.musicDelay = this.parseFloat(settingKeyValue[1]);
+						this.musicDelay = this.musicDelay < 0.0F || this.musicDelay > 1.0F ? 0.5F : this.musicDelay;	// Overflow glitch
 						break;
 					case "FOV":
 						this.fov = this.parseFloat(settingKeyValue[1]);
+						this.fov = this.fov < 0.0F || this.fov > 1.0F ? 0.5F : this.fov;	// Overflow glitch
 						break;
 					case "darkMode":
 						this.darkMode = settingKeyValue[1].equals("true");
