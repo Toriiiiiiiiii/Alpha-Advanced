@@ -230,13 +230,17 @@ public class EntityRenderer {
 
 	private float getFOVModifier(float ticks, boolean hand) {
 		EntityPlayerSP player = this.mc.thePlayer;
-		float fov;
-		if (!hand && this.mc.options != null) {
+		// float fov;
+
+		float fov = (mc.options.fov - 0.5F) * 80F + 70F;
+
+		/*if (!hand && this.mc.options != null) {
 			fov = this.mc.options.fov;
 		}
 		else {
 			fov = 70.0F;
-		}
+		}*/
+
 		if(player.isInsideOfMaterial(Material.water)) {
 			fov = fov - 10.0F;
 		}
