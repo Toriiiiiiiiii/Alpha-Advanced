@@ -196,7 +196,12 @@ public class WorldRenderer {
 			this.tileEntities.removeAll(var21);
 			this.isChunkLit = Chunk.isLit;
 			this.isInitialized = true;
+			
+		
 		}
+		
+		if(this.worldObj.isSpring) Item.appleRed.iconIndex = 14*16;
+		else Item.appleRed.iconIndex = 10;
 	}
 
 	public float distanceToEntitySquared(Entity var1) {
