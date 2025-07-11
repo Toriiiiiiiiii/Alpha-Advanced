@@ -27,6 +27,6 @@ public class RecipesCrafting {
 		var1.addRecipe(new ItemStack(Item.flint, 4), new Object[]{"#", Character.valueOf('#'), Block.blockFlint});
 		var1.addRecipe(new ItemStack(Block.marblePillar, 4), new Object[]{"##", "##", Character.valueOf('#'), Block.marble});
 		
-		
+		var1.addRecipe(new ItemStack(Item.aquamarineBucket), new Object[]{" # ", "#X#", " # ", Character.valueOf('#'), Item.aquamarine, Character.valueOf('X'), Item.bucketWater});
 	}
 }

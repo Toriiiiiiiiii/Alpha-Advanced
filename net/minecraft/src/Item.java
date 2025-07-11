@@ -103,7 +103,7 @@ public class Item {
 	public static Item ingotCopper = (new Item(2003)).setIconIndex(243);
 	
 	public static Item swordCopper = (new ItemSword(2004, 2)).setIconIndex(244).setMaxDamage(36 << 2).setEfficiencyOnProperMaterial(10);
-	public static Item shovelCopper = (new ItemSpade(20205, 2)).setIconIndex(245).setMaxDamage(36 << 2).setEfficiencyOnProperMaterial(10);
+	public static Item shovelCopper = (new ItemSpade(2005, 2)).setIconIndex(245).setMaxDamage(36 << 2).setEfficiencyOnProperMaterial(10);
 	public static Item pickaxeCopper = (new ItemPickaxe(2006, 2)).setIconIndex(246).setMaxDamage(36 << 2).setEfficiencyOnProperMaterial(10);
 	public static Item axeCopper = (new ItemAxe(2007, 2)).setIconIndex(247).setMaxDamage(36 << 2).setEfficiencyOnProperMaterial(10);
 	public static Item hoeCopper = (new ItemHoe(2008, 2)).setIconIndex(248).setMaxDamage(36 << 2).setEfficiencyOnProperMaterial(10);
@@ -117,6 +117,8 @@ public class Item {
 	
 	public static Item applePie = (new ItemFood(2015, 7, 1, 3)).setIconIndex(255);
 	public static Item aquamarine = (new Item(2016)).setIconIndex(241-16);
+	
+	public static Item aquamarineBucket = (new ItemBucket(2017, Block.waterMoving.blockID, true)).setIconIndex(75+16);
 	
 	public final int shiftedIndex;
 	protected int maxStackSize = 64;

@@ -2,12 +2,21 @@ package net.minecraft.src;
 
 public class ItemBucket extends Item {
 	private int isFull;
+	public boolean isInfinite;
 
 	public ItemBucket(int var1, int var2) {
 		super(var1);
 		this.maxStackSize = 1;
 		this.maxDamage = 64;
 		this.isFull = var2;
+	}
+	
+	public ItemBucket(int var1, int var2, boolean inf) {
+		super(var1);
+		this.maxStackSize = 1;
+		this.maxDamage = 64;
+		this.isFull = var2;
+		this.isInfinite = inf;
 	}
 
 	public ItemStack onItemRightClick(ItemStack var1, World var2, EntityPlayer var3) {
@@ -77,7 +86,9 @@ public class ItemBucket extends Item {
 
 					if(var2.getBlockId(var25, var26, var27) == 0 || !var2.getBlockMaterial(var25, var26, var27).isSolid()) {
 						var2.setBlockAndMetadataWithNotify(var25, var26, var27, this.isFull, 0);
-						return new ItemStack(Item.bucketEmpty);
+						
+						if(!isInfinite)
+							return new ItemStack(Item.bucketEmpty);
 					}
 				}
 			} else if(this.isFull == 0 && var24.entityHit instanceof EntityCow) {

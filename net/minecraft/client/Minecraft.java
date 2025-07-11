@@ -79,8 +79,8 @@ import org.lwjgl.util.glu.GLU;
 public abstract class Minecraft implements Runnable {
 	public byte versionMajor      = 1;
 	public byte versionMinor      = 5;
-	public byte versionSubMinor   = 1;
-	public boolean previewVersion = false;
+	public byte versionSubMinor   = 2;
+	public boolean previewVersion = true;
 	
 	public boolean hideUI = false;
 	public PlayerController playerController;
