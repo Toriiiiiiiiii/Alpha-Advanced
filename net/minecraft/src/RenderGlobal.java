@@ -652,7 +652,12 @@ public class RenderGlobal implements IWorldAccess {
 			byte var3 = 32;
 			int var4 = 256 / var3;
 			Tessellator var5 = Tessellator.instance;
-			GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.renderEngine.getTexture("/clouds.png"));
+			
+			if(!this.mc.options.cloudSettings)
+				GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.renderEngine.getTexture("/clouds.png"));
+			else
+				GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.renderEngine.getTexture("/clouds_old.png"));
+			
 			GL11.glEnable(GL11.GL_BLEND);
 			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 			Vec3D var6 = this.theWorld.getCloudColor(var1 + 10*i);

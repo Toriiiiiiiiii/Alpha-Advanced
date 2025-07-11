@@ -22,6 +22,7 @@ enum OptionId {
 	MUSICDELAY,
 	FOV,
 	DARKMODE,
+	CLOUDSTYLE,
 }
 
 public class GameSettings {
@@ -53,9 +54,10 @@ public class GameSettings {
 	public KeyBinding[] keyBindings = new KeyBinding[]{this.keyBindForward, this.keyBindLeft, this.keyBindBack, this.keyBindRight, this.keyBindJump, this.keyBindSneak, this.keyBindDrop, this.keyBindInventory, this.keyBindChat, this.keyBindToggleFog};
 	protected Minecraft mc;
 	private File optionsFile;
-	public int numberOfOptions = 13;
+	public int numberOfOptions = 14;
 	public int difficulty = 2;
 	public boolean thirdPersonView = false;
+	public boolean cloudSettings = false;
 
 	public GameSettings(Minecraft mc, File optionsFile) {
 		this.mc = mc;
@@ -103,6 +105,8 @@ public class GameSettings {
 				return OptionId.FOV;
 			case 12:
 				return OptionId.DARKMODE;
+			case 13:
+				return OptionId.CLOUDSTYLE;
 		}
 		return OptionId.MUSICVOLUME; // Has to be here for compilation
 																 // TODO: error here
@@ -164,6 +168,9 @@ public class GameSettings {
 				break;*/
 			case DARKMODE:
 				this.darkMode = !this.darkMode;
+				break;
+			case CLOUDSTYLE:
+				this.cloudSettings = !this.cloudSettings;
 				break;
 		}
 		this.saveOptions();
@@ -251,6 +258,8 @@ public class GameSettings {
 				return "FOV: " + actualFoV;
 			case DARKMODE:
 				return "Dark mode: " + (this.darkMode ? "ON" : "OFF");
+			case CLOUDSTYLE:
+				return "Cloud style: " + (this.cloudSettings ? "Classic" : "Modern");
 		}
 		return "NONEXISTANT SETTING"; // TODO: error here
 	}
@@ -322,6 +331,9 @@ public class GameSettings {
 							this.ipText = "";
 						}
 						break;
+					case "cloudStyle":
+						this.cloudSettings = settingKeyValue[1].equals("true");
+						break;
 				}
 
 				for(int keyIterator = 0; keyIterator < this.keyBindings.length; ++keyIterator) {
@@ -354,6 +366,7 @@ public class GameSettings {
 			writer.println("limitFramerate:" + this.limitFramerate);
 			writer.println("difficulty:" + this.difficulty);
 			writer.println("fancyGraphics:" + this.fancyGraphics);
+			writer.println("cloudStyle:" + this.cloudSettings);
 
 			for(int keyIterator = 0; keyIterator < this.keyBindings.length; ++keyIterator) {
 				writer.println("key_" + this.keyBindings[keyIterator].keyDescription + ":" + this.keyBindings[keyIterator].keyCode);
