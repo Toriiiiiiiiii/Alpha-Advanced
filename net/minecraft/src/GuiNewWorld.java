@@ -139,7 +139,7 @@ public class GuiNewWorld extends GuiScreen {
 	}
 	
 	protected void keyTyped1(char var1, int var2) {
-		int maxLength = 16;
+		int maxLength = 24;
 		if(var1 == 22) {
 			String var3 = GuiScreen.getClipboardString();
 			if(var3 == null) {
