@@ -213,8 +213,7 @@ public class World implements IBlockAccess {
 				if(this.isSpring) Block.grass.spring = true;
 				else Block.grass.spring = false;
 				
-				if(this.isSpring) Item.appleRed.iconIndex = 14*16;
-				else Item.appleRed.iconIndex = 10;
+				
 				
 				if(var7.hasKey("Player")) {
 					this.nbtCompoundPlayer = var7.getCompoundTag("Player");
@@ -249,6 +248,9 @@ public class World implements IBlockAccess {
 
 //		this.rand.setSeed(randomSeed);
 		this.calculateInitialSkylight();
+		
+		if(this.isSpring) Item.appleRed.iconIndex = 14*16;
+		else Item.appleRed.iconIndex = 10;
 	}
 
 	protected IChunkProvider getChunkProvider(File var1) {
