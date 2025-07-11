@@ -103,6 +103,9 @@ public class World implements IBlockAccess {
 
 	public World(File var1, String var2) {
 		this(var1, var2, (new Random()).nextLong());
+		
+		if(this.isSpring) Item.appleRed.iconIndex = 14*16;
+		else Item.appleRed.iconIndex = 10;
 	}
 
 	public World(String var1) {
@@ -140,6 +143,9 @@ public class World implements IBlockAccess {
 		this.levelName = var1;
 		this.chunkProvider = this.getChunkProvider(this.saveDirectory);
 		this.calculateInitialSkylight();
+		
+		if(this.isSpring) Item.appleRed.iconIndex = 14*16;
+		else Item.appleRed.iconIndex = 10;
 	}
 
 	public World(File var1, String var2, long var3) {
