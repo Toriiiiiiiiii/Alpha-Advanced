@@ -296,27 +296,58 @@ public class InventoryPlayer implements IInventory {
 		return this.armorInventory[var1];
 	}
 
+//	public int getTotalArmorValue() {
+//		int var1 = 0;
+//		int var2 = 0;
+//		int var3 = 0;
+//
+//		for(int var4 = 0; var4 < this.armorInventory.length; ++var4) {
+//			if(this.armorInventory[var4] != null && this.armorInventory[var4].getItem() instanceof ItemArmor) {
+//				int var5 = this.armorInventory[var4].getMaxDamage();
+//				int var6 = this.armorInventory[var4].itemDmg;
+//				int var7 = var5 - var6;
+//				var2 += var7;
+//				var3 += var5;
+//				int var8 = ((ItemArmor)this.armorInventory[var4].getItem()).damageReduceAmount;
+//				var1 += var8;
+//			}
+//		}
+//
+//		if(var3 == 0) {
+//			return 0;
+//		} else {
+//			return (var1 - 1) * var2 / var3 + 1;
+//		}
+//	}
+	
 	public int getTotalArmorValue() {
-		int var1 = 0;
-		int var2 = 0;
-		int var3 = 0;
-
-		for(int var4 = 0; var4 < this.armorInventory.length; ++var4) {
-			if(this.armorInventory[var4] != null && this.armorInventory[var4].getItem() instanceof ItemArmor) {
-				int var5 = this.armorInventory[var4].getMaxDamage();
-				int var6 = this.armorInventory[var4].itemDmg;
-				int var7 = var5 - var6;
-				var2 += var7;
-				var3 += var5;
-				int var8 = ((ItemArmor)this.armorInventory[var4].getItem()).damageReduceAmount;
-				var1 += var8;
+		int armour = 0;
+		int durabilitySum = 0;
+		int maxDurabilitySum = 0;
+		
+		for(int armourIndex = 0; armourIndex < this.armorInventory.length; ++armourIndex) {
+			if(this.armorInventory[armourIndex] != null && this.armorInventory[armourIndex].getItem() instanceof ItemArmor) {
+				int maxDamage = this.armorInventory[armourIndex].getMaxDamage();
+				int damageTaken = this.armorInventory[armourIndex].itemDmg;
+				int durability = maxDamage - damageTaken;
+				
+				int armourLevel = ((ItemArmor)this.armorInventory[armourIndex].getItem()).armorLevel;
+				int invLevel = 3 - armourLevel;
+				int maxReduction = ((ItemArmor)this.armorInventory[armourIndex].getItem()).damageReduceAmount;
+				
+				maxReduction -= invLevel;
+				if(maxReduction < 1) maxReduction = 1;
+				
+				armour += maxReduction;
+				durabilitySum += durability;
+				maxDurabilitySum += maxDamage;
 			}
 		}
-
-		if(var3 == 0) {
+		
+		if(maxDurabilitySum == 0) {
 			return 0;
 		} else {
-			return (var1 - 1) * var2 / var3 + 1;
+			return (armour - 1) * durabilitySum / maxDurabilitySum + 1;
 		}
 	}
 
