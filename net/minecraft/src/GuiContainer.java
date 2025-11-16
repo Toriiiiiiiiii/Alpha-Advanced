@@ -25,16 +25,39 @@ public abstract class GuiContainer extends GuiScreen {
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
 
+		InventoryPlayer var10 = this.mc.thePlayer.inventory;
+		if(var10.draggedItemStack != null) {
+			GL11.glTranslatef(0.0F, 0.0F, 32.0F);
+			itemRenderer.renderItemIntoGUI(this.fontRenderer, this.mc.renderEngine, var10.draggedItemStack, var1 - var4 - 8, var2 - var5 - 8);
+			itemRenderer.renderItemOverlayIntoGUI(this.fontRenderer, this.mc.renderEngine, var10.draggedItemStack, var1 - var4 - 8, var2 - var5 - 8);
+		}
 		
 		for(int var6 = 0; var6 < this.inventorySlots.size(); ++var6) {
 			SlotInventory var7 = (SlotInventory)this.inventorySlots.get(var6);
 			this.drawSlotInventory(var7);
+		}
+		
+		this.drawGuiContainerOverlay(var1, var2, var3);
+		
+		GL11.glDisable(GL12.GL_RESCALE_NORMAL);
+		RenderHelper.disableStandardItemLighting();
+		GL11.glDisable(GL11.GL_LIGHTING);
+		GL11.glDisable(GL11.GL_DEPTH_TEST);
+		this.drawGuiContainerForegroundLayer();
+		GL11.glEnable(GL11.GL_LIGHTING);
+		GL11.glEnable(GL11.GL_DEPTH_TEST);
+		GL11.glPopMatrix();
+	}
+
+	public void drawGuiContainerOverlay(int var1, int var2, float var3) {
+		for(int var6 = 0; var6 < this.inventorySlots.size(); ++var6) {
+			SlotInventory var7 = (SlotInventory)this.inventorySlots.get(var6);
 			if(var7.getIsMouseOverSlot(var1, var2)) {
 				GL11.glDisable(GL11.GL_LIGHTING);
 				GL11.glDisable(GL11.GL_DEPTH_TEST);
 				int var8 = var7.xDisplayPosition;
 				int var9 = var7.yDisplayPosition;
-//				this.drawGradientRect(var8, var9, var8 + 16, var9 + 16, -2130706433, -2130706433);
+				this.drawGradientRect(var8, var9, var8 + 16, var9 + 16, -2130706433, -2130706433);
 				
 				IInventory inv = var7.inventory;
 				ItemStack item = inv.getStackInSlot(var7.slotIndex);
@@ -57,24 +80,8 @@ public abstract class GuiContainer extends GuiScreen {
 				GL11.glEnable(GL11.GL_DEPTH_TEST);
 			}
 		}
-
-		InventoryPlayer var10 = this.mc.thePlayer.inventory;
-		if(var10.draggedItemStack != null) {
-			GL11.glTranslatef(0.0F, 0.0F, 32.0F);
-			itemRenderer.renderItemIntoGUI(this.fontRenderer, this.mc.renderEngine, var10.draggedItemStack, var1 - var4 - 8, var2 - var5 - 8);
-			itemRenderer.renderItemOverlayIntoGUI(this.fontRenderer, this.mc.renderEngine, var10.draggedItemStack, var1 - var4 - 8, var2 - var5 - 8);
-		}
-		
-		GL11.glDisable(GL12.GL_RESCALE_NORMAL);
-		RenderHelper.disableStandardItemLighting();
-		GL11.glDisable(GL11.GL_LIGHTING);
-		GL11.glDisable(GL11.GL_DEPTH_TEST);
-		this.drawGuiContainerForegroundLayer();
-		GL11.glEnable(GL11.GL_LIGHTING);
-		GL11.glEnable(GL11.GL_DEPTH_TEST);
-		GL11.glPopMatrix();
 	}
-
+	
 	protected void drawGuiContainerForegroundLayer() {
 	}
 
@@ -90,8 +97,10 @@ public abstract class GuiContainer extends GuiScreen {
 			int var7 = var1.getBackgroundIconIndex();
 			if(var7 >= 0) {
 				GL11.glDisable(GL11.GL_LIGHTING);
+				GL11.glDisable(GL11.GL_DEPTH_TEST);
 				this.mc.renderEngine.bindTexture(this.mc.renderEngine.getTexture("/gui/items.png"));
 				this.drawTexturedModalRect(var4, var5, var7 % 16 * 16, var7 / 16 * 16, 16, 16);
+				GL11.glEnable(GL11.GL_DEPTH_TEST);
 				GL11.glEnable(GL11.GL_LIGHTING);
 				return;
 			}

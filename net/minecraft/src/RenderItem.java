@@ -126,6 +126,7 @@ public class RenderItem extends Render {
 //				GL11.glEnable(GL11.GL_LIGHTING);
 			} else if(var3.getIconIndex() >= 0) {
 				GL11.glDisable(GL11.GL_LIGHTING);
+				GL11.glDisable(GL11.GL_DEPTH_TEST);
 				if(var3.itemID < 256) {
 					var2.bindTexture(var2.getTexture("/terrain.png"));
 				} else {
@@ -133,6 +134,7 @@ public class RenderItem extends Render {
 				}
 
 				this.renderIcon(var4, var5, var3.getIconIndex() % 16 * 16, var3.getIconIndex() / 16 * 16, 16, 16);
+				GL11.glEnable(GL11.GL_DEPTH_TEST);
 				GL11.glEnable(GL11.GL_LIGHTING);
 			}
 
