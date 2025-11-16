@@ -412,11 +412,13 @@ public class EntityMinecart extends Entity implements IInventory {
 		int var9 = MathHelper.floor_double(var1);
 		int var10 = MathHelper.floor_double(var3);
 		int var11 = MathHelper.floor_double(var5);
-		if(this.worldObj.getBlockId(var9, var10 - 1, var11) == Block.minecartTrack.blockID) {
+		if(this.worldObj.getBlockId(var9, var10 - 1, var11) == Block.minecartTrack.blockID
+		|| this.worldObj.getBlockId(var9, var10 - 1, var11) == Block.minecartTrackPowered.blockID) {
 			--var10;
 		}
 
-		if(this.worldObj.getBlockId(var9, var10, var11) == Block.minecartTrack.blockID) {
+		if(this.worldObj.getBlockId(var9, var10, var11) == Block.minecartTrack.blockID
+		|| this.worldObj.getBlockId(var9, var10, var11) == Block.minecartTrackPowered.blockID) {
 			int var12 = this.worldObj.getBlockMetadata(var9, var10, var11);
 			var3 = (double)var10;
 			if(var12 >= 2 && var12 <= 5) {
@@ -447,11 +449,13 @@ public class EntityMinecart extends Entity implements IInventory {
 		int var7 = MathHelper.floor_double(var1);
 		int var8 = MathHelper.floor_double(var3);
 		int var9 = MathHelper.floor_double(var5);
-		if(this.worldObj.getBlockId(var7, var8 - 1, var9) == Block.minecartTrack.blockID) {
+		if(this.worldObj.getBlockId(var7, var8 - 1, var9) == Block.minecartTrack.blockID
+		|| this.worldObj.getBlockId(var7, var8 - 1, var9) == Block.minecartTrackPowered.blockID) {
 			--var8;
 		}
 
-		if(this.worldObj.getBlockId(var7, var8, var9) == Block.minecartTrack.blockID) {
+		if(this.worldObj.getBlockId(var7, var8, var9) == Block.minecartTrack.blockID
+		|| this.worldObj.getBlockId(var7, var8, var9) == Block.minecartTrackPowered.blockID) {
 			int var10 = this.worldObj.getBlockMetadata(var7, var8, var9);
 			var3 = (double)var8;
 			if(var10 >= 2 && var10 <= 5) {

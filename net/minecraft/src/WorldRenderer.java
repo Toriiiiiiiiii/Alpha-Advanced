@@ -200,8 +200,13 @@ public class WorldRenderer {
 		
 		}
 		
-		if(this.worldObj.isSpring) Item.appleRed.iconIndex = 14*16;
-		else Item.appleRed.iconIndex = 10;
+		if(this.worldObj.isSpring) {
+			Item.appleRed.iconIndex = 14*16;
+			Item.appleRed.name = "Cherry";
+		} else {
+			Item.appleRed.iconIndex = 10;
+			Item.appleRed.name = "Apple";
+		}
 	}
 
 	public float distanceToEntitySquared(Entity var1) {
