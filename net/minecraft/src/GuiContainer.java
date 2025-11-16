@@ -34,7 +34,25 @@ public abstract class GuiContainer extends GuiScreen {
 				GL11.glDisable(GL11.GL_DEPTH_TEST);
 				int var8 = var7.xDisplayPosition;
 				int var9 = var7.yDisplayPosition;
-				this.drawGradientRect(var8, var9, var8 + 16, var9 + 16, -2130706433, -2130706433);
+//				this.drawGradientRect(var8, var9, var8 + 16, var9 + 16, -2130706433, -2130706433);
+				
+				IInventory inv = var7.inventory;
+				ItemStack item = inv.getStackInSlot(var7.slotIndex);
+				
+				if(item != null && var7.isItemValid(item)) {
+					String itemName = "";
+					if(item.itemID >= 256) {
+						itemName = Item.itemsList[item.itemID].name;
+					} else {
+						itemName = Block.blocksList[item.itemID].name;
+					}
+					
+					int w = this.fontRenderer.getStringWidth(itemName);
+					this.drawGradientRect(var8, var9, var8 + w, var9 + 8, 0xff000000, 0xff000000);
+					this.drawString(this.fontRenderer, itemName, var7.xDisplayPosition, var7.yDisplayPosition, 0xffffffff);
+//					System.out.println(Item.itemsList[item.itemID].name);
+				}
+				
 				GL11.glEnable(GL11.GL_LIGHTING);
 				GL11.glEnable(GL11.GL_DEPTH_TEST);
 			}

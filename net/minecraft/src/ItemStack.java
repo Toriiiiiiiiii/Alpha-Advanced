@@ -5,21 +5,26 @@ public final class ItemStack {
 	public int animationsToGo;
 	public int itemID;
 	public int itemDmg;
+	public String name = "";
 
 	public ItemStack(Block var1) {
 		this((Block)var1, 1);
+		name = var1.name;
 	}
 
 	public ItemStack(Block var1, int var2) {
 		this(var1.blockID, var2);
+		name = var1.name;
 	}
 
 	public ItemStack(Item var1) {
 		this((Item)var1, 1);
+		name = var1.name;
 	}
 
 	public ItemStack(Item var1, int var2) {
 		this(var1.shiftedIndex, var2);
+		name = var1.name;
 	}
 
 	public ItemStack(int var1) {
