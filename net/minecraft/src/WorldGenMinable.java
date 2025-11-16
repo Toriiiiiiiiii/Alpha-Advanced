@@ -28,9 +28,9 @@ public class WorldGenMinable extends WorldGenerator {
 			double var28 = (double)(MathHelper.sin((float)var19 * (float)Math.PI / (float)this.numberOfBlocks) + 1.0F) * var26 + 1.0D;
 			double var30 = (double)(MathHelper.sin((float)var19 * (float)Math.PI / (float)this.numberOfBlocks) + 1.0F) * var26 + 1.0D;
 
-			for(int var32 = (int)(var20 - var28 / 2.0D); var32 <= (int)(var20 + var28 / 2.0D); ++var32) {
-				for(int var33 = (int)(var22 - var30 / 2.0D); var33 <= (int)(var22 + var30 / 2.0D); ++var33) {
-					for(int var34 = (int)(var24 - var28 / 2.0D); var34 <= (int)(var24 + var28 / 2.0D); ++var34) {
+			for(int var32 = MathHelper.floor_double(var20 - var28 / 2.0D); var32 <= MathHelper.floor_double(var20 + var28 / 2.0D); ++var32) {
+				for(int var33 = MathHelper.floor_double(var22 - var30 / 2.0D); var33 <= MathHelper.floor_double(var22 + var30 / 2.0D); ++var33) {
+					for(int var34 = MathHelper.floor_double(var24 - var28 / 2.0D); var34 <= MathHelper.floor_double(var24 + var28 / 2.0D); ++var34) {
 						double var35 = ((double)var32 + 0.5D - var20) / (var28 / 2.0D);
 						double var37 = ((double)var33 + 0.5D - var22) / (var30 / 2.0D);
 						double var39 = ((double)var34 + 0.5D - var24) / (var28 / 2.0D);
