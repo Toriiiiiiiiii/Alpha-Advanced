@@ -4,15 +4,15 @@ import java.util.Random;
 
 public class MapGenCaves extends MapGenBase {
 	protected void generateLargeCaveNode(int var1, int var2, byte[] var3, double var4, double var6, double var8) {
-		this.generateCaveNode(var1, var2, var3, var4, var6, var8, 1.0F + this.rand.nextFloat() * 6.0F, 0.0F, 0.0F, -1, -1, 0.5D);
+		this.generateCaveNode(this.rand.nextLong(), var1, var2, var3, var4, var6, var8, 1.0F + this.rand.nextFloat() * 6.0F, 0.0F, 0.0F, -1, -1, 0.5D);
 	}
 
-	protected void generateCaveNode(int var1, int var2, byte[] var3, double var4, double var6, double var8, float var10, float var11, float var12, int var13, int var14, double var15) {
+	protected void generateCaveNode(long rand, int var1, int var2, byte[] var3, double var4, double var6, double var8, float var10, float var11, float var12, int var13, int var14, double var15) {
 		double var17 = (double)(var1 * 16 + 8);
 		double var19 = (double)(var2 * 16 + 8);
 		float var21 = 0.0F;
 		float var22 = 0.0F;
-		Random var23 = new Random(this.rand.nextLong());
+		Random var23 = new Random(rand);
 		if(var14 <= 0) {
 			int var24 = this.range * 16 - 16;
 			var14 = var24 - var23.nextInt(var24 / 4);
@@ -47,8 +47,8 @@ public class MapGenCaves extends MapGenBase {
 			var22 += (var23.nextFloat() - var23.nextFloat()) * var23.nextFloat() * 2.0F;
 			var21 += (var23.nextFloat() - var23.nextFloat()) * var23.nextFloat() * 4.0F;
 			if(!var52 && var13 == var25 && var10 > 1.0F) {
-				this.generateCaveNode(var1, var2, var3, var4, var6, var8, var23.nextFloat() * 0.5F + 0.5F, var11 - (float)Math.PI * 0.5F, var12 / 3.0F, var13, var14, 1.0D);
-				this.generateCaveNode(var1, var2, var3, var4, var6, var8, var23.nextFloat() * 0.5F + 0.5F, var11 + (float)Math.PI * 0.5F, var12 / 3.0F, var13, var14, 1.0D);
+				this.generateCaveNode(this.rand.nextLong(), var1, var2, var3, var4, var6, var8, var23.nextFloat() * 0.5F + 0.5F, var11 - (float)Math.PI * 0.5F, var12 / 3.0F, var13, var14, 1.0D);
+				this.generateCaveNode(this.rand.nextLong(), var1, var2, var3, var4, var6, var8, var23.nextFloat() * 0.5F + 0.5F, var11 + (float)Math.PI * 0.5F, var12 / 3.0F, var13, var14, 1.0D);
 				return;
 			}
 
@@ -177,7 +177,7 @@ public class MapGenCaves extends MapGenBase {
 				float var17 = this.rand.nextFloat() * (float)Math.PI * 2.0F;
 				float var18 = (this.rand.nextFloat() - 0.5F) * 2.0F / 8.0F;
 				float var19 = this.rand.nextFloat() * 2.0F + this.rand.nextFloat();
-				this.generateCaveNode(var4, var5, var6, var9, var11, var13, var19, var17, var18, 0, 0, 1.0D);
+				this.generateCaveNode(this.rand.nextLong(), var4, var5, var6, var9, var11, var13, var19, var17, var18, 0, 0, 1.0D);
 			}
 		}
 
