@@ -7,7 +7,7 @@ public class BlockPressurePlate extends Block {
 	private EnumMobType triggerMobType;
 
 	protected BlockPressurePlate(int var1, int var2, EnumMobType var3) {
-		super(var1, var2, Material.rock);
+		super(var1, var2, Material.wood);
 		this.triggerMobType = var3;
 		this.setTickOnLoad(true);
 		float var4 = 1.0F / 16.0F;
@@ -31,7 +31,7 @@ public class BlockPressurePlate extends Block {
 	}
 
 	public boolean canPlaceBlockAt(World var1, int var2, int var3, int var4) {
-		return var1.isBlockNormalCube(var2, var3 - 1, var4);
+		return var1.isBlockNormalCube(var2, var3 - 1, var4) || var1.getBlockId(var2, var3 - 1, var4) == Block.fence.blockID;
 	}
 
 	public void onBlockAdded(World var1, int var2, int var3, int var4) {
@@ -143,6 +143,10 @@ public class BlockPressurePlate extends Block {
 		float var2 = 2.0F / 16.0F;
 		float var3 = 0.5F;
 		this.setBlockBounds(0.5F - var1, 0.5F - var2, 0.5F - var3, 0.5F + var1, 0.5F + var2, 0.5F + var3);
+	}
+	
+	public int quantityDropped(Random rand) {
+		return 1;
 	}
 	
 	public int idDropped(int var1, Random var2) {
