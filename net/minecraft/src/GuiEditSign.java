@@ -91,9 +91,11 @@ public class GuiEditSign extends GuiScreen {
 			this.entitySign.lineBeingEdited = this.editLine;
 		}
 
+		GL11.glDisable(GL11.GL_DEPTH_TEST);
 		TileEntityRenderer.instance.renderTileEntityAt(this.entitySign, -0.5D, -0.75D, -0.5D, 0.0F);
 		this.entitySign.lineBeingEdited = -1;
 		GL11.glPopMatrix();
-		super.drawScreen(var1, var2, var3);
+		super.drawScreen(var1, var2, var3); 
+		GL11.glEnable(GL11.GL_DEPTH_TEST);
 	}
 }
