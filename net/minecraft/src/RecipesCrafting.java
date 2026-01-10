@@ -32,5 +32,7 @@ public class RecipesCrafting {
 		var1.addRecipe(new ItemStack(Block.sponge, 4), new Object[]{" # ", "#X#", " # ", Character.valueOf('#'), Block.coralBlue, Character.valueOf('X'), Item.aquamarine});
 		var1.addRecipe(new ItemStack(Block.sponge, 4), new Object[]{" # ", "#X#", " # ", Character.valueOf('#'), Block.coralRed, Character.valueOf('X'), Item.aquamarine});
 		var1.addRecipe(new ItemStack(Block.sponge, 4), new Object[]{" # ", "#X#", " # ", Character.valueOf('#'), Block.coralGreen, Character.valueOf('X'), Item.aquamarine});
+		
+		var1.addRecipe(new ItemStack(Item.aquamarineAnchor, 1), new Object[] {" # ", " X ", "YXY", Character.valueOf('#'), Item.diamond, Character.valueOf('X'), Item.aquamarine, Character.valueOf('Y'), Item.ingotGold});
 	}
 }

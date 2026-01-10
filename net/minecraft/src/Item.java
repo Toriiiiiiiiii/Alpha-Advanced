@@ -119,6 +119,7 @@ public class Item {
 	public static Item aquamarine = (new Item(2016)).setIconIndex(241-16).setName("Aquamarine");
 	
 	public static Item aquamarineBucket = (new ItemBucket(2017, Block.waterMoving.blockID, true)).setIconIndex(75+16).setName("Bottemless Water Bucket");
+	public static Item aquamarineAnchor = (new ItemAnchor(2018)).setIconIndex(241-16+2).setName("Aquamarine Anchor");
 	
 	public final int shiftedIndex;
 	protected int maxStackSize = 64;

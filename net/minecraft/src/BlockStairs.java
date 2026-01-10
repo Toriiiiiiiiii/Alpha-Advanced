@@ -30,28 +30,28 @@ public class BlockStairs extends Block {
 		return super.shouldSideBeRendered(var1, var2, var3, var4, var5);
 	}
 
-	public void getCollidingBoundingBoxes(World var1, int var2, int var3, int var4, AxisAlignedBB var5, ArrayList var6) {
-		int var7 = var1.getBlockMetadata(var2, var3, var4);
-		if(var7 == 0) {
+	public void getCollidingBoundingBoxes(World world, int x, int y, int z, AxisAlignedBB boundingBox, ArrayList var6) {
+		int direction = world.getBlockMetadata(x, y, z);
+		if(direction == 0) {
 			this.setBlockBounds(0.0F, 0.0F, 0.0F, 0.5F, 0.5F, 1.0F);
-			super.getCollidingBoundingBoxes(var1, var2, var3, var4, var5, var6);
+			super.getCollidingBoundingBoxes(world, x, y, z, boundingBox, var6);
 			this.setBlockBounds(0.5F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
-			super.getCollidingBoundingBoxes(var1, var2, var3, var4, var5, var6);
-		} else if(var7 == 1) {
+			super.getCollidingBoundingBoxes(world, x, y, z, boundingBox, var6);
+		} else if(direction == 1) {
 			this.setBlockBounds(0.0F, 0.0F, 0.0F, 0.5F, 1.0F, 1.0F);
-			super.getCollidingBoundingBoxes(var1, var2, var3, var4, var5, var6);
+			super.getCollidingBoundingBoxes(world, x, y, z, boundingBox, var6);
 			this.setBlockBounds(0.5F, 0.0F, 0.0F, 1.0F, 0.5F, 1.0F);
-			super.getCollidingBoundingBoxes(var1, var2, var3, var4, var5, var6);
-		} else if(var7 == 2) {
+			super.getCollidingBoundingBoxes(world, x, y, z, boundingBox, var6);
+		} else if(direction == 2) {
 			this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.5F, 0.5F);
-			super.getCollidingBoundingBoxes(var1, var2, var3, var4, var5, var6);
+			super.getCollidingBoundingBoxes(world, x, y, z, boundingBox, var6);
 			this.setBlockBounds(0.0F, 0.0F, 0.5F, 1.0F, 1.0F, 1.0F);
-			super.getCollidingBoundingBoxes(var1, var2, var3, var4, var5, var6);
-		} else if(var7 == 3) {
+			super.getCollidingBoundingBoxes(world, x, y, z, boundingBox, var6);
+		} else if(direction == 3) {
 			this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 0.5F);
-			super.getCollidingBoundingBoxes(var1, var2, var3, var4, var5, var6);
+			super.getCollidingBoundingBoxes(world, x, y, z, boundingBox, var6);
 			this.setBlockBounds(0.0F, 0.0F, 0.5F, 1.0F, 0.5F, 1.0F);
-			super.getCollidingBoundingBoxes(var1, var2, var3, var4, var5, var6);
+			super.getCollidingBoundingBoxes(world, x, y, z, boundingBox, var6);
 		}
 
 		this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);

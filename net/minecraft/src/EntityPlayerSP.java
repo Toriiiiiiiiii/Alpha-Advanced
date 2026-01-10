@@ -4,7 +4,7 @@ import net.minecraft.client.Minecraft;
 
 public class EntityPlayerSP extends EntityPlayer {
 	public MovementInput movementInput;
-	private Minecraft mc;
+	public Minecraft mc;
 
 	public EntityPlayerSP(Minecraft var1, World var2, Session var3) {
 		super(var2);
